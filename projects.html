@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Projects, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   .proj-hero {
-    padding: 180px 48px 80px;
+    padding: var(--hero-pad-top) var(--pad-x) 80px;
     background: var(--cream);
     border-bottom: 1px solid var(--ink-15);
   }
@@ -20,7 +20,7 @@
     position: sticky; top: 0; z-index: 40;
     background: var(--cream);
     border-bottom: 1px solid var(--ink-15);
-    padding: 16px 48px;
+    padding: 16px var(--pad-x);
     display: flex; gap: 24px; align-items: center;
     font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
   }
@@ -107,7 +107,7 @@
   .case-study {
     background: var(--ink);
     color: var(--cream);
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
   }
   .case-study-head { max-width: 1440px; margin: 0 auto var(--s-8); }
   .case-study-head .eyebrow { color: var(--acid); margin-bottom: 24px; display: block; }
@@ -136,7 +136,7 @@
   .cs-cta::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('assets/topo-pattern.png');
+    background-image: url('assets/topo-pattern-hq.png');
     background-size: 800px;
     opacity: .08;
     mix-blend-mode: multiply;
@@ -171,11 +171,11 @@
   .pe-text.dark .eyebrow { color: var(--acid); opacity: 1; }
 
   @media (max-width: 960px) {
-    .proj-hero { padding: 120px 24px 48px; }
+    .proj-hero { padding: var(--hero-pad-top) var(--pad-x) var(--pad-x); }
     .proj-hero-inner { grid-template-columns: 1fr; }
     .project-entry { grid-template-columns: 1fr; }
     .project-entry.reverse .pe-text { order: 0; }
-    .pe-text { padding: 48px 24px; }
+    .pe-text { padding: var(--pad-x) 24px; }
     .pe-media { min-height: 360px; }
     .case-study-grid { grid-template-columns: 1fr; }
     .cs-cta { padding: var(--s-7) var(--s-6); }
@@ -366,7 +366,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>HC.init('projects');</script>
 </body>
 </html>

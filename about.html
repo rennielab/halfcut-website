@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>About, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   .about-hero {
-    padding: 180px 48px 120px;
+    padding: var(--hero-pad-top) var(--pad-x) 120px;
     background: var(--cream);
     position: relative;
     border-bottom: 1px solid var(--ink-15);
@@ -45,7 +45,7 @@
 
   /* Long-form manifesto */
   .manifesto-section {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--ink);
     color: var(--cream);
   }
@@ -81,7 +81,7 @@
 
   /* Values grid */
   .values {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--cream);
   }
   .values-head {
@@ -142,7 +142,7 @@
   /* Partnership framework */
   .framework {
     background: var(--stone);
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
   }
   .framework-head { max-width: 1440px; margin: 0 auto var(--s-8); }
   .framework-head h2 {
@@ -193,7 +193,7 @@
 
   /* Partners */
   .partners {
-    padding: var(--s-10) 48px;
+    padding: var(--s-10) var(--pad-x);
     border-top: 1px solid var(--ink-15);
     border-bottom: 1px solid var(--ink-15);
   }
@@ -220,12 +220,12 @@
 
   /* Acknowledgement */
   .acknowledgement {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--ink);
     color: var(--cream);
     position: relative;
   }
-  .acknowledgement .wrap-sm { max-width: 920px; padding: 0 48px; margin: 0 auto; }
+  .acknowledgement .wrap-sm { max-width: 920px; padding: 0 var(--pad-x); margin: 0 auto; }
   .acknowledgement .eyebrow { color: var(--acid); margin-bottom: var(--s-6); display: block; }
   .acknowledgement p {
     font-family: var(--f-serif);
@@ -246,7 +246,7 @@
   }
 
   @media (max-width: 960px) {
-    .about-hero { padding: 120px 24px 64px; }
+    .about-hero { padding: var(--hero-pad-top) var(--pad-x) 64px; }
     .about-hero-bottom, .values-head, .framework-cols { grid-template-columns: 1fr; gap: var(--s-6); }
     .values-grid { grid-template-columns: 1fr 1fr; }
     .value:nth-child(2n) { border-right: 0; }
@@ -392,7 +392,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>HC.init('about');</script>
 </body>
 </html>

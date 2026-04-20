@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Journal, HalfCut (Wireframe)</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   .wf-banner {
     position: fixed; top: 0; left: 0; right: 0;
     background: var(--coral); color: var(--ink);
-    padding: 8px 48px;
+    padding: 8px var(--pad-x);
     font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .2em;
     text-transform: uppercase;
     z-index: 200;
     display: flex; justify-content: space-between;
   }
   .masthead {
-    padding: 140px 48px 32px;
+    padding: calc(var(--hero-pad-top) - 40px) var(--pad-x) 32px;
     max-width: 1440px; margin: 0 auto;
     border-bottom: 2px solid var(--ink);
   }
@@ -34,7 +34,7 @@
   /* Categories */
   .cats {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-5) 48px;
+    padding: var(--s-5) var(--pad-x);
     border-bottom: 1px solid var(--ink-15);
     display: flex; gap: 28px;
     font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
@@ -47,7 +47,7 @@
   /* Featured hero article */
   .feature {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-7) 48px;
+    padding: var(--s-7) var(--pad-x);
     display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7);
     border-bottom: 1px solid var(--ink-15);
   }
@@ -72,7 +72,7 @@
   /* Grid */
   .grid {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-8) 48px;
+    padding: var(--s-8) var(--pad-x);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--s-7) var(--s-5);
@@ -105,7 +105,7 @@
     background: var(--ink); color: var(--cream);
     overflow: hidden;
   }
-  .photo-essay-inner { max-width: 1440px; margin: 0 auto; padding: var(--s-9) 48px; }
+  .photo-essay-inner { max-width: 1440px; margin: 0 auto; padding: var(--s-9) var(--pad-x); }
   .photo-essay .cat { color: var(--acid); font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; display: block; margin-bottom: var(--s-5); }
   .photo-essay h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; max-width: 18ch; margin-bottom: var(--s-7); }
   .photo-strip {
@@ -120,7 +120,7 @@
   /* Newsletter strip */
   .newsletter {
     background: var(--acid);
-    padding: var(--s-10) 48px;
+    padding: var(--s-10) var(--pad-x);
     border-top: 1px solid var(--ink);
     border-bottom: 1px solid var(--ink);
   }
@@ -131,7 +131,7 @@
   .nl-form input { flex: 1; padding: 18px 20px; background: var(--cream); border: 1px solid var(--ink); border-radius: 999px; font-family: var(--f-serif); font-size: 18px; outline: none; }
 
   @media (max-width: 960px) {
-    .masthead { padding: 120px 24px 24px; }
+    .masthead { padding: var(--hero-pad-top) var(--pad-x) 24px; }
     .feature { grid-template-columns: 1fr; padding: var(--s-5) 24px; }
     .grid { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
     .photo-strip { grid-template-columns: 1fr 1fr; height: 220px; }
@@ -250,7 +250,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>HC.init('journal');</script>
 </body>
 </html>

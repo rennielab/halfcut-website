@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Impact, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   .imp-hero {
-    padding: 180px 48px 120px;
+    padding: var(--hero-pad-top) var(--pad-x) 120px;
     background: var(--ink);
     color: var(--cream);
     position: relative;
@@ -38,7 +38,7 @@
   /* Big number band */
   .big-num {
     background: var(--acid);
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     text-align: center;
     border-bottom: 1px solid var(--ink);
   }
@@ -64,7 +64,7 @@
 
   /* Ledger table */
   .ledger {
-    padding: var(--s-10) 48px;
+    padding: var(--s-10) var(--pad-x);
     background: var(--cream);
   }
   .ledger-head {
@@ -95,44 +95,173 @@
   /* Year breakdown: how every dollar lands */
   .dollar {
     background: var(--ink); color: var(--cream);
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
+    position: relative; overflow: hidden;
   }
-  .dollar-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-9); align-items: start; }
-  .dollar h2 { font-family: var(--f-display); font-size: clamp(56px, 7vw, 120px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; max-width: 16ch; }
+  .dollar-topo {
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-repeat: repeat;
+    background-size: 1100px auto;
+    opacity: .08;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .dollar-inner {
+    max-width: 1600px; margin: 0 auto; position: relative;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-9); align-items: center;
+  }
+  .dollar h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 5.6vw, 96px);
+    line-height: .9; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin-top: var(--s-4);
+  }
   .dollar .eyebrow { color: var(--acid); display: block; margin-bottom: var(--s-5); }
-  .dollar p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-5); opacity: .8; max-width: 52ch; }
+  .dollar p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 20px; line-height: 1.5;
+    margin-top: var(--s-6); opacity: .82; max-width: 46ch;
+  }
+  .dollar-meta {
+    margin-top: var(--s-8);
+    display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: var(--s-5);
+    border-top: 1px solid var(--cream-15);
+    padding-top: var(--s-5);
+  }
+  .dollar-meta > div { display: flex; flex-direction: column; gap: 8px; }
+  .dm-k {
+    font-family: var(--f-sans); font-size: 10px;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cream); opacity: .45;
+  }
+  .dm-v {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 1.6vw, 26px);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .dm-v.acid { color: var(--acid); }
 
-  /* Stacked dollar bar */
-  .bar {
-    display: flex;
-    height: 140px;
-    border-radius: 4px;
-    overflow: hidden;
+  /* Viz column */
+  .dollar-viz { display: flex; flex-direction: column; gap: var(--s-7); }
+  .donut-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .donut {
+    width: 100%; height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+  .donut .donut-ghost {
+    fill: none;
+    stroke: var(--cream);
+    stroke-opacity: .08;
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+  }
+  .donut .seg {
+    fill: none;
+    stroke-width: 22;
+    stroke-linecap: butt;
+    transition: stroke-dasharray 1.6s cubic-bezier(.2,.8,.2,1);
+    filter: drop-shadow(0 2px 14px rgba(0,0,0,.4));
+  }
+  .donut .seg-country { stroke: var(--acid); }
+  .donut .seg-prog    { stroke: var(--coral); }
+  .donut .seg-ops     { stroke: var(--cream); }
+  /* Initial hidden state, JS animates to final */
+  .donut.loading .seg-country { stroke-dasharray: 0 100; }
+  .donut.loading .seg-prog    { stroke-dasharray: 0 100; }
+  .donut.loading .seg-ops     { stroke-dasharray: 0 100; }
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    pointer-events: none;
+  }
+  .donut-big {
+    font-family: var(--f-display);
+    font-size: clamp(80px, 9vw, 150px);
+    line-height: .85;
+    letter-spacing: -0.04em;
+    color: var(--acid);
+    text-shadow: 0 4px 40px rgba(201,232,73,.3);
+  }
+  .donut-cap {
     font-family: var(--f-sans);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: .06em;
-    margin-bottom: var(--s-4);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .55;
+    margin-top: 14px;
+    line-height: 1.6;
   }
-  .bar-seg {
-    display: flex; align-items: flex-end;
-    padding: 16px;
-    transition: flex-grow .3s;
-  }
-  .bar-seg.to-country { flex: 92; background: var(--acid); color: var(--ink); }
-  .bar-seg.programs   { flex: 5; background: var(--coral); color: var(--ink); }
-  .bar-seg.ops        { flex: 3; background: var(--cream); color: var(--ink); }
 
-  .bar-legend {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px; margin-top: var(--s-5);
-    font-family: var(--f-sans); font-size: 12px; letter-spacing: .06em;
+  .dollar-legend {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    gap: var(--s-6);
+    border-top: 1px solid var(--cream-15);
+    padding-top: var(--s-6);
   }
-  .bar-legend .swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; margin-right: 8px; vertical-align: middle; }
+  .dollar-legend li {
+    display: grid;
+    grid-template-columns: 6px 1fr;
+    gap: var(--s-5);
+    align-items: start;
+  }
+  .ll-tick {
+    width: 6px;
+    min-height: 72px;
+    border-radius: 3px;
+    margin-top: 4px;
+  }
+  .ll-tick.to-country { background: var(--acid); }
+  .ll-tick.programs   { background: var(--coral); }
+  .ll-tick.ops        { background: var(--cream); }
+  .ll-pct {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 2.4vw, 42px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .ll-lbl {
+    font-family: var(--f-sans);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .55;
+    margin-top: 8px;
+  }
+  .ll-desc {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-top: 10px;
+    opacity: .75;
+    max-width: 46ch;
+  }
+
+  @media (max-width: 900px) {
+    .dollar-inner { grid-template-columns: 1fr; }
+    .dollar-meta { grid-template-columns: 1fr; }
+  }
 
   /* Testimonial / story block */
   .story {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--stone);
     border-top: 1px solid var(--ink-15);
   }
@@ -162,7 +291,7 @@
 
   /* Method / audit */
   .method {
-    padding: var(--s-10) 48px;
+    padding: var(--s-10) var(--pad-x);
     background: var(--cream);
   }
   .method-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: var(--s-8); }
@@ -203,6 +332,58 @@
     object-fit: cover;
     opacity: .85;
   }
+
+  /* H-emerge: image starts clipped to an H (HalfCut logo mark) and opens to full-bleed on scroll.
+     --p is 0..1, driven by scroll-driven-animations where supported (fallback: JS). */
+  .cinematic.h-emerge {
+    background: var(--ink);
+  }
+  .cinematic.h-emerge img {
+    --p: 0;
+    /* Horizontal "H" slot positions in % — two verts and a crossbar */
+    --v-w: calc(18% - (18% - 50%) * var(--p));   /* vert-bar width grows from 18% to 50% (meets) */
+    --lx1: calc(18% - 18% * var(--p));           /* left vert left edge → 0 */
+    --lx2: calc(36% + 14% * var(--p));           /* left vert right edge → 50% */
+    --rx1: calc(64% - 14% * var(--p));           /* right vert left edge → 50% */
+    --rx2: calc(82% + 18% * var(--p));           /* right vert right edge → 100% */
+    --cy1: calc(42% - 42% * var(--p));           /* crossbar top → 0 */
+    --cy2: calc(58% + 42% * var(--p));           /* crossbar bottom → 100% */
+    clip-path: polygon(
+      /* left vertical bar */
+      var(--lx1) 0%,    var(--lx2) 0%,    var(--lx2) 100%,  var(--lx1) 100%,  var(--lx1) 0%,
+      /* right vertical bar */
+      var(--rx1) 0%,    var(--rx2) 0%,    var(--rx2) 100%,  var(--rx1) 100%,  var(--rx1) 0%,
+      /* crossbar */
+      var(--lx2) var(--cy1), var(--rx1) var(--cy1), var(--rx1) var(--cy2), var(--lx2) var(--cy2)
+    );
+    transform: scale(calc(1.04 + .08 * var(--p)));
+    transform-origin: 50% 50%;
+    transition: opacity .5s var(--ease);
+    opacity: calc(.65 + .35 * var(--p));
+  }
+  @supports (animation-timeline: view()) {
+    .cinematic.h-emerge img {
+      animation: h-emerge-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+    @keyframes h-emerge-reveal { from { --p: 0; } to { --p: 1; } }
+  }
+  /* Keep an ink wash behind while H is clipped */
+  .cinematic.h-emerge::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--ink);
+    z-index: 0;
+  }
+  .cinematic.h-emerge img { z-index: 1; }
+  .cinematic.h-emerge::after { z-index: 2; }
+  .cinematic.h-emerge .cinematic-cap { z-index: 3; }
+
+  @property --p {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
   .cinematic::after {
     content: '';
     position: absolute; inset: 0;
@@ -233,7 +414,7 @@
 
   /* Ambient editorial slab, words over texture */
   .ambient {
-    padding: clamp(96px, 14vh, 200px) 48px;
+    padding: clamp(96px, 14vh, 200px) var(--pad-x);
     background: var(--ink);
     color: var(--cream);
     position: relative;
@@ -245,7 +426,7 @@
   .ambient::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('assets/topo-pattern.png');
+    background-image: url('assets/topo-pattern-hq.png');
     background-size: 1400px;
     background-position: center;
     opacity: .08;
@@ -342,7 +523,7 @@
   .story-xl-cite-meta { font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; opacity: .4; text-align: right; max-width: 22ch; }
 
   @media (max-width: 960px) {
-    .imp-hero { padding: 120px 24px 64px; }
+    .imp-hero { padding: var(--hero-pad-top) var(--pad-x) 64px; }
     .imp-hero-bottom, .dollar-inner, .story-inner, .method-inner { grid-template-columns: 1fr; }
     .ledger-row { grid-template-columns: 60px 1fr 1fr; font-size: 14px; }
     .ledger-row > :nth-child(4), .ledger-row > :nth-child(5), .ledger-row > :nth-child(6) { display: none; }
@@ -359,6 +540,7 @@
 <body>
 
 <section class="imp-hero" data-screen-label="04 Impact · Hero">
+  <span class="topo-bg dark" aria-hidden="true"></span>
   <div class="imp-hero-inner">
     <span class="eyebrow">Impact Report · FY2025</span>
     <h1>The work,<br>in numbers.</h1>
@@ -374,7 +556,7 @@
 </section>
 
 <!-- CINEMATIC 01 — Daintree canopy / place -->
-<section class="cinematic" data-screen-label="04 Impact · Cinematic 01" aria-label="Daintree canopy">
+<section class="cinematic h-emerge" data-screen-label="04 Impact · Cinematic 01" aria-label="Daintree canopy">
   <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2400&q=85" alt="Daintree rainforest canopy at dawn">
   <div class="cinematic-cap">
     <div class="words">This is the place. 180 million years of unbroken rainforest, held by the oldest living culture on Earth.</div>
@@ -399,23 +581,61 @@
 
 <!-- Dollar breakdown -->
 <section class="dollar" data-screen-label="04 Impact · Dollar">
+  <div class="dollar-topo"></div>
   <div class="dollar-inner">
-    <div>
+    <div class="dollar-head">
       <span class="eyebrow">How every dollar lands</span>
-      <h2>No soft accounting.</h2>
-      <p>We publish this breakdown every quarter and sit for external audit every year. If the mix ever shifts, because program expansion, new partners, different funding rhythm, the bar below changes, in public, the day it happens.</p>
+      <h2>No soft<br>accounting.</h2>
+      <p>We publish this breakdown every quarter and sit for external audit every year. If the mix ever shifts, the chart below changes in public, the day it happens.</p>
+      <div class="dollar-meta">
+        <div><span class="dm-k">FY25 total raised</span><span class="dm-v" data-count="1247000" data-prefix="$">$0</span></div>
+        <div><span class="dm-k">To Country</span><span class="dm-v acid" data-count="1147240" data-prefix="$">$0</span></div>
+        <div><span class="dm-k">Independently audited</span><span class="dm-v">BDO · FY25</span></div>
+      </div>
     </div>
-    <div>
-      <div class="bar">
-        <div class="bar-seg to-country">92¢ · To Country</div>
-        <div class="bar-seg programs">5¢ · Program</div>
-        <div class="bar-seg ops">3¢ · Ops</div>
+
+    <div class="dollar-viz">
+      <div class="donut-wrap">
+        <svg class="donut" viewBox="0 0 200 200" aria-hidden="true">
+          <!-- topo ring decoration -->
+          <circle class="donut-ghost" cx="100" cy="100" r="94" />
+          <!-- 3 segments of a donut, drawn with stroke-dasharray. circumference = 2πr = 2*π*76 ≈ 477.52 -->
+          <circle class="seg seg-ops"     cx="100" cy="100" r="76" pathLength="100" stroke-dasharray="3 97"  stroke-dashoffset="0"   />
+          <circle class="seg seg-prog"    cx="100" cy="100" r="76" pathLength="100" stroke-dasharray="5 95"  stroke-dashoffset="-3"  />
+          <circle class="seg seg-country" cx="100" cy="100" r="76" pathLength="100" stroke-dasharray="92 8"  stroke-dashoffset="-8"  />
+        </svg>
+        <div class="donut-center">
+          <div class="donut-big"><span data-count="92" data-suffix="¢">0¢</span></div>
+          <div class="donut-cap">of every dollar<br>reaches Country</div>
+        </div>
       </div>
-      <div class="bar-legend">
-        <div><span class="swatch" style="background: var(--acid);"></span> Traditional Owner-led restoration</div>
-        <div><span class="swatch" style="background: var(--coral);"></span> Campaign &amp; program delivery</div>
-        <div><span class="swatch" style="background: var(--cream);"></span> Operations &amp; compliance</div>
-      </div>
+
+      <ul class="dollar-legend">
+        <li>
+          <span class="ll-tick to-country"></span>
+          <div>
+            <div class="ll-pct"><span data-count="92" data-suffix="¢">0¢</span></div>
+            <div class="ll-lbl">To Country</div>
+            <div class="ll-desc">Direct, unrestricted transfer to Traditional Owner corporations for ranger wages, seedlings, equipment, on-Country costs.</div>
+          </div>
+        </li>
+        <li>
+          <span class="ll-tick programs"></span>
+          <div>
+            <div class="ll-pct"><span data-count="5" data-suffix="¢">0¢</span></div>
+            <div class="ll-lbl">Program &amp; campaign delivery</div>
+            <div class="ll-desc">Field coordination, campaign production, partner reporting, donor communications.</div>
+          </div>
+        </li>
+        <li>
+          <span class="ll-tick ops"></span>
+          <div>
+            <div class="ll-pct"><span data-count="3" data-suffix="¢">0¢</span></div>
+            <div class="ll-lbl">Operations &amp; compliance</div>
+            <div class="ll-desc">Insurance, audit, governance, legal, platform. Held under 5% by policy.</div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -474,7 +694,7 @@
 <section class="story-xl" data-screen-label="04 Impact · Story">
   <div class="story-xl-inner">
     <div class="story-xl-media">
-      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1400&q=85" alt="Aunty Marilyn Wallace portrait placeholder">
+      <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1400&q=85" alt="Woman on Country, natural light portrait placeholder">
       <div class="overlay">
         <span>Kuku Yalanji Country</span>
         <span>Portrait, placeholder</span>
@@ -540,7 +760,81 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>HC.init('impact');</script>
+<script>
+// H-emerge fallback for browsers without scroll-driven animations (Safari/Firefox)
+(function(){
+  if (CSS.supports('animation-timeline: view()')) return;
+  const els = document.querySelectorAll('.cinematic.h-emerge img');
+  if (!els.length) return;
+  function update() {
+    const vh = window.innerHeight;
+    els.forEach(img => {
+      const sec = img.closest('.cinematic');
+      const r = sec.getBoundingClientRect();
+      // progress: 0 when section top hits viewport bottom, 1 at ~55% through
+      const total = r.height + vh;
+      const traveled = vh - r.top;
+      let p = traveled / (total * 0.55);
+      p = Math.max(0, Math.min(1, p));
+      img.style.setProperty('--p', p.toFixed(3));
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+// Dollar section: animate donut segments + counters on scroll-in
+(function () {
+  const section = document.querySelector('.dollar');
+  if (!section) return;
+  const donut = section.querySelector('.donut');
+  const counters = section.querySelectorAll('[data-count]');
+  donut.classList.add('loading');
+
+  let played = false;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function animateCounters(duration) {
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const e = easeOutCubic(t);
+      counters.forEach(el => {
+        const target = parseFloat(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        let v = target * e;
+        if (target >= 1000) {
+          el.textContent = prefix + Math.round(v).toLocaleString() + suffix;
+        } else {
+          el.textContent = prefix + Math.round(v) + suffix;
+        }
+      });
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function play() {
+    if (played) return;
+    played = true;
+    // Donut: segments are in markup with final stroke-dasharray values,
+    // but .loading class overrides them to 0. Remove it with a tiny delay to trigger CSS transition.
+    requestAnimationFrame(() => {
+      donut.classList.remove('loading');
+    });
+    animateCounters(1800);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) play(); });
+  }, { threshold: 0.35 });
+  io.observe(section);
+})();
+</script>
 </body>
 </html>

@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Donate, HalfCut (Wireframe)</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   .wf-banner {
     position: fixed; top: 0; left: 0; right: 0;
     background: var(--coral); color: var(--ink);
-    padding: 8px 48px;
+    padding: 8px var(--pad-x);
     font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .2em;
     text-transform: uppercase;
     z-index: 200;
     display: flex; justify-content: space-between;
   }
   .donate-hero {
-    padding: 140px 48px 64px;
+    padding: calc(var(--hero-pad-top) - 40px) var(--pad-x) 64px;
     background: var(--ink); color: var(--cream);
     border-bottom: 1px solid var(--cream-15);
   }
@@ -26,7 +26,7 @@
 
   .donate-body {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-8) 48px var(--s-10);
+    padding: var(--s-8) var(--pad-x) var(--s-10);
     display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--s-8); align-items: start;
   }
   .donate-context { position: sticky; top: 40px; }
@@ -120,7 +120,7 @@
   /* Trust strip */
   .trust {
     background: var(--cream); border-top: 1px solid var(--ink-15);
-    padding: var(--s-7) 48px;
+    padding: var(--s-7) var(--pad-x);
   }
   .trust-inner {
     max-width: 1440px; margin: 0 auto;
@@ -228,7 +228,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>
   HC.init('donate');
   document.querySelectorAll('.options button').forEach(b => b.addEventListener('click', () => {

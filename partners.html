@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Partners, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<link rel="stylesheet" href="assets/system.css?v=1776688039176">
 <style>
   /* ================================================================
      PARTNERS
@@ -19,7 +19,7 @@
 
   /* Hero */
   .prt-hero {
-    padding: 180px 48px 96px;
+    padding: var(--hero-pad-top) var(--pad-x) 96px;
     background: var(--cream);
     border-bottom: 1px solid var(--ink-15);
     position: relative;
@@ -47,7 +47,7 @@
 
   /* Intro */
   .prt-intro {
-    padding: var(--s-10) 48px;
+    padding: var(--s-10) var(--pad-x);
     background: var(--cream);
     border-bottom: 1px solid var(--ink-15);
   }
@@ -73,7 +73,7 @@
 
   /* Partners grid */
   .prt-grid-wrap {
-    padding: var(--s-9) 48px var(--s-11);
+    padding: var(--s-9) var(--pad-x) var(--s-11);
     background: var(--cream);
   }
   .prt-grid {
@@ -146,7 +146,7 @@
   .prt-feature {
     background: var(--ink);
     color: var(--cream);
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     position: relative;
     overflow: hidden;
   }
@@ -195,7 +195,7 @@
 
   /* Pull quote */
   .prt-quote {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--cream);
     border-bottom: 1px solid var(--ink-15);
   }
@@ -235,7 +235,7 @@
 
   /* CTA band */
   .prt-cta {
-    padding: var(--s-11) 48px;
+    padding: var(--s-11) var(--pad-x);
     background: var(--ink);
     color: var(--cream);
     position: relative;
@@ -244,7 +244,7 @@
   .prt-cta::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('assets/topo-pattern.png');
+    background-image: url('assets/topo-pattern-hq.png');
     background-size: 900px;
     opacity: .06;
     pointer-events: none;
@@ -266,7 +266,7 @@
   .prt-cta-act { display: flex; flex-direction: column; gap: var(--s-4); align-items: flex-start; }
 
   @media (max-width: 960px) {
-    .prt-hero { padding: 120px 24px 64px; }
+    .prt-hero { padding: var(--hero-pad-top) var(--pad-x) 64px; }
     .prt-intro, .prt-grid-wrap, .prt-feature, .prt-quote, .prt-cta { padding-left: 24px; padding-right: 24px; }
     .prt-intro-inner { grid-template-columns: 1fr; }
     .prt-grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-6) var(--s-4); }
@@ -503,7 +503,7 @@
   .btn-lg-cta { font-size: 17px !important; padding: 22px 40px !important; }
 </style>
 
-<script src="assets/shell.js?v=1776674336531"></script>
+<script src="assets/shell.js?v=1776688039176"></script>
 <script>HC.init('partners');</script>
 </body>
 </html>
