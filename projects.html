@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects, HalfCut</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .proj-hero {
+    padding: 180px 48px 80px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .proj-hero-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: var(--s-8); align-items: end; }
+  .proj-hero h1 { font-family: var(--f-display); font-size: clamp(64px, 9vw, 160px); line-height: .9; letter-spacing: -0.025em; text-transform: uppercase; max-width: 12ch; }
+  .proj-hero .lede { max-width: 40ch; opacity: .75; }
+
+  /* Filter bar */
+  .filter-bar {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+    padding: 16px 48px;
+    display: flex; gap: 24px; align-items: center;
+    font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .filter-bar .label { opacity: .5; }
+  .filter-bar button {
+    padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--ink-15);
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .filter-bar button[aria-pressed="true"] { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .filter-bar .count { margin-left: auto; opacity: .5; letter-spacing: .1em; font-size: 11px; }
+
+  /* Project entries */
+  .project-entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .project-entry.reverse .pe-text { order: 2; }
+  .pe-media {
+    position: relative;
+    overflow: hidden;
+    min-height: 640px;
+  }
+  .pe-media img { width: 100%; height: 100%; object-fit: cover; }
+  .pe-media .tag-overlay {
+    position: absolute; top: 28px; left: 28px;
+    display: flex; gap: 8px;
+  }
+  .pe-media .tag-overlay .tag { color: var(--cream); border-color: var(--cream-50); background: rgba(19,20,14,.3); backdrop-filter: blur(8px); }
+  .pe-media .number-overlay {
+    position: absolute; bottom: 28px; right: 28px;
+    font-family: var(--f-display); font-size: 120px; line-height: .85;
+    color: var(--cream); opacity: .85;
+    letter-spacing: -0.02em;
+  }
+  .pe-text {
+    padding: 96px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .pe-text > * { max-width: 560px; }
+  .pe-text .eyebrow { opacity: .5; margin-bottom: 24px; }
+  .pe-text h2 {
+    font-family: var(--f-display);
+    font-size: clamp(44px, 5.5vw, 88px);
+    line-height: .92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+  .pe-text .summary {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    margin-bottom: var(--s-6);
+    max-width: 46ch;
+  }
+  .pe-facts {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--ink-15);
+    margin-bottom: var(--s-6);
+  }
+  .pe-facts > div {
+    padding: 20px 16px 20px 0;
+    border-right: 1px solid var(--ink-15);
+  }
+  .pe-facts > div:last-child { border-right: 0; }
+  .pe-facts .label {
+    font-family: var(--f-sans); font-weight: 600; font-size: 10px;
+    letter-spacing: .18em; text-transform: uppercase; opacity: .5;
+    margin-bottom: 6px;
+  }
+  .pe-facts .value {
+    font-family: var(--f-display); font-size: 24px;
+    line-height: 1; letter-spacing: -0.01em;
+  }
+
+  .pe-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Wide section: case study */
+  .case-study {
+    background: var(--ink);
+    color: var(--cream);
+    padding: var(--s-11) 48px;
+  }
+  .case-study-head { max-width: 1440px; margin: 0 auto var(--s-8); }
+  .case-study-head .eyebrow { color: var(--acid); margin-bottom: 24px; display: block; }
+  .case-study-head h2 { font-family: var(--f-display); font-size: clamp(56px, 7vw, 120px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; max-width: 16ch; }
+  .case-study-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--cream-15);
+  }
+  .cs-step { background: var(--ink); padding: var(--s-7) var(--s-6); }
+  .cs-step .num { font-family: var(--f-display); font-size: 72px; line-height: .85; color: var(--acid); margin-bottom: var(--s-4); letter-spacing: -0.02em; }
+  .cs-step h4 { font-family: var(--f-display); font-size: 24px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 12px; }
+  .cs-step p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; opacity: .75; }
+
+  .cs-cta {
+    max-width: 1440px; margin: var(--s-9) auto 0;
+    padding: var(--s-8);
+    background: linear-gradient(135deg, var(--acid) 0%, color-mix(in oklab, var(--acid), #f5ff3d 30%) 100%);
+    color: var(--ink);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cs-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 800px;
+    opacity: .08;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .cs-cta-inner {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-8);
+    align-items: end;
+  }
+  .cs-cta-text .eyebrow { opacity: .6; margin-bottom: var(--s-5); color: var(--ink); }
+  .cs-cta-text h3 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 84px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: var(--s-5);
+  }
+  .cs-cta-text .lede { max-width: 40ch; color: var(--ink); opacity: .8; font-size: clamp(18px, 1.4vw, 22px); }
+  .cs-cta-act { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-4); }
+  .cs-cta-act .btn-lg {
+    font-size: 18px !important;
+    padding: 22px 44px !important;
+    background: var(--ink) !important;
+    color: var(--cream) !important;
+    border-color: var(--ink) !important;
+  }
+  .cs-cta-act .btn-lg:hover { background: transparent !important; color: var(--ink) !important; }
+  .cs-cta-meta { font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; max-width: 32ch; }
+
+  .pe-text.dark { background: var(--ink); color: var(--cream); }
+  .pe-text.dark .eyebrow { color: var(--acid); opacity: 1; }
+
+  @media (max-width: 960px) {
+    .proj-hero { padding: 120px 24px 48px; }
+    .proj-hero-inner { grid-template-columns: 1fr; }
+    .project-entry { grid-template-columns: 1fr; }
+    .project-entry.reverse .pe-text { order: 0; }
+    .pe-text { padding: 48px 24px; }
+    .pe-media { min-height: 360px; }
+    .case-study-grid { grid-template-columns: 1fr; }
+    .cs-cta { padding: var(--s-7) var(--s-6); }
+    .cs-cta-inner { grid-template-columns: 1fr; gap: var(--s-6); }
+    .filter-bar { padding: 12px 16px; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<section class="proj-hero" data-screen-label="03 Projects · Hero">
+  <div class="proj-hero-inner">
+    <div>
+      <div class="eyebrow">Projects · On-Country, governed by Traditional Owners</div>
+      <h1 style="margin-top: 24px;">Work happening<br>right now.</h1>
+    </div>
+    <p class="lede">
+      Four active programs, each assessed against a shared governance framework. None of this work is ours to claim, we resource, amplify, and report back.
+    </p>
+  </div>
+</section>
+
+<div class="filter-bar" data-screen-label="03 Projects · Filters">
+  <span class="label">Filter</span>
+  <button aria-pressed="true">All</button>
+  <button>Active</button>
+  <button>In development</button>
+  <button>Scoping</button>
+  <span style="width: 1px; height: 18px; background: var(--ink-15);"></span>
+  <button>Queensland</button>
+  <button>NSW</button>
+  <button>On-Country programs</button>
+  <span class="count">04 projects</span>
+</div>
+
+<!-- PROJECT 01 -->
+<article class="project-entry" data-screen-label="03 Projects · Daintree">
+  <div class="pe-media">
+    <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=80" alt="Daintree rainforest canopy">
+    <div class="tag-overlay">
+      <span class="tag">Active · 2022–</span>
+      <span class="tag">Jabalbina · QLD</span>
+    </div>
+    <div class="number-overlay">01</div>
+  </div>
+  <div class="pe-text">
+    <span class="eyebrow">Flagship Program</span>
+    <h2>The Daintree<br>Restoration.</h2>
+    <p class="summary">
+      Regenerating 1,200 hectares of the oldest continuous rainforest on Earth, alongside the Eastern Kuku Yalanji rangers program. This is our longest-running program and the backbone of everything else we do.
+    </p>
+    <div class="pe-facts">
+      <div>
+        <div class="label">Area</div>
+        <div class="value">1,200 ha</div>
+      </div>
+      <div>
+        <div class="label">Governance</div>
+        <div class="value">Jabalbina</div>
+      </div>
+      <div>
+        <div class="label">Stage</div>
+        <div class="value">Year 4 / 12</div>
+      </div>
+    </div>
+    <div class="pe-actions">
+      <a href="#" class="btn btn-primary">Project brief →</a>
+      <a href="impact.html" class="btn btn-secondary">Impact data</a>
+    </div>
+  </div>
+</article>
+
+<!-- PROJECT 02 -->
+<article class="project-entry reverse" data-screen-label="03 Projects · Yalada">
+  <div class="pe-text dark">
+    <span class="eyebrow">Annual Program</span>
+    <h2>The Yalada<br>Tour.</h2>
+    <p class="summary" style="opacity: .85;">
+      Once a year we bring values-aligned organisations onto Jabalbina Country for three days of immersive cultural exchange, shared governance, and deep briefing on the restoration work they're helping resource.
+    </p>
+    <div class="pe-facts" style="border-color: var(--cream-15);">
+      <div style="border-color: var(--cream-15);"><div class="label" style="opacity: .6;">Cohort</div><div class="value">12 partners</div></div>
+      <div style="border-color: var(--cream-15);"><div class="label" style="opacity: .6;">Duration</div><div class="value">3 days</div></div>
+      <div><div class="label" style="opacity: .6;">Next</div><div class="value">July 2026</div></div>
+    </div>
+    <div class="pe-actions">
+      <a href="#" class="btn btn-acid">Apply for cohort →</a>
+      <a href="contact.html" class="btn" style="color: var(--cream); border: 1px solid var(--cream-50);">Get briefed</a>
+    </div>
+  </div>
+  <div class="pe-media">
+    <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1600&q=80" alt="Yalada Tour on Country">
+    <div class="tag-overlay">
+      <span class="tag">Annual · 2023–</span>
+    </div>
+    <div class="number-overlay">02</div>
+  </div>
+</article>
+
+<!-- PROJECT 03 -->
+<article class="project-entry" data-screen-label="03 Projects · Capacity">
+  <div class="pe-media">
+    <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80" alt="Forest understory">
+    <div class="tag-overlay">
+      <span class="tag">In development</span>
+    </div>
+    <div class="number-overlay">03</div>
+  </div>
+  <div class="pe-text">
+    <span class="eyebrow">Replicable Model</span>
+    <h2>Capacity<br>Codified.</h2>
+    <p class="summary">
+      Documenting the Jabalbina model, the governance, the funding flow, the accountability structures, as a replicable framework other Traditional Owner corporations can adopt and adapt. The aim: ten Jabalbina-equivalent partnerships by 2035.
+    </p>
+    <div class="pe-facts">
+      <div><div class="label">Format</div><div class="value">Open doc</div></div>
+      <div><div class="label">Release</div><div class="value">Q3 2026</div></div>
+      <div><div class="label">License</div><div class="value">CC BY-SA</div></div>
+    </div>
+    <div class="pe-actions">
+      <a href="#" class="btn btn-primary">Read the draft →</a>
+    </div>
+  </div>
+</article>
+
+<!-- PROJECT 04 -->
+<article class="project-entry reverse" data-screen-label="03 Projects · Southern">
+  <div class="pe-text">
+    <span class="eyebrow">Next Partnership</span>
+    <h2>Southern<br>Rainforests.</h2>
+    <p class="summary">
+      We're scoping a second Traditional Owner partnership in the Gondwana remnants of northern NSW. The work is deliberately slow: the right relationship, on Country, at the right pace, is worth more than a fast launch.
+    </p>
+    <div class="pe-facts">
+      <div><div class="label">Region</div><div class="value">Gondwana</div></div>
+      <div><div class="label">Status</div><div class="value">Scoping</div></div>
+      <div><div class="label">Decision</div><div class="value">Late 2026</div></div>
+    </div>
+    <div class="pe-actions">
+      <a href="contact.html" class="btn btn-primary">Introduce yourself →</a>
+    </div>
+  </div>
+  <div class="pe-media">
+    <img src="https://images.unsplash.com/photo-1472213984618-c79aaec7fef0?auto=format&fit=crop&w=1600&q=80" alt="Seedling scoping work">
+    <div class="tag-overlay">
+      <span class="tag">Scoping · 2026</span>
+    </div>
+    <div class="number-overlay">04</div>
+  </div>
+</article>
+
+<!-- HOW THE MONEY MOVES -->
+<section class="case-study" data-screen-label="03 Projects · Flow">
+  <div class="case-study-head">
+    <span class="eyebrow">How the money moves</span>
+    <h2>From donation<br>to Country.</h2>
+  </div>
+  <div class="case-study-grid">
+    <div class="cs-step">
+      <div class="num">01</div>
+      <h4>Donation received</h4>
+      <p>Every dollar hits a ring-fenced account. Operational overhead is capped at 8%, independently audited each year.</p>
+    </div>
+    <div class="cs-step">
+      <div class="num">02</div>
+      <h4>Governance cycle</h4>
+      <p>Quarterly, the Traditional Owner partner board reviews the pipeline. They decide what gets funded, in what order, at what scale.</p>
+    </div>
+    <div class="cs-step">
+      <div class="num">03</div>
+      <h4>Work on Country</h4>
+      <p>Funds flow directly to the partner corporation. Rangers do the work. We report back, in their words, on their timeline.</p>
+    </div>
+  </div>
+
+  <div class="cs-cta">
+    <div class="cs-cta-inner">
+      <div class="cs-cta-text">
+        <span class="eyebrow">Bold. Brave. Direct.</span>
+        <h3>Don't just read about it.<br>Fund a hectare.</h3>
+        <p class="lede">Every donation is ring-fenced, audited, and travels in a straight line to the Traditional Owners doing the work. No middle layer. No vague promises.</p>
+      </div>
+      <div class="cs-cta-act">
+        <a href="donate.html" class="btn btn-primary btn-on-dark btn-lg">Donate now →</a>
+        <div class="cs-cta-meta">100% of donations to Country, 8% overhead cap, audited quarterly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('projects');</script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Partners, HalfCut</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  /* ================================================================
+     PARTNERS
+     Structure (following inversa.com/partners):
+     01. Hero (large title + supporting line, cream)
+     02. Intro (single paragraph, editorial)
+     03. Partners grid (large image tiles, name caption below)
+     04. Featured case study (full-bleed dark, video/still, read-more)
+     05. Pull quote (editorial, large serif)
+     06. CTA band (acid, partner with us)
+     ================================================================ */
+
+  /* Hero */
+  .prt-hero {
+    padding: 180px 48px 96px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+    position: relative;
+    overflow: hidden;
+  }
+  .prt-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .prt-hero .eyebrow { opacity: .5; margin-bottom: var(--s-6); }
+  .prt-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .prt-hero .subtitle {
+    margin-top: var(--s-7);
+    max-width: 48ch;
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.35;
+    opacity: .85;
+  }
+
+  /* Intro */
+  .prt-intro {
+    padding: var(--s-10) 48px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .prt-intro-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 2fr; gap: var(--s-8);
+    align-items: start;
+  }
+  .prt-intro h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 4vw, 72px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 10ch;
+  }
+  .prt-intro .body {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.4vw, 22px);
+    line-height: 1.55;
+    max-width: 58ch;
+    opacity: .85;
+  }
+
+  /* Partners grid */
+  .prt-grid-wrap {
+    padding: var(--s-9) 48px var(--s-11);
+    background: var(--cream);
+  }
+  .prt-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-8) var(--s-6);
+  }
+  .prt-card {
+    display: flex; flex-direction: column;
+    cursor: pointer;
+  }
+  .prt-card-media {
+    aspect-ratio: 1.6/1;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--ink-15);
+  }
+  .prt-card-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity .4s;
+  }
+  .prt-card:hover .prt-card-media img { transform: scale(1.04); }
+  .prt-card-media .prt-logo {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 12%;
+    background: rgba(19,20,14,0.55);
+    transition: opacity .4s;
+  }
+  .prt-card:hover .prt-card-media .prt-logo { opacity: 0; }
+  .prt-card-media .prt-logo-text {
+    color: var(--cream);
+    font-family: var(--f-display);
+    font-size: clamp(20px, 2.2vw, 34px);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1;
+    text-align: center;
+  }
+  .prt-card-media .prt-logo-text.serif { font-family: var(--f-serif); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: clamp(22px, 2.4vw, 38px); }
+  .prt-card-media .prt-logo-text.mono { font-family: var(--f-sans); font-weight: 800; letter-spacing: .02em; }
+  .prt-card-meta {
+    padding-top: var(--s-4);
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--ink-15);
+    margin-top: var(--s-4);
+  }
+  .prt-card-name {
+    font-family: var(--f-display);
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    max-width: 22ch;
+  }
+  .prt-card-type {
+    font-family: var(--f-sans);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    opacity: .5;
+    white-space: nowrap;
+  }
+
+  /* Featured case study */
+  .prt-feature {
+    background: var(--ink);
+    color: var(--cream);
+    padding: var(--s-11) 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .prt-feature-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .prt-feature .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .prt-feature h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 104px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 16ch;
+    margin-bottom: var(--s-7);
+  }
+  .prt-feature-media {
+    aspect-ratio: 16/7;
+    width: 100%;
+    background: var(--ink-85);
+    border: 1px solid var(--cream-15);
+    overflow: hidden;
+    position: relative;
+    margin-bottom: var(--s-6);
+  }
+  .prt-feature-media img { width: 100%; height: 100%; object-fit: cover; }
+  .prt-feature-media .play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cream);
+  }
+  .prt-feature-media .play-circle {
+    width: 88px; height: 88px; border-radius: 50%;
+    border: 1.5px solid var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(19,20,14,.25);
+    backdrop-filter: blur(6px);
+    transition: background .3s, transform .4s;
+  }
+  .prt-feature-media:hover .play-circle { background: var(--acid); color: var(--ink); transform: scale(1.06); }
+  .prt-feature-media .play-circle svg { width: 22px; height: 22px; margin-left: 3px; }
+  .prt-feature-foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: var(--s-6);
+    padding-top: var(--s-6);
+    border-top: 1px solid var(--cream-15);
+  }
+  .prt-feature-desc { max-width: 60ch; font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; opacity: .85; }
+
+  /* Pull quote */
+  .prt-quote {
+    padding: var(--s-11) 48px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .prt-quote-inner { max-width: 1100px; margin: 0 auto; }
+  .prt-quote .mark {
+    font-family: var(--f-display);
+    font-size: clamp(80px, 10vw, 180px);
+    line-height: .6;
+    color: var(--acid);
+    display: block;
+    margin-bottom: var(--s-4);
+  }
+  .prt-quote blockquote {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(28px, 3.4vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+  .prt-quote-cite {
+    margin-top: var(--s-6);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--ink-15);
+    display: grid; grid-template-columns: 48px 1fr; gap: 16px;
+    align-items: center;
+    max-width: 540px;
+  }
+  .prt-quote-cite .avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--ink); color: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--f-display); font-size: 16px;
+  }
+  .prt-quote-cite-name { font-family: var(--f-display); font-size: 14px; letter-spacing: .02em; text-transform: uppercase; }
+  .prt-quote-cite-role { font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; margin-top: 3px; }
+
+  /* CTA band */
+  .prt-cta {
+    padding: var(--s-11) 48px;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .prt-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 900px;
+    opacity: .06;
+    pointer-events: none;
+  }
+  .prt-cta-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr; gap: var(--s-8);
+    align-items: end;
+    position: relative; z-index: 1;
+  }
+  .prt-cta .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .prt-cta h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 104px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 14ch;
+  }
+  .prt-cta-act { display: flex; flex-direction: column; gap: var(--s-4); align-items: flex-start; }
+
+  @media (max-width: 960px) {
+    .prt-hero { padding: 120px 24px 64px; }
+    .prt-intro, .prt-grid-wrap, .prt-feature, .prt-quote, .prt-cta { padding-left: 24px; padding-right: 24px; }
+    .prt-intro-inner { grid-template-columns: 1fr; }
+    .prt-grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-6) var(--s-4); }
+    .prt-feature-foot { flex-direction: column; align-items: flex-start; }
+    .prt-cta-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .prt-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="prt-hero" data-screen-label="07 Partners · Hero">
+  <div class="prt-hero-inner">
+    <span class="eyebrow">Partners</span>
+    <h1>Partnering with conservation leaders to deliver lasting impact.</h1>
+    <p class="subtitle">HalfCut equips Traditional Owners, rangers, and cultural institutions with the capital, infrastructure, and public profile to restore Country on their terms.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="prt-intro" data-screen-label="07 Partners · Intro">
+  <div class="prt-intro-inner">
+    <h2>Our partners</h2>
+    <div class="body">
+      We don't run projects. We fund the people who do. These are the Traditional Owner corporations, scientific institutions, cultural bodies, and brand partners making our work possible, and they are the reason every dollar moves with purpose. The list is small on purpose. Each relationship is deep, audited, and built for a decade, not a campaign.
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS GRID -->
+<section class="prt-grid-wrap" data-screen-label="07 Partners · Grid">
+  <div class="prt-grid">
+
+    <!-- 01 -->
+    <a class="prt-card" href="projects.html#jabalbina" aria-label="Jabalbina Yalanji Aboriginal Corporation">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=80" alt="Daintree rainforest canopy">
+        <div class="prt-logo"><span class="prt-logo-text">Jabalbina</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Jabalbina Yalanji Aboriginal Corporation</div>
+        <div class="prt-card-type">Traditional Owner</div>
+      </div>
+    </a>
+
+    <!-- 02 -->
+    <a class="prt-card" href="about.html" aria-label="Kuku Yalanji Bama">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80" alt="Dense tropical forest">
+        <div class="prt-logo"><span class="prt-logo-text serif">Kuku Yalanji</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Kuku Yalanji Bama</div>
+        <div class="prt-card-type">Traditional Owner</div>
+      </div>
+    </a>
+
+    <!-- 03 -->
+    <a class="prt-card" href="#" aria-label="Bush Heritage Australia">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=80" alt="Forested Australian bushland">
+        <div class="prt-logo"><span class="prt-logo-text">Bush Heritage</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Bush Heritage Australia</div>
+        <div class="prt-card-type">Conservation</div>
+      </div>
+    </a>
+
+    <!-- 04 -->
+    <a class="prt-card" href="#" aria-label="The Wilderness Society">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1600&q=80" alt="Ancient forest canopy">
+        <div class="prt-logo"><span class="prt-logo-text mono">Wilderness Society</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">The Wilderness Society</div>
+        <div class="prt-card-type">Advocacy</div>
+      </div>
+    </a>
+
+    <!-- 05 -->
+    <a class="prt-card" href="#" aria-label="Rennie Foundation">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="Coastal landscape">
+        <div class="prt-logo"><span class="prt-logo-text serif">Rennie</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Rennie Foundation</div>
+        <div class="prt-card-type">Foundation</div>
+      </div>
+    </a>
+
+    <!-- 06 -->
+    <a class="prt-card" href="#" aria-label="Patagonia Australia">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80" alt="Mountain wilderness">
+        <div class="prt-logo"><span class="prt-logo-text">Patagonia</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Patagonia Australia</div>
+        <div class="prt-card-type">Brand Partner</div>
+      </div>
+    </a>
+
+    <!-- 07 -->
+    <a class="prt-card" href="#" aria-label="Ben & Jerry's Australia">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1600&q=80" alt="Pasture and forest edge">
+        <div class="prt-logo"><span class="prt-logo-text">Ben &amp; Jerry's</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Ben &amp; Jerry's Australia</div>
+        <div class="prt-card-type">Brand Partner</div>
+      </div>
+    </a>
+
+    <!-- 08 -->
+    <a class="prt-card" href="#" aria-label="Seven Mile Brewing Co.">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80" alt="Mountain range">
+        <div class="prt-logo"><span class="prt-logo-text mono">Seven Mile</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Seven Mile Brewing Co.</div>
+        <div class="prt-card-type">Brand Partner</div>
+      </div>
+    </a>
+
+    <!-- 09 -->
+    <a class="prt-card" href="#" aria-label="Aesop">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1600&q=80" alt="Rainforest understory">
+        <div class="prt-logo"><span class="prt-logo-text serif">Aesop.</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Aesop</div>
+        <div class="prt-card-type">Brand Partner</div>
+      </div>
+    </a>
+
+    <!-- 10 -->
+    <a class="prt-card" href="#" aria-label="Koskela">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1600&q=80" alt="Wild Australian coast">
+        <div class="prt-logo"><span class="prt-logo-text">Koskela</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Koskela</div>
+        <div class="prt-card-type">Brand Partner</div>
+      </div>
+    </a>
+
+    <!-- 11 -->
+    <a class="prt-card" href="#" aria-label="NAB Foundation">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1600&q=80" alt="Misty highland">
+        <div class="prt-logo"><span class="prt-logo-text mono">NAB Foundation</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">NAB Foundation</div>
+        <div class="prt-card-type">Foundation</div>
+      </div>
+    </a>
+
+    <!-- 12 -->
+    <a class="prt-card" href="#" aria-label="Bangalow Growers">
+      <div class="prt-card-media">
+        <img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1600&q=80" alt="Farmland rolling hills">
+        <div class="prt-logo"><span class="prt-logo-text serif">Bangalow Growers</span></div>
+      </div>
+      <div class="prt-card-meta">
+        <div class="prt-card-name">Bangalow Growers</div>
+        <div class="prt-card-type">Local Partner</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- FEATURED CASE STUDY -->
+<section class="prt-feature" data-screen-label="07 Partners · Feature">
+  <div class="prt-feature-inner">
+    <span class="eyebrow">· Case Study</span>
+    <h2>Jabalbina and the return of 160,388 hectares.</h2>
+    <div class="prt-feature-media">
+      <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?auto=format&fit=crop&w=2400&q=85" alt="Rangers on Country">
+      <div class="play" aria-hidden="true">
+        <div class="play-circle">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3v18l16-9L5 3z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="prt-feature-foot">
+      <p class="prt-feature-desc">How a two-decade fight for handback became a working partnership that funds rangers, protects cassowary habitat, and rebuilds the cultural economy of Kuku Yalanji Country.</p>
+      <a href="projects.html#jabalbina" class="btn btn-primary btn-on-dark">Read case study →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="prt-quote" data-screen-label="07 Partners · Quote">
+  <div class="prt-quote-inner">
+    <span class="mark">"</span>
+    <blockquote>HalfCut shows up, stays out of the way, and funds what we decide. That's the partnership we asked for.</blockquote>
+    <div class="prt-quote-cite">
+      <div class="avatar">BM</div>
+      <div>
+        <div class="prt-quote-cite-name">Brad Mitchell</div>
+        <div class="prt-quote-cite-role">Director, Jabalbina Yalanji Aboriginal Corporation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="prt-cta" data-screen-label="07 Partners · CTA">
+  <div class="prt-cta-inner">
+    <div>
+      <span class="eyebrow">Join us</span>
+      <h2>Ready to partner on Country?</h2>
+    </div>
+    <div class="prt-cta-act">
+      <a href="contact.html" class="btn btn-primary btn-on-dark btn-lg-cta">Partner with us →</a>
+      <div class="prt-cta-meta" style="font-family:var(--f-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.5;max-width:32ch;">We work with Traditional Owner corporations, foundations, and values-aligned brands. Minimum commitment $50k / yr.</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .btn-lg-cta { font-size: 17px !important; padding: 22px 40px !important; }
+</style>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('partners');</script>
+</body>
+</html>

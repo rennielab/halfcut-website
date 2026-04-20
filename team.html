@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team &amp; Board, HalfCut (Wireframe)</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .wf-banner {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--coral); color: var(--ink);
+    padding: 8px 48px;
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .2em;
+    text-transform: uppercase;
+    z-index: 200;
+    display: flex; justify-content: space-between;
+  }
+  .hero { padding: 140px 48px 64px; max-width: 1440px; margin: 0 auto; }
+  .hero .eyebrow { font-family: var(--f-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; opacity: .5; margin-bottom: 16px; }
+  .hero h1 { font-family: var(--f-display); font-size: clamp(64px, 9vw, 160px); line-height: .9; letter-spacing: -0.025em; text-transform: uppercase; }
+  .hero .lede { font-family: var(--f-serif); font-weight: 300; font-size: 22px; line-height: 1.5; max-width: 56ch; margin-top: var(--s-6); opacity: .8; }
+
+  .section-head {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-8) 48px var(--s-5);
+    display: flex; justify-content: space-between; align-items: end;
+    border-top: 1px solid var(--ink-15);
+  }
+  .section-head h2 { font-family: var(--f-display); font-size: clamp(40px, 5vw, 72px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; }
+  .section-head .count { font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; opacity: .5; }
+
+  .people {
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 48px var(--s-10);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5) var(--s-4);
+  }
+  .person { display: flex; flex-direction: column; }
+  .portrait {
+    aspect-ratio: 4/5;
+    background: var(--stone);
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .portrait::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(19,20,14,.04) 14px, rgba(19,20,14,.04) 28px);
+  }
+  .portrait.has-img::before { display: none; }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .portrait .ph {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--f-display); font-size: 60px; opacity: .3;
+  }
+  .person h4 { font-family: var(--f-display); font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase; line-height: .95; margin-bottom: 4px; }
+  .person .role { font-family: var(--f-serif);  font-weight: 300; font-size: 16px; opacity: .7; margin-bottom: 10px; }
+  .person .bio { font-family: var(--f-serif); font-weight: 300; font-size: 15px; line-height: 1.45; opacity: .75; }
+
+  .board-grid {
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 48px var(--s-10);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6) var(--s-5);
+    border-top: 0;
+  }
+  .board-card {
+    background: var(--stone);
+    padding: var(--s-6);
+    display: flex; flex-direction: column;
+    min-height: 280px;
+  }
+  .board-card h4 { font-family: var(--f-display); font-size: 26px; letter-spacing: -0.005em; text-transform: uppercase; margin-bottom: 6px; }
+  .board-card .role { font-family: var(--f-serif);  font-weight: 300; font-size: 17px; opacity: .7; margin-bottom: var(--s-5); }
+  .board-card .bio { font-family: var(--f-serif); font-weight: 300; font-size: 16px; line-height: 1.5; opacity: .8; flex-grow: 1; }
+  .board-card .tag { margin-top: 16px; align-self: flex-start; }
+
+  .on-country {
+    background: var(--ink); color: var(--cream);
+    padding: var(--s-10) 48px;
+  }
+  .on-country-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
+  .on-country h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; }
+  .on-country .eyebrow { color: var(--acid); display: block; margin-bottom: var(--s-5); }
+  .on-country p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-5); opacity: .85; max-width: 52ch; }
+
+  @media (max-width: 960px) {
+    .people { grid-template-columns: 1fr 1fr; padding: 0 24px var(--s-7); }
+    .board-grid { grid-template-columns: 1fr; padding: 0 24px var(--s-7); }
+    .section-head { padding: var(--s-7) 24px var(--s-5); }
+    .hero { padding: 120px 24px 32px; }
+    .on-country-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-banner">
+  <span>Wireframe · Team &amp; Board</span>
+  <span>Placeholder portraits · real copy</span>
+</div>
+
+<section class="hero" data-screen-label="07 Team · Hero">
+  <div class="eyebrow">Team &amp; Board</div>
+  <h1>A small<br>team. A wide<br>circle.</h1>
+  <p class="lede">
+    Nine people in the HalfCut operation, plus a board that includes Traditional Owner representation with veto power over program decisions. We're deliberately small so money moves fast and clearly.
+  </p>
+</section>
+
+<div class="section-head" data-screen-label="07 Team · Team">
+  <h2>Operations team.</h2>
+  <span class="count">09 people · Sydney + remote</span>
+</div>
+<div class="people">
+  <div class="person"><div class="portrait"><div class="ph">JL</div></div><h4>Jimmy Langford</h4><div class="role">Founder &amp; Executive Director</div><div class="bio">Started the campaign in 2014 by shaving half his head. Still the person in the room making sure we don't write ourselves into the middle of the story.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">KR</div></div><h4>Kate Reynolds</h4><div class="role">Head of Partnerships</div><div class="bio">Twelve years in mission-led fundraising. Runs the values framework that decides who we partner with and who we don't.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">DT</div></div><h4>Dylan Thompson</h4><div class="role">Program Director</div><div class="bio">Ecologist by training. The person on the phone with Jabalbina rangers every week. Writes the impact reports in plain language.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">MA</div></div><h4>Mia Antonelli</h4><div class="role">Creative Director</div><div class="bio">Oversees brand, campaign, and the Journal. Author of the current manifesto.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">SP</div></div><h4>Sam Park</h4><div class="role">Head of Finance</div><div class="bio">Makes sure 92¢ of every dollar gets where it needs to go. Liaises with BDO on the annual audit.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">JO</div></div><h4>Jess O'Connor</h4><div class="role">Campaign Lead</div><div class="bio">Runs the August shave. Knows more about clipper attachments than anyone reasonable should.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">RN</div></div><h4>Reuben Nguyen</h4><div class="role">Digital &amp; Journal</div><div class="bio">Editor of the Journal, producer of field dispatches, and one-person web team.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">AD</div></div><h4>Amara Delgado</h4><div class="role">Operations Coordinator</div><div class="bio">Runs logistics for the Yalada Tour and keeps the studio running on Gadigal Country.</div></div>
+  <div class="person"><div class="portrait"><div class="ph">TW</div></div><h4>Tom Walsh</h4><div class="role">Philanthropy Advisor</div><div class="bio">Part-time. Liaises with major donors and family foundations across AU and NZ.</div></div>
+</div>
+
+<div class="section-head" data-screen-label="07 Team · Board">
+  <h2>Board of directors.</h2>
+  <span class="count">07 directors · Traditional Owner seat with program veto</span>
+</div>
+<div class="board-grid">
+  <div class="board-card">
+    <h4>Aunty Marilyn Wallace</h4>
+    <div class="role">Kuku Yalanji Elder · Board Director (Jabalbina seat)</div>
+    <div class="bio">Traditional Owner representative with veto on all program and partnership decisions. Holds the cultural authority at the heart of the governance model.</div>
+    <span class="tag" style="background: var(--acid);">Program veto</span>
+  </div>
+  <div class="board-card">
+    <h4>Prof. Nikisha Patel</h4>
+    <div class="role">Chair</div>
+    <div class="bio">Former head of environmental policy at ANU. Chairs the board and the annual audit review. Ten years on Australian NFP boards.</div>
+  </div>
+  <div class="board-card">
+    <h4>Harlan Greer</h4>
+    <div class="role">Treasurer</div>
+    <div class="bio">CA, formerly with PwC sustainability assurance. Oversees the financial controls and independent audit process.</div>
+  </div>
+  <div class="board-card">
+    <h4>Yuki Tanaka</h4>
+    <div class="role">Director · Philanthropy</div>
+    <div class="bio">Principal at a family foundation with two decades of major-gift experience across the environmental sector.</div>
+  </div>
+  <div class="board-card">
+    <h4>Davinder Singh</h4>
+    <div class="role">Director · Governance</div>
+    <div class="bio">Indigenous corporations governance specialist. Advises on the replicable capacity model HalfCut is developing with Jabalbina.</div>
+  </div>
+  <div class="board-card">
+    <h4>Claire Donnelly</h4>
+    <div class="role">Director · Legal</div>
+    <div class="bio">Environmental and not-for-profit lawyer. Handles the compliance, IP, and funding agreement workstreams.</div>
+  </div>
+  <div class="board-card">
+    <h4>Jimmy Langford</h4>
+    <div class="role">Executive Director (ex-officio)</div>
+    <div class="bio">Sits on the board without a vote on program decisions. Keeps the executive team accountable to the values framework above.</div>
+  </div>
+</div>
+
+<section class="on-country" data-screen-label="07 Team · On-Country">
+  <div class="on-country-inner">
+    <div>
+      <span class="eyebrow">On-Country partners</span>
+      <h2>Who actually<br>does the work.</h2>
+      <p>
+        The rangers, Elders, and corporation staff of Jabalbina Aboriginal Corporation are not HalfCut employees. They are the reason HalfCut exists. We publish their work at their invitation, in their words, and with their approval.
+      </p>
+      <p style="margin-top: 16px;">
+        Meet the Eastern Kuku Yalanji ranger program on the Projects page, or visit Jabalbina's own site for the fullest picture of their work.
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: var(--s-6); flex-wrap: wrap;">
+        <a class="btn btn-acid" href="projects.html">Projects →</a>
+        <a class="btn" style="color: var(--cream); border: 1px solid var(--cream-50);" href="#">Visit Jabalbina ↗</a>
+      </div>
+    </div>
+    <div style="aspect-ratio: 4/3; background: var(--stone); position: relative; overflow: hidden; border-radius: 2px;">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" style="width:100%; height:100%; object-fit: cover; opacity: .8;" alt="">
+      <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em; color: var(--cream); opacity: .8;">Placeholder imagery, awaiting Jabalbina-approved photography.</div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('team');</script>
+</body>
+</html>

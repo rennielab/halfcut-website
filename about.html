@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About, HalfCut</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .about-hero {
+    padding: 180px 48px 120px;
+    background: var(--cream);
+    position: relative;
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .about-hero-inner { max-width: 1440px; margin: 0 auto; }
+  .about-hero .eyebrow { opacity: .5; margin-bottom: var(--s-6); }
+  .about-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .about-hero h1 em {
+    font-family: var(--f-serif);
+    
+    font-weight: 300;
+    text-transform: none;
+    color: var(--coral);
+    letter-spacing: -0.01em;
+  }
+  .about-hero-bottom {
+    margin-top: var(--s-9);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8);
+    padding-top: var(--s-6);
+    border-top: 1px solid var(--ink-15);
+  }
+  .about-hero-bottom .lede { max-width: 38ch; }
+  .about-hero-bottom .sidenote {
+    font-family: var(--f-sans); font-size: 13px; letter-spacing: .04em;
+    line-height: 1.6; opacity: .6; max-width: 36ch;
+  }
+
+  /* Long-form manifesto */
+  .manifesto-section {
+    padding: var(--s-11) 48px;
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .manifesto-section .wrap-sm { max-width: 920px; padding: 0; }
+  .manifesto-section .eyebrow { color: var(--acid); margin-bottom: var(--s-6); display: block; }
+  .manifesto-section h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: .92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: var(--s-8);
+  }
+  .manifesto-section p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.45;
+    margin-bottom: var(--s-5);
+    max-width: 58ch;
+  }
+  .manifesto-section p.indent { padding-left: var(--s-8); border-left: 2px solid var(--acid);  }
+  .manifesto-section .callout {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 5.5vw, 88px);
+    line-height: .95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin: var(--s-8) 0;
+    max-width: 16ch;
+  }
+
+  /* Values grid */
+  .values {
+    padding: var(--s-11) 48px;
+    background: var(--cream);
+  }
+  .values-head {
+    max-width: 1440px; margin: 0 auto var(--s-9);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: end;
+  }
+  .values-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 7vw, 120px);
+    line-height: .9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .values-head p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 22px; line-height: 1.5;
+    max-width: 46ch;
+  }
+  .values-grid {
+    max-width: 1440px; margin: 0 auto;
+    border-top: 1px solid var(--ink-15);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    counter-reset: val;
+  }
+  .value {
+    counter-increment: val;
+    padding: var(--s-7) var(--s-5) var(--s-7) 0;
+    border-right: 1px solid var(--ink-15);
+    border-bottom: 1px solid var(--ink-15);
+    position: relative;
+  }
+  .value:last-child { border-right: 0; }
+  .value::before {
+    content: counter(val, decimal-leading-zero);
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 11px; letter-spacing: .18em;
+    padding-left: var(--s-5);
+    display: block; margin-bottom: var(--s-6);
+    opacity: .4;
+  }
+  .value h3 {
+    font-family: var(--f-display);
+    font-size: 28px;
+    line-height: .95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    padding-left: var(--s-5);
+    margin-bottom: 16px;
+  }
+  .value p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 16px; line-height: 1.5;
+    padding-left: var(--s-5);
+    max-width: 30ch;
+    opacity: .75;
+  }
+
+  /* Partnership framework */
+  .framework {
+    background: var(--stone);
+    padding: var(--s-11) 48px;
+  }
+  .framework-head { max-width: 1440px; margin: 0 auto var(--s-8); }
+  .framework-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 7vw, 120px);
+    line-height: .9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 20ch;
+  }
+  .framework-head p { font-family: var(--f-serif); font-weight: 300; font-size: 22px; line-height: 1.5; max-width: 56ch; margin-top: var(--s-5); }
+
+  .framework-cols {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    background: var(--ink-15);
+  }
+  .fw-col { background: var(--stone); padding: var(--s-7); }
+  .fw-col.yes { background: var(--acid); }
+  .fw-col h3 {
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+    margin-bottom: var(--s-5);
+  }
+  .fw-col h4 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 4.5vw, 72px);
+    line-height: .92;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin-bottom: var(--s-6);
+  }
+  .fw-list {
+    list-style: none; padding: 0;
+    border-top: 1px solid var(--ink-15);
+  }
+  .fw-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--ink-15);
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 19px; line-height: 1.4;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .fw-list .mark {
+    font-family: var(--f-sans); font-weight: 700; font-size: 14px;
+    flex-shrink: 0; padding-top: 4px;
+  }
+
+  /* Partners */
+  .partners {
+    padding: var(--s-10) 48px;
+    border-top: 1px solid var(--ink-15);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .partners-head { max-width: 1440px; margin: 0 auto var(--s-7); display: flex; justify-content: space-between; align-items: end; }
+  .partners-head h3 { font-family: var(--f-display); font-size: clamp(36px, 4vw, 64px); text-transform: uppercase; letter-spacing: -0.01em; line-height: .95; }
+  .partners-head p { font-family: var(--f-sans); font-size: 13px; letter-spacing: .08em; opacity: .55; max-width: 32ch; }
+  .partners-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    border-top: 1px solid var(--ink-15);
+  }
+  .partner {
+    aspect-ratio: 2 / 1;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--f-display); font-size: 22px; letter-spacing: .02em;
+    border-right: 1px solid var(--ink-15);
+    border-bottom: 1px solid var(--ink-15);
+    text-transform: uppercase;
+    opacity: .6;
+    transition: opacity .2s, background .2s;
+  }
+  .partner:hover { opacity: 1; background: var(--stone); }
+  .partner:nth-child(6n) { border-right: 0; }
+
+  /* Acknowledgement */
+  .acknowledgement {
+    padding: var(--s-11) 48px;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+  }
+  .acknowledgement .wrap-sm { max-width: 920px; padding: 0 48px; margin: 0 auto; }
+  .acknowledgement .eyebrow { color: var(--acid); margin-bottom: var(--s-6); display: block; }
+  .acknowledgement p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(24px, 2.4vw, 38px);
+    line-height: 1.3;
+    text-wrap: pretty;
+    margin-bottom: var(--s-5);
+  }
+  .acknowledgement p.sig {
+    font-family: var(--f-sans);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .5;
+    margin-top: var(--s-7);
+  }
+
+  @media (max-width: 960px) {
+    .about-hero { padding: 120px 24px 64px; }
+    .about-hero-bottom, .values-head, .framework-cols { grid-template-columns: 1fr; gap: var(--s-6); }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .value:nth-child(2n) { border-right: 0; }
+    .partners-grid { grid-template-columns: repeat(3, 1fr); }
+    .partner:nth-child(6n) { border-right: 1px solid var(--ink-15); }
+    .partner:nth-child(3n) { border-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="about-hero" data-screen-label="02 About · Hero">
+  <div class="about-hero-inner">
+    <div class="eyebrow">About HalfCut</div>
+    <h1>We're not the saviour. We're the bridge.</h1>
+    <div class="about-hero-bottom">
+      <p class="lede">
+        For twelve years we've raised funds for rainforest restoration. For the last three, we've been quietly rebuilding ourselves around a harder, truer idea: that the people best placed to heal this Country are the ones who have known it for 60,000 years.
+      </p>
+      <p class="sidenote">
+        This page is the public statement of a working principle. It sits beneath every decision we make, every campaign, every partnership, every dollar that moves through our accounts. We publish it here so you can hold us to it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto-section" data-screen-label="02 About · Manifesto">
+  <div class="wrap-sm">
+    <span class="eyebrow">The Manifesto</span>
+    <h2>Half the world's<br>forests are gone.</h2>
+    <p>Half of Australia's forests are gone.</p>
+    <p>This is not a statistic. It's a warning.</p>
+    <div class="callout">We have twelve years<br>to get this right.</div>
+    <p>
+      The science is settled and the window is narrow. What's not settled, what we believe is the real unfinished
+      work of the Australian environmental sector, is who gets to lead the response.
+    </p>
+    <p class="indent">
+      For two centuries, the answer has been: experts, agencies, organisations like ours. That answer has produced the world we currently live in. It is time to try a different one.
+    </p>
+    <p>
+      The people who have cared for this continent for sixty thousand years still hold the knowledge. They still hold the authority. What they have often not held is the resources, the platform, or the power to act at the scale their knowledge deserves. HalfCut exists to change that, not by adding our voice to theirs, but by getting out of the way and making sure the resources land where they always should have.
+    </p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" data-screen-label="02 About · Values">
+  <div class="values-head">
+    <h2 class="reveal">What we<br>stand for.</h2>
+    <p class="reveal">
+      Four commitments. They sit above every other decision we make, and they do not flex for convenience, partner pressure, or funding opportunity. If a program, a campaign, or a partnership conflicts with one of these, the commitment wins.
+    </p>
+  </div>
+  <div class="values-grid">
+    <div class="value">
+      <h3>Country comes<br>first.</h3>
+      <p>The forests, the water, the species, the systems. They are not a backdrop. They are the reason we exist, and they are the measure of everything we do.</p>
+    </div>
+    <div class="value">
+      <h3>Traditional<br>Owners lead.</h3>
+      <p>On the ground, in the governance, in the language. Our job is to resource and amplify, not to represent, translate, or speak over.</p>
+    </div>
+    <div class="value">
+      <h3>Money moves<br>honestly.</h3>
+      <p>Ninety-two cents in every dollar flows to on-Country work. Every figure published here is independently audited. No soft accounting.</p>
+    </div>
+    <div class="value">
+      <h3>We say the<br>hard thing.</h3>
+      <p>The mission is too urgent for careful language. If a partner, a practice, or an idea is not working, we will say so, in public, plainly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERSHIP FRAMEWORK -->
+<section class="framework" data-screen-label="02 About · Framework">
+  <div class="framework-head">
+    <div class="eyebrow">Partnership Framework</div>
+    <h2 style="margin-top: 24px;">Who we'll<br>work with. Who<br>we won't.</h2>
+    <p>
+      Every corporate partner we carry on this site has been assessed against the same values framework Traditional Owner partners assess us against. We publish both lists because opacity is its own kind of saviour behaviour.
+    </p>
+  </div>
+  <div class="framework-cols">
+    <div class="fw-col yes">
+      <h3>We say yes to</h3>
+      <h4>Values-aligned, long-horizon partners.</h4>
+      <ul class="fw-list">
+        <li><span class="mark"></span> Businesses whose core model is compatible with the world we are trying to restore.</li>
+        <li><span class="mark"></span> Organisations prepared to fund operational capacity, not just campaign visibility.</li>
+        <li><span class="mark"></span> Philanthropists willing to defer to Traditional Owner governance on program decisions.</li>
+        <li><span class="mark"></span> Partners who treat this as a twelve-year relationship, not a twelve-month activation.</li>
+      </ul>
+    </div>
+    <div class="fw-col">
+      <h3>We say no to</h3>
+      <h4>Extraction, greenwash, or saviour framing.</h4>
+      <ul class="fw-list">
+        <li><span class="mark">✕</span> Fossil fuels, native forest logging, industrial agribusiness at scale.</li>
+        <li><span class="mark">✕</span> Funding that is conditional on creative control, brand placement, or narrative direction.</li>
+        <li><span class="mark">✕</span> Partnerships that ask Traditional Owner partners to perform culture or language for marketing.</li>
+        <li><span class="mark">✕</span> One-off offset arrangements that treat restoration as a carbon accounting line item.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" data-screen-label="02 About · Partners">
+  <div class="partners-head">
+    <h3>Current<br>partners.</h3>
+    <p>Each assessed against our partnership framework. The list is short by design.</p>
+  </div>
+  <div class="partners-grid">
+    <div class="partner">Jabalbina</div>
+    <div class="partner">Ben &amp; Jerry's</div>
+    <div class="partner">Dr.V</div>
+    <div class="partner">Seven Mile</div>
+    <div class="partner">Laidre</div>
+    <div class="partner">The Proof</div>
+    <div class="partner">Memobottle</div>
+    <div class="partner">Farm My School</div>
+    <div class="partner" style="color: var(--coral);">+ Your Org</div>
+    <div class="partner" style="opacity:.25;"></div>
+    <div class="partner" style="opacity:.25;"></div>
+    <div class="partner" style="opacity:.25;"></div>
+  </div>
+</section>
+
+<!-- ACKNOWLEDGEMENT -->
+<section class="acknowledgement" data-screen-label="02 About · Acknowledgement">
+  <div class="wrap-sm">
+    <span class="eyebrow">Acknowledgement of Country</span>
+    <p>
+      We acknowledge the Eastern Kuku Yalanji people as the Traditional Owners of the Country on which our core restoration work takes place, and the Gadigal and Bundjalung people of the Country on which we meet, plan, and publish.
+    </p>
+    <p>
+      We pay respects to Elders past and present, and we recognise that sovereignty was never ceded. This always was, and always will be, Aboriginal land.
+    </p>
+    <p class="sig">The HalfCut team &amp; Board</p>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('about');</script>
+</body>
+</html>

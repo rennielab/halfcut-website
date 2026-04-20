@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Journal, HalfCut (Wireframe)</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .wf-banner {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--coral); color: var(--ink);
+    padding: 8px 48px;
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .2em;
+    text-transform: uppercase;
+    z-index: 200;
+    display: flex; justify-content: space-between;
+  }
+  .masthead {
+    padding: 140px 48px 32px;
+    max-width: 1440px; margin: 0 auto;
+    border-bottom: 2px solid var(--ink);
+  }
+  .masthead-top { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
+  .masthead h1 {
+    font-family: var(--f-display);
+    font-size: clamp(100px, 18vw, 340px);
+    line-height: .88;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: 24px 0 16px;
+  }
+  .masthead-sub { font-family: var(--f-serif);  font-weight: 300; font-size: 24px; opacity: .75; }
+
+  /* Categories */
+  .cats {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-5) 48px;
+    border-bottom: 1px solid var(--ink-15);
+    display: flex; gap: 28px;
+    font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .cats a { opacity: .55; transition: opacity .2s; white-space: nowrap; }
+  .cats a[aria-current="true"] { opacity: 1; border-bottom: 2px solid var(--coral); padding-bottom: 4px; }
+  .cats a:hover { opacity: 1; }
+
+  /* Featured hero article */
+  .feature {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-7) 48px;
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .feature-img { aspect-ratio: 4/3; background: var(--stone); overflow: hidden; }
+  .feature-img img { width: 100%; height: 100%; object-fit: cover; }
+  .feature-meta .cat { font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 20px; display: block; }
+  .feature-meta h2 {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(40px, 4.5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--s-5);
+    text-wrap: balance;
+  }
+  .feature-meta .excerpt {
+    font-family: var(--f-serif);  font-weight: 300;
+    font-size: 22px; line-height: 1.45;
+    opacity: .7; margin-bottom: var(--s-5);
+  }
+  .feature-meta .byline { font-family: var(--f-sans); font-size: 12px; letter-spacing: .08em; opacity: .55; }
+
+  /* Grid */
+  .grid {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-8) 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-7) var(--s-5);
+  }
+  .art {
+    display: flex; flex-direction: column;
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--ink-15);
+  }
+  .art-img { aspect-ratio: 4/3; background: var(--stone); margin-bottom: 20px; overflow: hidden; }
+  .art-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .art:hover .art-img img { transform: scale(1.03); }
+  .art .cat { font-family: var(--f-sans); font-weight: 700; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 12px; display: flex; justify-content: space-between; }
+  .art .cat .date { color: var(--ink); opacity: .55; }
+  .art h3 {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(22px, 1.7vw, 28px);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    margin-bottom: 10px;
+    text-wrap: balance;
+  }
+  .art p { font-family: var(--f-serif); font-weight: 300; font-size: 16px; line-height: 1.5; opacity: .7; margin-bottom: 12px; }
+  .art .byline { font-family: var(--f-sans); font-size: 11px; letter-spacing: .08em; opacity: .5; margin-top: auto; }
+
+  /* Photo essay feature */
+  .photo-essay {
+    position: relative;
+    margin: var(--s-8) 0;
+    background: var(--ink); color: var(--cream);
+    overflow: hidden;
+  }
+  .photo-essay-inner { max-width: 1440px; margin: 0 auto; padding: var(--s-9) 48px; }
+  .photo-essay .cat { color: var(--acid); font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; display: block; margin-bottom: var(--s-5); }
+  .photo-essay h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; max-width: 18ch; margin-bottom: var(--s-7); }
+  .photo-strip {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2px;
+    height: 360px;
+  }
+  .photo-strip > div {
+    background-size: cover; background-position: center;
+  }
+  .photo-essay .byline { font-family: var(--f-sans); font-size: 12px; letter-spacing: .1em; opacity: .6; margin-top: var(--s-5); }
+
+  /* Newsletter strip */
+  .newsletter {
+    background: var(--acid);
+    padding: var(--s-10) 48px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .newsletter-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7); align-items: end; }
+  .newsletter h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; max-width: 18ch; }
+  .newsletter p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-4); max-width: 46ch; }
+  .nl-form { display: flex; gap: 8px; }
+  .nl-form input { flex: 1; padding: 18px 20px; background: var(--cream); border: 1px solid var(--ink); border-radius: 999px; font-family: var(--f-serif); font-size: 18px; outline: none; }
+
+  @media (max-width: 960px) {
+    .masthead { padding: 120px 24px 24px; }
+    .feature { grid-template-columns: 1fr; padding: var(--s-5) 24px; }
+    .grid { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
+    .photo-strip { grid-template-columns: 1fr 1fr; height: 220px; }
+    .newsletter-inner { grid-template-columns: 1fr; }
+    .cats { padding: var(--s-4) 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-banner">
+  <span>Wireframe · Journal (magazine style)</span>
+  <span>Editorial index · field dispatches + essays</span>
+</div>
+
+<section class="masthead" data-screen-label="08 Journal · Masthead">
+  <div class="masthead-top">
+    <span>Issue 07 · Apr 2026</span>
+    <span>Published monthly from Gadigal &amp; Kuku Yalanji Country</span>
+  </div>
+  <h1>JOURNAL</h1>
+  <p class="masthead-sub">Field dispatches, long-form essays, and interviews from the bridge between Country and the people helping resource it.</p>
+</section>
+
+<nav class="cats" data-screen-label="08 Journal · Categories">
+  <a href="#" aria-current="true">All</a>
+  <a href="#">Field dispatches</a>
+  <a href="#">Essays</a>
+  <a href="#">Interviews</a>
+  <a href="#">Photo essays</a>
+  <a href="#">Manifesto</a>
+  <a href="#">On the money</a>
+  <a href="#">Campaign</a>
+</nav>
+
+<section class="feature" data-screen-label="08 Journal · Feature">
+  <div class="feature-img">
+    <img src="https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=1600&q=80" alt="">
+  </div>
+  <div class="feature-meta">
+    <span class="cat">Manifesto · 14 min read</span>
+    <h2>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h2>
+    <p class="excerpt">For twelve years HalfCut talked about saving the rainforest. In the last eighteen months we've quietly stopped, and the work is getting better for it. A long-form account of what changed, why, and what it took to make the change stick.</p>
+    <div class="byline">By Mia Antonelli · Creative Director · 04 Apr 2026</div>
+  </div>
+</section>
+
+<section class="grid" data-screen-label="08 Journal · Grid">
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>Field dispatch</span><span class="date">27 Mar</span></div>
+    <h3>Three seasons on Jabalbina Country: what the ranger program is doing, in plain language.</h3>
+    <p>Dylan Thompson spent the wet season with the Eastern Kuku Yalanji rangers. This is what the work actually looks like when nobody's watching.</p>
+    <div class="byline">Dylan Thompson · 11 min</div>
+  </a>
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1440342359743-84fcb8c21f21?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>Interview</span><span class="date">18 Mar</span></div>
+    <h3>Aunty Marilyn Wallace on the forest her grandfather knew, and the one her grandchildren will.</h3>
+    <p>An hour on Country with the Kuku Yalanji Elder who sits on HalfCut's board with veto power over every program decision.</p>
+    <div class="byline">Mia Antonelli · 9 min</div>
+  </a>
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1472213984618-c79aaec7fef0?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>On the money</span><span class="date">11 Mar</span></div>
+    <h3>Why we publish our audit notes. And why more environmental NFPs should.</h3>
+    <p>A short piece from our Treasurer on the case for radical financial transparency in a sector that still runs on trust-us.</p>
+    <div class="byline">Harlan Greer · 6 min</div>
+  </a>
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>Essay</span><span class="date">02 Mar</span></div>
+    <h3>Twelve years of shaving: what the August campaign actually accomplishes (and what it doesn't).</h3>
+    <p>An honest accounting of participatory fundraising as both engine and distraction.</p>
+    <div class="byline">Jess O'Connor · 12 min</div>
+  </a>
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>Field dispatch</span><span class="date">22 Feb</span></div>
+    <h3>A new quadrat: what 270 hectares of restoration looks like at Year 2.</h3>
+    <p>Satellite imagery, on-ground measurements, and the ecological rhythm of regeneration on Kuku Yalanji Country.</p>
+    <div class="byline">Dylan Thompson · 8 min</div>
+  </a>
+  <a class="art">
+    <div class="art-img"><img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="cat"><span>Campaign</span><span class="date">15 Feb</span></div>
+    <h3>Behind the Yalada Tour: three days, twelve partners, one very long dinner.</h3>
+    <p>A dispatch from the most recent cohort, what changed, what didn't, what the next one will do differently.</p>
+    <div class="byline">Amara Delgado · 7 min</div>
+  </a>
+</section>
+
+<section class="photo-essay" data-screen-label="08 Journal · Photo essay">
+  <div class="photo-essay-inner">
+    <span class="cat">Photo essay</span>
+    <h2>The forest<br>at 4am.</h2>
+    <div class="photo-strip">
+      <div style="background-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80');"></div>
+      <div style="background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80');"></div>
+      <div style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80');"></div>
+      <div style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80');"></div>
+    </div>
+    <div class="byline">Photography awaiting Jabalbina approval · Placeholder imagery shown · 14 frames in published essay</div>
+  </div>
+</section>
+
+<section class="newsletter" data-screen-label="08 Journal · Newsletter">
+  <div class="newsletter-inner">
+    <div>
+      <h2>One dispatch<br>a month.</h2>
+      <p>Field notes, long-form essays, and audit transparency, straight to your inbox. No campaign drip. No ask. Unsubscribe in one click.</p>
+    </div>
+    <form class="nl-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=\'font-family: var(--f-serif);  font-size: 20px;\'>Subscribed. Welcome.</div>'">
+      <input type="email" placeholder="your@email" required>
+      <button class="btn btn-primary">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('journal');</script>
+</body>
+</html>

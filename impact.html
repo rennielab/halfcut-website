@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Impact, HalfCut</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .imp-hero {
+    padding: 180px 48px 120px;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .imp-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .imp-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-6); display: block; }
+  .imp-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9.5vw, 190px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 16ch;
+  }
+  .imp-hero h1 em {
+    font-family: var(--f-serif);  font-weight: 300;
+    text-transform: none; color: var(--acid); letter-spacing: -0.01em;
+  }
+  .imp-hero-bottom {
+    margin-top: var(--s-9);
+    display: grid; grid-template-columns: 2fr 1fr; gap: var(--s-8); align-items: end;
+    padding-top: var(--s-6); border-top: 1px solid var(--cream-15);
+  }
+  .imp-hero-bottom .lede { max-width: 46ch; opacity: .85; color: var(--cream); }
+  .imp-hero-bottom .meta { font-family: var(--f-sans); font-size: 12px; letter-spacing: .12em; opacity: .5; }
+
+  /* Big number band */
+  .big-num {
+    background: var(--acid);
+    padding: var(--s-11) 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--ink);
+  }
+  .big-num .label { font-family: var(--f-sans); font-weight: 700; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: var(--s-5); }
+  .big-num .stat {
+    font-family: var(--f-display);
+    font-size: clamp(120px, 22vw, 400px);
+    line-height: .85;
+    letter-spacing: -0.04em;
+    display: block;
+  }
+  .big-num .stat .unit {
+    font-family: var(--f-serif);  font-weight: 300;
+    font-size: 0.28em; letter-spacing: 0;
+    margin-left: 12px; vertical-align: baseline;
+    opacity: .7;
+  }
+  .big-num p {
+    max-width: 52ch; margin: var(--s-5) auto 0;
+    font-family: var(--f-serif); font-weight: 300; font-size: 22px;
+    line-height: 1.45;
+  }
+
+  /* Ledger table */
+  .ledger {
+    padding: var(--s-10) 48px;
+    background: var(--cream);
+  }
+  .ledger-head {
+    max-width: 1440px; margin: 0 auto var(--s-7);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .ledger-head h2 { font-family: var(--f-display); font-size: clamp(56px, 7vw, 120px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; }
+  .ledger-table {
+    max-width: 1440px; margin: 0 auto;
+    border-top: 2px solid var(--ink);
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 80px 2fr 1fr 1fr 1fr 1fr;
+    gap: var(--s-5);
+    padding: 22px 0;
+    border-bottom: 1px solid var(--ink-15);
+    align-items: baseline;
+    font-family: var(--f-sans);
+    transition: background .2s;
+  }
+  .ledger-row:hover { background: var(--stone); padding-left: 8px; padding-right: 8px; }
+  .ledger-row.header { font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .55; padding-bottom: 16px; padding-top: 16px; }
+  .ledger-row .year { font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em; }
+  .ledger-row .partner { font-family: var(--f-serif); font-size: 19px; font-weight: 400; }
+  .ledger-row .num { font-family: var(--f-display); font-size: 24px; letter-spacing: -0.01em; }
+
+  /* Year breakdown: how every dollar lands */
+  .dollar {
+    background: var(--ink); color: var(--cream);
+    padding: var(--s-11) 48px;
+  }
+  .dollar-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-9); align-items: start; }
+  .dollar h2 { font-family: var(--f-display); font-size: clamp(56px, 7vw, 120px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; max-width: 16ch; }
+  .dollar .eyebrow { color: var(--acid); display: block; margin-bottom: var(--s-5); }
+  .dollar p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-5); opacity: .8; max-width: 52ch; }
+
+  /* Stacked dollar bar */
+  .bar {
+    display: flex;
+    height: 140px;
+    border-radius: 4px;
+    overflow: hidden;
+    font-family: var(--f-sans);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .06em;
+    margin-bottom: var(--s-4);
+  }
+  .bar-seg {
+    display: flex; align-items: flex-end;
+    padding: 16px;
+    transition: flex-grow .3s;
+  }
+  .bar-seg.to-country { flex: 92; background: var(--acid); color: var(--ink); }
+  .bar-seg.programs   { flex: 5; background: var(--coral); color: var(--ink); }
+  .bar-seg.ops        { flex: 3; background: var(--cream); color: var(--ink); }
+
+  .bar-legend {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px; margin-top: var(--s-5);
+    font-family: var(--f-sans); font-size: 12px; letter-spacing: .06em;
+  }
+  .bar-legend .swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; margin-right: 8px; vertical-align: middle; }
+
+  /* Testimonial / story block */
+  .story {
+    padding: var(--s-11) 48px;
+    background: var(--stone);
+    border-top: 1px solid var(--ink-15);
+  }
+  .story-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 320px 1fr; gap: var(--s-8); align-items: start;
+  }
+  .story-portrait {
+    aspect-ratio: 3/4;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .story-portrait img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+  .story-quote {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(24px, 2.6vw, 38px);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+  }
+  .story-quote::before { content: '"'; font-family: var(--f-display); display: block; font-size: 100px; line-height: .6; color: var(--coral); margin-bottom: var(--s-4); }
+  .story-sig {
+    margin-top: var(--s-6);
+    font-family: var(--f-sans); font-size: 13px; letter-spacing: .08em;
+    text-transform: uppercase; opacity: .6;
+  }
+
+  /* Method / audit */
+  .method {
+    padding: var(--s-10) 48px;
+    background: var(--cream);
+  }
+  .method-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: var(--s-8); }
+  .method h2 { font-family: var(--f-display); font-size: clamp(40px, 4.5vw, 72px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; }
+  .method-list {
+    border-top: 1px solid var(--ink-15);
+    counter-reset: m;
+  }
+  .method-item {
+    counter-increment: m;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: var(--s-5);
+    padding: var(--s-5) 0;
+    border-bottom: 1px solid var(--ink-15);
+    align-items: start;
+  }
+  .method-item::before {
+    content: counter(m, decimal-leading-zero);
+    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em;
+    opacity: .4;
+  }
+  .method-item h4 { font-family: var(--f-serif); font-weight: 400; font-size: 22px; line-height: 1.3; margin-bottom: 6px; }
+  .method-item p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; opacity: .7; max-width: 50ch; }
+  .method-item .link { font-family: var(--f-sans); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--coral); white-space: nowrap; }
+
+  /* Cinematic full-bleed interstitials */
+  .cinematic {
+    position: relative;
+    width: 100%;
+    height: clamp(420px, 75vh, 820px);
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .cinematic img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: .85;
+  }
+  .cinematic::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.2) 0%, rgba(19,20,14,0) 35%, rgba(19,20,14,.55) 100%);
+    pointer-events: none;
+  }
+  .cinematic-cap {
+    position: absolute; left: 48px; bottom: 48px; right: 48px;
+    z-index: 2;
+    color: var(--cream);
+    display: grid; grid-template-columns: 1fr auto; gap: var(--s-6);
+    align-items: end;
+  }
+  .cinematic-cap .words {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 40px);
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+  .cinematic-cap .meta {
+    font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; opacity: .7;
+    text-align: right;
+    max-width: 32ch;
+  }
+
+  /* Ambient editorial slab, words over texture */
+  .ambient {
+    padding: clamp(96px, 14vh, 200px) 48px;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-top: 1px solid var(--cream-15);
+    border-bottom: 1px solid var(--cream-15);
+  }
+  .ambient::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 1400px;
+    background-position: center;
+    opacity: .08;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .ambient-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+  .ambient .eyebrow { color: var(--acid); display: block; margin-bottom: var(--s-6); }
+  .ambient h3 {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(30px, 4vw, 64px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    max-width: 24ch;
+    margin: 0 auto;
+  }
+  .ambient h3 .acid { color: var(--acid); }
+
+  /* Triptych of on-Country stills */
+  .triptych {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 2px;
+    background: var(--ink);
+  }
+  .triptych .tile { aspect-ratio: 4/5; overflow: hidden; background: var(--ink-85); position: relative; }
+  .triptych .tile img { width: 100%; height: 100%; object-fit: cover; }
+  .triptych .tile .tag {
+    position: absolute; left: 18px; bottom: 18px;
+    background: rgba(19,20,14,.55);
+    backdrop-filter: blur(6px);
+    color: var(--cream);
+    font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border: 1px solid var(--cream-15);
+  }
+
+  /* Upgraded story section (Aunty Marilyn) — larger cinematic portrait + environment */
+  .story-xl {
+    padding: 0;
+    background: var(--cream);
+    border-top: 1px solid var(--ink-15);
+  }
+  .story-xl-inner {
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    min-height: 80vh;
+  }
+  .story-xl-media {
+    position: relative;
+    background: var(--ink);
+    min-height: 560px;
+    overflow: hidden;
+  }
+  .story-xl-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(15%);
+  }
+  .story-xl-media .overlay {
+    position: absolute; left: 32px; bottom: 32px; right: 32px;
+    color: var(--cream);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .story-xl-text {
+    padding: clamp(64px, 8vw, 120px) clamp(32px, 5vw, 96px);
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--stone);
+  }
+  .story-xl-text .mark {
+    font-family: var(--f-display); color: var(--coral);
+    font-size: clamp(80px, 9vw, 160px); line-height: .5;
+    margin-bottom: var(--s-4); display: block;
+  }
+  .story-xl-text blockquote {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(24px, 2.4vw, 38px);
+    line-height: 1.28;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+    max-width: 28ch;
+  }
+  .story-xl-cite {
+    margin-top: var(--s-7);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--ink-15);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: var(--s-5);
+  }
+  .story-xl-cite-name { font-family: var(--f-display); font-size: 14px; letter-spacing: .02em; text-transform: uppercase; }
+  .story-xl-cite-role { font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; margin-top: 4px; }
+  .story-xl-cite-meta { font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; opacity: .4; text-align: right; max-width: 22ch; }
+
+  @media (max-width: 960px) {
+    .imp-hero { padding: 120px 24px 64px; }
+    .imp-hero-bottom, .dollar-inner, .story-inner, .method-inner { grid-template-columns: 1fr; }
+    .ledger-row { grid-template-columns: 60px 1fr 1fr; font-size: 14px; }
+    .ledger-row > :nth-child(4), .ledger-row > :nth-child(5), .ledger-row > :nth-child(6) { display: none; }
+    .cinematic-cap { left: 24px; right: 24px; bottom: 24px; grid-template-columns: 1fr; }
+    .cinematic-cap .meta { text-align: left; }
+    .ambient { padding: 72px 24px; }
+    .triptych { grid-template-columns: 1fr; }
+    .triptych .tile { aspect-ratio: 16/11; }
+    .story-xl-inner { grid-template-columns: 1fr; }
+    .story-xl-media { min-height: 420px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="imp-hero" data-screen-label="04 Impact · Hero">
+  <div class="imp-hero-inner">
+    <span class="eyebrow">Impact Report · FY2025</span>
+    <h1>The work,<br>in numbers.</h1>
+    <div class="imp-hero-bottom">
+      <p class="lede">
+        Every figure on this page is independently audited and reconciled quarterly with our Traditional Owner partners. We publish the full workings because money you can't trace isn't money you can trust.
+      </p>
+      <div class="meta">
+        Audited by BDO Australia · Last update 14 Apr 2026 · Next audit Q3 2026
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CINEMATIC 01 — Daintree canopy / place -->
+<section class="cinematic" data-screen-label="04 Impact · Cinematic 01" aria-label="Daintree canopy">
+  <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2400&q=85" alt="Daintree rainforest canopy at dawn">
+  <div class="cinematic-cap">
+    <div class="words">This is the place. 180 million years of unbroken rainforest, held by the oldest living culture on Earth.</div>
+    <div class="meta">Kuku Yalanji Country · Daintree, Far North Queensland · Photo, J. Harding</div>
+  </div>
+</section>
+
+<!-- Hero number -->
+<section class="big-num" data-screen-label="04 Impact · Headline">
+  <div class="label">Raised since 2014</div>
+  <span class="stat">$4.2<span class="unit">million</span></span>
+  <p>Across twelve August campaigns, one flagship program, and the generosity of 11,400 people who shaved half their head for a month. Ninety-two cents of every dollar reaches Country.</p>
+</section>
+
+<!-- AMBIENT editorial slab -->
+<section class="ambient" data-screen-label="04 Impact · Ambient 01">
+  <div class="ambient-inner">
+    <span class="eyebrow">Why the numbers matter</span>
+    <h3>Every figure on this page is a <span class="acid">hectare regrowing</span>, a ranger on wages, a language returning, a decision made on Country by the people of this Country.</h3>
+  </div>
+</section>
+
+<!-- Dollar breakdown -->
+<section class="dollar" data-screen-label="04 Impact · Dollar">
+  <div class="dollar-inner">
+    <div>
+      <span class="eyebrow">How every dollar lands</span>
+      <h2>No soft accounting.</h2>
+      <p>We publish this breakdown every quarter and sit for external audit every year. If the mix ever shifts, because program expansion, new partners, different funding rhythm, the bar below changes, in public, the day it happens.</p>
+    </div>
+    <div>
+      <div class="bar">
+        <div class="bar-seg to-country">92¢ · To Country</div>
+        <div class="bar-seg programs">5¢ · Program</div>
+        <div class="bar-seg ops">3¢ · Ops</div>
+      </div>
+      <div class="bar-legend">
+        <div><span class="swatch" style="background: var(--acid);"></span> Traditional Owner-led restoration</div>
+        <div><span class="swatch" style="background: var(--coral);"></span> Campaign &amp; program delivery</div>
+        <div><span class="swatch" style="background: var(--cream);"></span> Operations &amp; compliance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRIPTYCH — on Country, hands, rangers -->
+<section class="triptych" data-screen-label="04 Impact · On Country" aria-label="On Country">
+  <div class="tile">
+    <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?auto=format&fit=crop&w=1400&q=85" alt="Ranger walking on a forest track">
+    <div class="tag">Rangers · Jabalbina</div>
+  </div>
+  <div class="tile">
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=85" alt="Dense rainforest understory">
+    <div class="tag">Restoration site, Year 3</div>
+  </div>
+  <div class="tile">
+    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1400&q=85" alt="Forest edge, morning light">
+    <div class="tag">Wet Tropics · Daintree</div>
+  </div>
+</section>
+
+<!-- The ledger -->
+<section class="ledger" data-screen-label="04 Impact · Ledger">
+  <div class="ledger-head">
+    <h2>The ledger,<br>year by year.</h2>
+    <a href="#" class="btn btn-secondary">Download FY25 report →</a>
+  </div>
+  <div class="ledger-table">
+    <div class="ledger-row header">
+      <div>Year</div><div>Partner / Program</div><div>Raised</div><div>To Country</div><div>Hectares</div><div>Shavers</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'25</div><div class="partner">Jabalbina, Daintree Restoration Y3</div><div class="num">$612K</div><div class="num">$563K</div><div class="num">310 ha</div><div class="num">1,840</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'24</div><div class="partner">Jabalbina, Daintree Restoration Y2</div><div class="num">$548K</div><div class="num">$504K</div><div class="num">270 ha</div><div class="num">1,610</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'23</div><div class="partner">Jabalbina, Daintree Restoration Y1</div><div class="num">$487K</div><div class="num">$448K</div><div class="num">220 ha</div><div class="num">1,420</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'22</div><div class="partner">Jabalbina, Scoping &amp; governance</div><div class="num">$342K</div><div class="num">$315K</div><div class="num"></div><div class="num">1,180</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'21</div><div class="partner">General restoration fund</div><div class="num">$398K</div><div class="num">$366K</div><div class="num">180 ha</div><div class="num">1,240</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'20</div><div class="partner">General restoration fund</div><div class="num">$304K</div><div class="num">$280K</div><div class="num">140 ha</div><div class="num">980</div>
+    </div>
+    <div class="ledger-row">
+      <div class="year">'14–'19</div><div class="partner">Foundational years, multi-partner</div><div class="num">$1.51M</div><div class="num">$1.39M</div><div class="num">580 ha</div><div class="num">3,130</div>
+    </div>
+  </div>
+</section>
+
+<!-- Story / TO voice · cinematic -->
+<section class="story-xl" data-screen-label="04 Impact · Story">
+  <div class="story-xl-inner">
+    <div class="story-xl-media">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1400&q=85" alt="Aunty Marilyn Wallace portrait placeholder">
+      <div class="overlay">
+        <span>Kuku Yalanji Country</span>
+        <span>Portrait, placeholder</span>
+      </div>
+    </div>
+    <div class="story-xl-text">
+      <span class="mark">"</span>
+      <blockquote>
+        The forest my grandfather walked is not the forest I walk. The forest my grandchildren walk will be the one we make now. HalfCut's job is not to save anything. Their job is to make sure we have what we need to do the saving ourselves.
+      </blockquote>
+      <div class="story-xl-cite">
+        <div>
+          <div class="story-xl-cite-name">Aunty Marilyn Wallace</div>
+          <div class="story-xl-cite-role">Kuku Yalanji Elder · Jabalbina Board</div>
+        </div>
+        <div class="story-xl-cite-meta">Recorded on Country, March 2026. Shared with permission.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CINEMATIC 02 — close ground / life returning -->
+<section class="cinematic" data-screen-label="04 Impact · Cinematic 02" aria-label="Life returning">
+  <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=2400&q=85" alt="Rainforest understory, young regrowth">
+  <div class="cinematic-cap">
+    <div class="words">Not a programme. A place. One hectare, then another, then another, until the map looks like it should have looked all along.</div>
+    <div class="meta">Restoration plot, Daintree Y3 · April 2026</div>
+  </div>
+</section>
+
+<!-- Method -->
+<section class="method" data-screen-label="04 Impact · Method">
+  <div class="method-inner">
+    <div>
+      <span class="eyebrow" style="opacity: .5; display: block; margin-bottom: 16px;">How we count</span>
+      <h2>Our<br>method.</h2>
+      <p style="font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; margin-top: var(--s-5); opacity: .7; max-width: 34ch;">
+        Plain language explanation of what each number means, how it's measured, and who signs off on it.
+      </p>
+    </div>
+    <div class="method-list">
+      <div class="method-item">
+        <h4>Raised</h4>
+        <p>All funds received into the HalfCut trust account, including donations, campaign revenue, grants, and partner contributions. Independently reconciled quarterly.</p>
+        <a href="#" class="link">Audit note →</a>
+      </div>
+      <div class="method-item">
+        <h4>To Country</h4>
+        <p>Dollars transferred directly to Traditional Owner partner corporations for on-Country restoration, ranger time, and program delivery. Excludes HalfCut operational costs.</p>
+        <a href="#" class="link">Transfer logs →</a>
+      </div>
+      <div class="method-item">
+        <h4>Hectares under restoration</h4>
+        <p>Area formally entered into the restoration program, verified each wet season by the Eastern Kuku Yalanji ranger team and cross-checked by an independent ecologist.</p>
+        <a href="#" class="link">Ranger report →</a>
+      </div>
+      <div class="method-item">
+        <h4>Shavers</h4>
+        <p>Registered participants in the August campaign who completed a public shave and raised a verified minimum. Self-reported; we're working on tightening the count for FY26.</p>
+        <a href="#" class="link">Methodology →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>HC.init('impact');</script>
+</body>
+</html>

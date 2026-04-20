@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Donate, HalfCut (Wireframe)</title>
+<link rel="stylesheet" href="assets/system.css?v=1776674336531">
+<style>
+  .wf-banner {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--coral); color: var(--ink);
+    padding: 8px 48px;
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .2em;
+    text-transform: uppercase;
+    z-index: 200;
+    display: flex; justify-content: space-between;
+  }
+  .donate-hero {
+    padding: 140px 48px 64px;
+    background: var(--ink); color: var(--cream);
+    border-bottom: 1px solid var(--cream-15);
+  }
+  .donate-hero-inner { max-width: 1440px; margin: 0 auto; }
+  .donate-hero .eyebrow { color: var(--acid); margin-bottom: 20px; display: block; }
+  .donate-hero h1 { font-family: var(--f-display); font-size: clamp(64px, 9vw, 160px); line-height: .9; letter-spacing: -0.025em; text-transform: uppercase; max-width: 14ch; }
+
+  .donate-body {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-8) 48px var(--s-10);
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--s-8); align-items: start;
+  }
+  .donate-context { position: sticky; top: 40px; }
+  .donate-context h3 { font-family: var(--f-display); font-size: 32px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 16px; }
+  .donate-context p { font-family: var(--f-serif); font-weight: 300; font-size: 19px; line-height: 1.5; opacity: .8; margin-bottom: var(--s-5); max-width: 38ch; }
+  .ctx-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    background: var(--ink-15); border: 1px solid var(--ink-15);
+    margin-top: var(--s-5);
+  }
+  .ctx-stats > div { background: var(--cream); padding: 20px; }
+  .ctx-stats .n { font-family: var(--f-display); font-size: 36px; letter-spacing: -0.01em; line-height: 1; margin-bottom: 6px; }
+  .ctx-stats .l { font-family: var(--f-sans); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .55; }
+
+  /* Donation options */
+  .options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--ink); border-radius: 4px; overflow: hidden;
+    margin-bottom: var(--s-5);
+  }
+  .options button {
+    padding: 14px;
+    font-family: var(--f-sans); font-weight: 700; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase;
+    background: var(--cream);
+    border-right: 1px solid var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .options button:last-child { border-right: 0; }
+  .options button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+  .amount-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;
+  }
+  .amount-grid button {
+    padding: 18px 12px;
+    background: var(--cream);
+    border: 1px solid var(--ink-15);
+    border-radius: 4px;
+    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .amount-grid button[aria-pressed="true"] { background: var(--acid); border-color: var(--ink); }
+  .amount-grid button:hover { border-color: var(--ink); }
+  .custom {
+    width: 100%; padding: 18px;
+    background: var(--cream);
+    border: 1px solid var(--ink-15); border-radius: 4px;
+    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em;
+    outline: none;
+  }
+  .custom:focus { border-color: var(--ink); }
+
+  /* Raisley embed container */
+  .raisley-embed {
+    background: var(--stone);
+    border: 2px dashed var(--ink-30);
+    border-radius: 4px;
+    padding: var(--s-8);
+    min-height: 620px;
+    display: flex; flex-direction: column; gap: 16px;
+    position: relative;
+  }
+  .raisley-embed::before {
+    content: 'RAISLEY EMBED MOUNT POINT';
+    position: absolute; top: 12px; left: 12px;
+    font-family: var(--f-sans); font-size: 10px; letter-spacing: .2em;
+    background: var(--coral); color: var(--ink); padding: 4px 8px; border-radius: 2px;
+  }
+  .raisley-embed h4 { font-family: var(--f-display); font-size: 24px; text-transform: uppercase; letter-spacing: -0.01em; margin-top: 16px; }
+
+  /* Donate panel */
+  .donate-panel {
+    background: var(--cream);
+    padding: var(--s-7);
+    border: 1px solid var(--ink-15);
+    border-radius: 4px;
+  }
+  .donate-panel h3 { font-family: var(--f-display); font-size: 28px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 4px; }
+  .donate-panel .sub { font-family: var(--f-serif);  opacity: .6; margin-bottom: var(--s-5); font-size: 15px; }
+
+  .impact-preview {
+    margin-top: var(--s-5);
+    padding: var(--s-5);
+    background: var(--acid);
+    border-radius: 4px;
+    font-family: var(--f-serif); font-weight: 400; font-size: 18px; line-height: 1.4;
+  }
+  .impact-preview strong { font-family: var(--f-display); font-size: 24px; display: block; margin-bottom: 4px; letter-spacing: -0.01em; }
+
+  /* Trust strip */
+  .trust {
+    background: var(--cream); border-top: 1px solid var(--ink-15);
+    padding: var(--s-7) 48px;
+  }
+  .trust-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5);
+  }
+  .trust-inner > div { padding: 0; }
+  .trust-inner .label { font-family: var(--f-sans); font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .5; margin-bottom: 8px; }
+  .trust-inner h4 { font-family: var(--f-display); font-size: 20px; letter-spacing: -0.005em; margin-bottom: 6px; text-transform: uppercase; }
+  .trust-inner p { font-family: var(--f-serif); font-size: 15px; font-weight: 300; line-height: 1.4; opacity: .7; }
+
+  @media (max-width: 960px) {
+    .donate-body { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
+    .donate-context { position: static; }
+    .amount-grid { grid-template-columns: 1fr 1fr; }
+    .trust-inner { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-banner">
+  <span>Wireframe · Donate (Raisley embed)</span>
+  <span>Hybrid, supporting column + embed</span>
+</div>
+
+<section class="donate-hero" data-screen-label="06 Donate · Hero">
+  <div class="donate-hero-inner">
+    <span class="eyebrow">Donate</span>
+    <h1>Resource<br>the work.</h1>
+  </div>
+</section>
+
+<div class="donate-body">
+  <aside class="donate-context" data-screen-label="06 Donate · Context">
+    <h3>Where your<br>money goes.</h3>
+    <p>
+      Every dollar moves through governance developed with Jabalbina. 92¢ reaches Country. 5¢ funds the programs that get more money to Country. 3¢ keeps the lights on.
+    </p>
+    <p>
+      Donations over $2 are tax-deductible in Australia. We are a registered Public Benevolent Institution with DGR status.
+    </p>
+    <div class="ctx-stats">
+      <div><div class="n">92¢</div><div class="l">To Country</div></div>
+      <div><div class="n">$4.2M</div><div class="l">Raised since 2014</div></div>
+      <div><div class="n">1,200 ha</div><div class="l">Under restoration</div></div>
+      <div><div class="n">BDO</div><div class="l">Independently audited</div></div>
+    </div>
+  </aside>
+
+  <div class="donate-panel" data-screen-label="06 Donate · Form">
+    <h3>Make a contribution.</h3>
+    <div class="sub">Secured and processed via Raisley.</div>
+
+    <div class="options" role="tablist">
+      <button aria-pressed="true" data-tab="once">One-time</button>
+      <button data-tab="monthly">Monthly</button>
+      <button data-tab="august">August campaign</button>
+    </div>
+
+    <div class="amount-grid">
+      <button data-amt="50">$50</button>
+      <button aria-pressed="true" data-amt="120">$120</button>
+      <button data-amt="250">$250</button>
+      <button data-amt="1000">$1,000</button>
+    </div>
+    <input class="custom" id="customAmt" placeholder="Or enter a custom amount" value="$120">
+
+    <div class="impact-preview" id="impactPreview">
+      <strong>$120 · ~1 hectare / 1 day</strong>
+      Funds one full day of ranger time on Kuku Yalanji Country and the materials for ~1 hectare of seedling preparation.
+    </div>
+
+    <div class="raisley-embed" style="margin-top: var(--s-6);">
+      <h4>Raisley form loads here</h4>
+      <p style="font-family: var(--f-serif); font-weight: 300; font-size: 16px; opacity: .7; max-width: 48ch;">
+        Pre-filled with the selected amount and frequency. Iframe target:
+        <code style="font-family: ui-monospace; background: var(--cream); padding: 2px 6px; border-radius: 2px;">go.halfcut.org/donate?amount=120&frequency=once</code>
+      </p>
+      <div style="flex-grow:1; background: repeating-linear-gradient(45deg, transparent, transparent 14px, var(--ink-08) 14px, var(--ink-08) 28px); border-radius: 4px; margin-top: 16px;"></div>
+    </div>
+  </div>
+</div>
+
+<section class="trust" data-screen-label="06 Donate · Trust">
+  <div class="trust-inner">
+    <div>
+      <div class="label">Tax status</div>
+      <h4>DGR · ABN 00 000 000 000</h4>
+      <p>Public Benevolent Institution. Gifts over $2 tax-deductible in Australia.</p>
+    </div>
+    <div>
+      <div class="label">Audit</div>
+      <h4>BDO Australia</h4>
+      <p>Every figure on the Impact page independently audited annually.</p>
+    </div>
+    <div>
+      <div class="label">Security</div>
+      <h4>Raisley + Stripe</h4>
+      <p>PCI DSS Level 1. We never see your card details.</p>
+    </div>
+    <div>
+      <div class="label">Other ways</div>
+      <h4>Payroll, bequest, crypto</h4>
+      <p>Speak to us about larger or structured gifts, contact Jimmy directly.</p>
+    </div>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1776674336531"></script>
+<script>
+  HC.init('donate');
+  document.querySelectorAll('.options button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.options button').forEach(x => x.removeAttribute('aria-pressed'));
+    b.setAttribute('aria-pressed','true');
+  }));
+  document.querySelectorAll('.amount-grid button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.amount-grid button').forEach(x => x.removeAttribute('aria-pressed'));
+    b.setAttribute('aria-pressed','true');
+    document.getElementById('customAmt').value = '$' + b.dataset.amt;
+    const v = parseInt(b.dataset.amt, 10);
+    const p = document.getElementById('impactPreview');
+    const map = {
+      50: ['$50 · half a day on Country', 'Funds half a day of ranger time or materials for seed collection.'],
+      120: ['$120 · ~1 hectare / 1 day', 'Funds one full day of ranger time and the materials for ~1 hectare of seedling preparation.'],
+      250: ['$250 · ~2 hectares / multi-day', 'Resources a multi-day ranger patrol and ~2 hectares of seedling prep.'],
+      1000: ['$1,000 · ~8 hectares / a week', 'Funds a full week of ranger work and prepares ~8 hectares for restoration.']
+    };
+    const [strong, body] = map[v] || ['$' + v + ' · custom', 'We\'ll allocate via the Jabalbina governance cycle.'];
+    p.innerHTML = `<strong>${strong}</strong>${body}`;
+  }));
+</script>
+</body>
+</html>
