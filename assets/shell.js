@@ -52,8 +52,8 @@
           <span class="${dotCls}" aria-hidden="true"></span>Updates
         </button>
         <a href="donate.html" class="nav-item nav-donate-pill" aria-label="Donate">
-          <span class="donate-h" aria-hidden="true">H</span>
-          <span>Donate</span>
+          <span class="nav-donate-topo" aria-hidden="true"></span>
+          <span class="nav-donate-label">Donate</span>
         </a>
         <button class="nav-item nav-menu-btn" data-open="menu" aria-label="Open menu">
           <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
@@ -96,10 +96,12 @@
     p.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closePanel));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closePanel();
+      trapFocus(e);
     });
   }
 
   let currentActive = '';
+  let lastFocusedEl = null;
   function openPanel(which) {
     const p = document.querySelector('.slideout');
     const body = document.getElementById('slideoutBody');
@@ -109,7 +111,14 @@
     p.setAttribute('aria-hidden', 'false');
     p.classList.add('open');
     document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     if (which === 'updates') wireTabs();
+    // a11y: remember where focus came from, move focus into panel
+    lastFocusedEl = document.activeElement;
+    requestAnimationFrame(() => {
+      const firstLink = p.querySelector('.menu-link, .upd-tab, .slideout-close');
+      if (firstLink) firstLink.focus();
+    });
   }
   function closePanel() {
     const p = document.querySelector('.slideout');
@@ -117,6 +126,27 @@
     p.classList.remove('open');
     p.setAttribute('aria-hidden', 'true');
     document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    // a11y: return focus to the trigger
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+      lastFocusedEl.focus();
+      lastFocusedEl = null;
+    }
+  }
+
+  // Focus trap inside open panel
+  function trapFocus(e) {
+    const p = document.querySelector('.slideout.open');
+    if (!p || e.key !== 'Tab') return;
+    const focusables = p.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      last.focus(); e.preventDefault();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      first.focus(); e.preventDefault();
+    }
   }
 
   // ---- Menu content ----
@@ -287,7 +317,7 @@
         }
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.querySelectorAll('.reveal, .reveal-children').forEach(el => io.observe(el));
   }
 
   window.HC = {
