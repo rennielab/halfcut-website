@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Take Action, HalfCut</title>
+<link rel="stylesheet" href="assets/system.css?v=1779225169214">
+<style>
+  body { background: var(--ink); color: var(--cream); }
+
+  .ta-hero {
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm);
+    background: var(--ink);
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--cream-15);
+  }
+  .ta-hero-topo {
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 1400px auto; background-repeat: repeat;
+    opacity: .06; mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .ta-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .ta-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .ta-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin: 0;
+  }
+  .ta-hero p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin-top: var(--s-6);
+    max-width: 56ch;
+    opacity: .8;
+  }
+
+  .ta-grid {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-9) var(--pad-x) var(--s-10);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-5);
+  }
+  .ta-card {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--cream);
+    text-decoration: none;
+    isolation: isolate;
+    border: 0; padding: 0; width: 100%;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform .35s var(--ease);
+  }
+  .ta-card-img {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center;
+    filter: brightness(.55) saturate(.85);
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+  }
+  .ta-card:hover .ta-card-img { transform: scale(1.04); filter: brightness(.7) saturate(1); }
+  .ta-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.2) 40%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
+  }
+  .ta-card .pill {
+    position: absolute; top: 22px; left: 22px;
+    z-index: 2;
+    padding: 7px 13px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: var(--acid);
+  }
+  .ta-card .body {
+    position: absolute; left: 24px; right: 24px; bottom: 24px;
+    z-index: 2;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .ta-card h3 {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 2.3vw, 34px);
+    line-height: .95; letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--cream);
+    max-width: 16ch;
+  }
+  .ta-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 14px; line-height: 1.45;
+    margin: 0;
+    color: var(--cream-85);
+    max-width: 32ch;
+  }
+  .ta-card .row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 8px;
+  }
+  .ta-card .row .tag {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .6; font-weight: 700;
+  }
+  .ta-card .plus {
+    width: 40px; height: 40px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s, color .25s;
+  }
+  .ta-card:hover .plus { background: var(--acid); color: var(--ink); }
+  .ta-card .plus svg { width: 16px; height: 16px; }
+  .ta-card:focus-visible { outline: 2px solid var(--acid); outline-offset: 4px; }
+
+  /* Quick get-active form (Bob Brown style) */
+  .ta-form-band {
+    background: var(--cream);
+    color: var(--ink);
+    padding: var(--s-10) var(--pad-x);
+  }
+  .ta-form-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--s-9); align-items: center;
+  }
+  .ta-form-inner .lhs h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 80px);
+    line-height: .92; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-5);
+    color: var(--ink);
+    max-width: 16ch;
+  }
+  .ta-form-inner .lhs p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 19px; line-height: 1.55;
+    opacity: .8;
+    max-width: 46ch;
+    margin: 0;
+  }
+  .ta-form {
+    background: var(--cream);
+    border: 1px solid var(--ink-15);
+    border-radius: 4px;
+    padding: var(--s-7);
+  }
+  .ta-form .label {
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: .55; margin-bottom: 8px;
+    display: block;
+  }
+  .ta-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .ta-form .field { margin-bottom: var(--s-5); }
+  .ta-form .field:last-of-type { margin-bottom: var(--s-6); }
+  .ta-form input, .ta-form select, .ta-form textarea {
+    width: 100%;
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 1px solid var(--ink-15);
+    background: transparent;
+    font-family: var(--f-serif); font-size: 18px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .ta-form input:focus, .ta-form select:focus { border-color: var(--ink); }
+  .ta-form .btn { width: 100%; justify-content: center; padding: 14px 22px; }
+
+  @media (max-width: 960px) {
+    .ta-grid { grid-template-columns: 1fr 1fr; }
+    .ta-form-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .ta-grid { grid-template-columns: 1fr; }
+    .ta-form .grid2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<section class="ta-hero" data-screen-label="09 Take Action · Hero">
+  <div class="ta-hero-topo" aria-hidden="true"></div>
+  <div class="ta-hero-inner">
+    <span class="eyebrow">Take Action</span>
+    <h1>The work<br>needs you.</h1>
+    <p>
+      HalfCut funds the work, but the work needs more than money. Below are five ways to back the Eastern Kuku Yalanji Bama people and the rainforest they steward. Pick the one that fits your life. Pick more than one if you have it in you.
+    </p>
+  </div>
+</section>
+
+<div class="ta-grid" data-screen-label="09 Take Action · Grid">
+
+  <a class="ta-card" href="donate.html">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">Donate</span>
+    <div class="body">
+      <h3>Resource<br>the work</h3>
+      <p>One hundred per cent of profits to Country, through Jabalbina Yalanji Aboriginal Corporation. Tax-deductible in Australia.</p>
+      <div class="row">
+        <span class="tag">DGR · ACNC</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </a>
+
+  <a class="ta-card" href="membership.html">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">Member</span>
+    <div class="body">
+      <h3>Become a<br>HalfCut member</h3>
+      <p>Monthly giving that resources the rainforest restoration program every month, not just in August.</p>
+      <div class="row">
+        <span class="tag">Monthly · from $10</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </a>
+
+  <a class="ta-card" href="#get-active-form">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">On Country</span>
+    <div class="body">
+      <h3>Join a<br>camp</h3>
+      <p>Spend a week on Eastern Kuku Yalanji Country, alongside the ranger team. Limited spots, Bama-led, properly briefed.</p>
+      <div class="row">
+        <span class="tag">By application</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </a>
+
+  <a class="ta-card" href="#get-active-form">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">Volunteer</span>
+    <div class="body">
+      <h3>Donate<br>your time</h3>
+      <p>Designers, writers, lawyers, accountants, and event organisers — we keep a working bench of skilled volunteers for the times we need them.</p>
+      <div class="row">
+        <span class="tag">Pro-bono · flexible</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </a>
+
+  <button class="ta-card" data-action="petition" aria-label="Sign the petition">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">Petition</span>
+    <div class="body">
+      <h3>Sign the<br>petition</h3>
+      <p>Permanent protection of the Daintree Lowland Rainforest. Return of unceded forest to Traditional Owner management.</p>
+      <div class="row">
+        <span class="tag">3,847 signatures · target 10k</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </button>
+
+  <button class="ta-card" data-action="email-gov" aria-label="Email government">
+    <div class="ta-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80');"></div>
+    <span class="pill">Email Gov</span>
+    <div class="body">
+      <h3>Email<br>government</h3>
+      <p>Pre-drafted, editable, and sent to your Federal Member and the Environment Minister. Two minutes, real political weight.</p>
+      <div class="row">
+        <span class="tag">2 min · pre-drafted</span>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </div>
+  </button>
+
+</div>
+
+<section class="ta-form-band" id="get-active-form" data-screen-label="09 Take Action · Form">
+  <div class="ta-form-inner">
+    <div class="lhs">
+      <h2>Not sure where<br>to start?</h2>
+      <p>If this is your first time joining HalfCut, fill in the form. We'll come back to you within three working days with the right next step based on what you're up for.</p>
+    </div>
+    <form class="ta-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=&quot;font-family: var(--f-display); font-size: 28px; text-transform: uppercase; letter-spacing: -0.01em; padding: 32px 0;&quot;>Got it. We&rsquo;ll be in touch.</div>';">
+      <div class="grid2">
+        <div class="field">
+          <label class="label">First name</label>
+          <input type="text" required>
+        </div>
+        <div class="field">
+          <label class="label">Last name</label>
+          <input type="text" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Email</label>
+        <input type="email" required>
+      </div>
+      <div class="field">
+        <label class="label">What I'm up for</label>
+        <select>
+          <option>Donating monthly (member)</option>
+          <option>One-time donation</option>
+          <option>Joining a camp on Country</option>
+          <option>Donating skills / time</option>
+          <option>Signing the petition</option>
+          <option>Emailing government</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <button class="btn btn-primary">Get started →</button>
+    </form>
+  </div>
+</section>
+
+<script src="assets/shell.js?v=1779225169214"></script>
+<script>
+  HC.init('take-action');
+
+  // Stub interactions for petition + email gov until real flows are wired
+  document.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById('get-active-form');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

@@ -154,10 +154,11 @@
     const links = [
       { label: 'Origins', href: 'about.html', key: 'about' },
       { label: 'Impact',  href: 'impact.html', key: 'impact' },
-      { label: 'Projects',href: 'projects.html', key: 'projects' },
+      { label: 'Campaigns', href: 'projects.html', key: 'projects' },
       { label: 'Partners',href: 'partners.html', key: 'partners' },
       { label: 'Team',    href: 'team.html', key: 'team' },
-      { label: 'Journal', href: 'journal.html', key: 'journal' },
+      { label: 'Field Notes', href: 'journal.html', key: 'journal' },
+      { label: 'Take Action', href: 'take-action.html', key: 'take-action' },
     ];
     return `
       <nav class="menu-list">
@@ -189,7 +190,7 @@
     ];
     return `
       <div class="upd-head">
-        <p class="upd-lede">Short dispatches from the operation. Longer pieces live in the Journal.</p>
+        <p class="upd-lede">Short dispatches from the operation. Longer pieces live in Field Notes.</p>
       </div>
       <div class="upd-tabs" role="tablist">
         ${tabs.map((t, i) =>
@@ -251,18 +252,19 @@
           <div class="footer-links">
             <a href="about.html">Origins</a>
             <a href="impact.html">Impact</a>
-            <a href="projects.html">Projects</a>
+            <a href="projects.html">Campaigns</a>
             <a href="partners.html">Partners</a>
             <a href="team.html">Team &amp; Board</a>
-            <a href="journal.html">Journal</a>
+            <a href="journal.html">Field Notes</a>
           </div>
         </div>
         <div>
           <h5>Act</h5>
           <div class="footer-links">
+            <a href="take-action.html">Take Action</a>
             <a href="donate.html">Donate</a>
+            <a href="membership.html">Become a member</a>
             <a href="#">Shave in August</a>
-            <a href="https://halfcut.gumroad.com" target="_blank" rel="noopener">Store ↗</a>
             <a href="contact.html">Partner with us</a>
           </div>
         </div>
