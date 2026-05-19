@@ -158,7 +158,6 @@
       { label: 'Partners',href: 'partners.html', key: 'partners' },
       { label: 'Team',    href: 'team.html', key: 'team' },
       { label: 'Field Notes', href: 'journal.html', key: 'journal' },
-      { label: 'Take Action', href: 'take-action.html', key: 'take-action' },
     ];
     return `
       <nav class="menu-list">
@@ -177,7 +176,11 @@
           <a href="#">Newsletter</a>
         </div>
       </div>
-      <a class="menu-contact" href="contact.html">Contact →</a>
+      <div class="menu-ctas">
+        <a class="menu-cta menu-cta-primary" href="take-action.html">Take Action <span aria-hidden="true">→</span></a>
+        <a class="menu-cta menu-cta-cream" href="donate.html">Donate <span aria-hidden="true">→</span></a>
+        <a class="menu-cta menu-cta-ghost" href="contact.html">Contact <span aria-hidden="true">→</span></a>
+      </div>
     `;
   }
 
