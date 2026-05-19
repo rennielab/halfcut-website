@@ -982,33 +982,52 @@ img.footer-wordmark {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 88px;
-  padding: 18px 16px;
-  font-family: var(--f-display);
-  font-size: 14px;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 1.1;
-  color: var(--cream);
-  opacity: .72;
+  min-height: 110px;
+  padding: 22px 20px;
   border-right: 1px solid var(--cream-15);
   border-bottom: 1px solid var(--cream-15);
-  transition: opacity .25s ease, color .25s ease, background .25s ease;
+  transition: opacity .25s ease, background .25s ease;
 }
-.partner-mark:hover { opacity: 1; color: var(--acid); background: rgba(235,252,115,.04); }
-
-/* Per-partner treatments — swap to real SVG logos when supplied */
-.partner-mark[data-mark="bj"]   { font-family: var(--f-display); letter-spacing: .01em; }
-.partner-mark[data-mark="rl"]   { font-family: var(--f-sans); font-weight: 700; letter-spacing: .14em; }
-.partner-mark[data-mark="smb"]  { font-family: var(--f-serif); font-weight: 600;  text-transform: none; font-size: 18px; letter-spacing: -0.01em; }
-.partner-mark[data-mark="pat"]  { font-family: var(--f-sans); font-weight: 800; letter-spacing: .18em; }
-.partner-mark[data-mark="aes"]  { font-family: var(--f-serif); font-weight: 400; text-transform: lowercase; letter-spacing: .02em; font-size: 20px; }
-.partner-mark[data-mark="kms"]  { font-family: var(--f-sans); font-weight: 500; letter-spacing: .24em; }
-.partner-mark[data-mark="byg"]  { font-family: var(--f-serif); font-weight: 300;  text-transform: none; letter-spacing: -0.01em; font-size: 17px; }
-.partner-mark[data-mark="tws"]  { font-family: var(--f-sans); font-weight: 700; letter-spacing: .06em; }
-.partner-mark[data-mark="fol"]  { font-family: var(--f-display); letter-spacing: -0.01em; font-size: 13px; }
-.partner-mark[data-mark="nab"]  { font-family: var(--f-sans); font-weight: 800; letter-spacing: .04em; font-size: 18px; }
+.partner-mark img {
+  max-height: 56px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  /* Render any logo (black, full-colour, white) as uniform cream silhouette */
+  filter: brightness(0) invert(1);
+  opacity: .72;
+  transition: opacity .25s ease, filter .25s ease;
+}
+.partner-mark:hover { background: rgba(235,252,115,.04); }
+.partner-mark:hover img {
+  filter: none;
+  opacity: 1;
+}
+/* TO partner (Jabalbina) separate row, full-colour treatment */
+.footer-to-partner {
+  margin-top: var(--s-7);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--cream-15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  flex-wrap: wrap;
+}
+.footer-to-partner .label {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--acid);
+}
+.footer-to-partner img {
+  max-height: 64px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: .85;
+}
 
 .footer-partners-foot {
   padding-top: var(--s-5);

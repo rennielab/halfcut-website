@@ -276,25 +276,24 @@
           </div>
         </div>
       </div>
-      <div class="footer-partners" aria-label="Our partners">
+      <div class="footer-partners" aria-label="Our sponsors and partners">
         <div class="footer-partners-head">
-          <span class="eyebrow">Resourced by</span>
-          <span class="footer-partners-count">10 foundation partners · FY25</span>
+          <span class="eyebrow">Our sponsors</span>
+          <span class="footer-partners-count">Resourcing the work · FY26</span>
         </div>
         <div class="footer-partners-row">
-          <span class="partner-mark" data-mark="bj">Ben &amp; Jerry's</span>
-          <span class="partner-mark" data-mark="rl">Rennie Lab</span>
-          <span class="partner-mark" data-mark="smb">Seven Mile Brewing</span>
-          <span class="partner-mark" data-mark="pat">Patagonia</span>
-          <span class="partner-mark" data-mark="aes">Aesop</span>
-          <span class="partner-mark" data-mark="kms">Koskela</span>
-          <span class="partner-mark" data-mark="byg">Bangalow Growers</span>
-          <span class="partner-mark" data-mark="tws">The Wilderness Society</span>
-          <span class="partner-mark" data-mark="fol">Foundation for Country</span>
-          <span class="partner-mark" data-mark="nab">NAB Foundation</span>
+          <span class="partner-mark"><img src="assets/sponsors/ben-jerrys.png" alt="Ben &amp; Jerry's" loading="lazy"></span>
+          <span class="partner-mark"><img src="assets/sponsors/dr-v.svg" alt="Dr.V" loading="lazy"></span>
+          <span class="partner-mark"><img src="assets/sponsors/seven-mile.png" alt="Seven Mile Brewing Co." loading="lazy"></span>
+          <span class="partner-mark"><img src="assets/sponsors/laidre.png" alt="Laidre" loading="lazy"></span>
+          <span class="partner-mark"><img src="assets/sponsors/forest-tree-service.png" alt="Forest Tree Service" loading="lazy"></span>
+        </div>
+        <div class="footer-to-partner" aria-label="Traditional Owner partner">
+          <span class="label">Our Traditional Owner partner</span>
+          <img src="assets/sponsors/jabalbina.png" alt="Jabalbina Yalanji Aboriginal Corporation" loading="lazy">
         </div>
         <div class="footer-partners-foot">
-          <a href="contact.html" class="footer-partners-cta">Become a partner →</a>
+          <a href="contact.html" class="footer-partners-cta">Become a sponsor →</a>
         </div>
       </div>
       <div class="footer-bottom">

@@ -4,239 +4,462 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Journal, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1779190580854">
+<link rel="stylesheet" href="assets/system.css?v=1779192137808">
 <style>
-  .masthead {
-    padding: var(--hero-pad-top-sm) var(--pad-x) var(--s-6);
-    max-width: 1440px; margin: 0 auto;
-    border-bottom: 2px solid var(--ink);
+  /* ---- Journal — dark editorial card grid (Bob Brown-inspired) ---- */
+  body { background: var(--ink); color: var(--cream); }
+
+  .jrn-hero {
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm);
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--cream-15);
   }
-  .masthead-top { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
-  .masthead h1 {
+  .jrn-hero-topo {
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 1400px auto;
+    background-repeat: repeat;
+    background-position: center;
+    opacity: .06;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .jrn-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .jrn-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .jrn-hero h1 {
     font-family: var(--f-display);
-    font-size: clamp(100px, 18vw, 340px);
+    font-size: clamp(64px, 9vw, 180px);
     line-height: .88;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
     text-transform: uppercase;
-    margin: 24px 0 16px;
+    max-width: 14ch;
+    margin: 0;
   }
-  .masthead-sub { font-family: var(--f-serif);  font-weight: 300; font-size: 24px; opacity: .75; }
+  .jrn-hero p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin-top: var(--s-6);
+    max-width: 56ch;
+    opacity: .8;
+  }
 
-  /* Categories */
-  .cats {
-    max-width: 1440px; margin: 0 auto;
-    padding: var(--s-5) var(--pad-x);
-    border-bottom: 1px solid var(--ink-15);
-    display: flex; gap: 28px;
-    font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-    overflow-x: auto; scrollbar-width: none;
+  /* Category filter — sticky just under nav */
+  .jrn-cats {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(19,20,14,.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--cream-15);
+    padding: 14px var(--pad-x);
   }
-  .cats a { opacity: .55; transition: opacity .2s; white-space: nowrap; }
-  .cats a[aria-current="true"] { opacity: 1; border-bottom: 2px solid var(--coral); padding-bottom: 4px; }
-  .cats a:hover { opacity: 1; }
+  .jrn-cats-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: flex; gap: 6px; align-items: center;
+    flex-wrap: wrap;
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
+  }
+  .jrn-cat {
+    color: var(--cream);
+    background: transparent;
+    border: 1px solid var(--cream-15);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .jrn-cat:hover { border-color: var(--cream-50); }
+  .jrn-cat[aria-pressed="true"] { background: var(--acid); color: var(--ink); border-color: var(--acid); }
+  .jrn-cats-count { margin-left: auto; opacity: .5; font-size: 10px; letter-spacing: .2em; }
 
-  /* Featured hero article */
-  .feature {
+  /* Card grid — 3 columns, dark vertical cards */
+  .jrn-grid {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-7) var(--pad-x);
-    display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7);
-    border-bottom: 1px solid var(--ink-15);
-  }
-  .feature-img { aspect-ratio: 4/3; background: var(--stone); overflow: hidden; }
-  .feature-img img { width: 100%; height: 100%; object-fit: cover; }
-  .feature-meta .cat { font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 20px; display: block; }
-  .feature-meta h2 {
-    font-family: var(--f-serif); font-weight: 400;
-    font-size: clamp(40px, 4.5vw, 72px);
-    line-height: 1.02;
-    letter-spacing: -0.01em;
-    margin-bottom: var(--s-5);
-    text-wrap: balance;
-  }
-  .feature-meta .excerpt {
-    font-family: var(--f-serif);  font-weight: 300;
-    font-size: 22px; line-height: 1.45;
-    opacity: .7; margin-bottom: var(--s-5);
-  }
-  .feature-meta .byline { font-family: var(--f-sans); font-size: 12px; letter-spacing: .08em; opacity: .55; }
-
-  /* Grid */
-  .grid {
-    max-width: 1440px; margin: 0 auto;
-    padding: var(--s-8) var(--pad-x);
+    padding: var(--s-9) var(--pad-x) var(--s-11);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-7) var(--s-5);
+    gap: var(--s-5);
   }
-  .art {
-    display: flex; flex-direction: column;
-    padding-top: var(--s-4);
-    border-top: 1px solid var(--ink-15);
+  /* First (featured) card spans 2 columns + 2 rows */
+  .jrn-card.is-feature {
+    grid-column: span 2;
+    grid-row: span 2;
   }
-  .art-img { aspect-ratio: 4/3; background: var(--stone); margin-bottom: 20px; overflow: hidden; }
-  .art-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
-  .art:hover .art-img img { transform: scale(1.03); }
-  .art .cat { font-family: var(--f-sans); font-weight: 700; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 12px; display: flex; justify-content: space-between; }
-  .art .cat .date { color: var(--ink); opacity: .55; }
-  .art h3 {
-    font-family: var(--f-serif); font-weight: 400;
-    font-size: clamp(22px, 1.7vw, 28px);
-    line-height: 1.15;
-    letter-spacing: -0.005em;
-    margin-bottom: 10px;
+
+  .jrn-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--cream);
+    text-decoration: none;
+    isolation: isolate;
+    transition: transform .35s var(--ease);
+  }
+  .jrn-card.is-feature { aspect-ratio: 8 / 5; }
+
+  .jrn-card-img {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+    z-index: 0;
+    filter: brightness(.6) saturate(.85);
+  }
+  .jrn-card:hover .jrn-card-img { transform: scale(1.04); filter: brightness(.75) saturate(1); }
+
+  .jrn-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.45) 0%, rgba(19,20,14,.25) 45%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
+  }
+
+  .jrn-card-cat {
+    position: absolute;
+    top: 22px; left: 22px;
+    z-index: 2;
+    padding: 8px 14px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: var(--acid);
+  }
+
+  .jrn-card-meta {
+    position: absolute;
+    top: 22px; right: 22px;
+    z-index: 2;
+    font-family: var(--f-sans);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: .6;
+  }
+
+  .jrn-card-body {
+    position: absolute;
+    left: 26px; right: 26px; bottom: 26px;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  }
+  .jrn-card h3 {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 2.2vw, 36px);
+    line-height: .95;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0;
+    max-width: 18ch;
     text-wrap: balance;
   }
-  .art p { font-family: var(--f-serif); font-weight: 300; font-size: 16px; line-height: 1.5; opacity: .7; margin-bottom: 12px; }
-  .art .byline { font-family: var(--f-sans); font-size: 11px; letter-spacing: .08em; opacity: .5; margin-top: auto; }
+  .jrn-card.is-feature h3 {
+    font-size: clamp(40px, 4vw, 72px);
+    max-width: 20ch;
+  }
 
-  /* Photo essay feature */
-  .photo-essay {
+  /* Plus-icon affordance (Bob Brown style) */
+  .jrn-card-plus {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .jrn-card:hover .jrn-card-plus { background: var(--acid); color: var(--ink); }
+  .jrn-card-plus svg { width: 18px; height: 18px; }
+
+  /* Empty-state / coming-soon card variant */
+  .jrn-card.is-empty {
+    background: rgba(245,244,236,.04);
+    border: 1px dashed var(--cream-15);
+  }
+  .jrn-card.is-empty .jrn-card-img,
+  .jrn-card.is-empty .jrn-card-overlay { display: none; }
+  .jrn-card.is-empty .jrn-card-body { position: relative; left: 0; right: 0; bottom: 0; padding: 26px; height: 100%; align-items: flex-start; }
+  .jrn-card.is-empty h3 { opacity: .55; }
+  .jrn-card.is-empty .jrn-card-plus { border-color: var(--cream-15); color: var(--cream-50); }
+
+  /* Pull-quote interstitial */
+  .jrn-quote {
+    background: var(--ink);
+    padding: var(--s-11) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+    border-bottom: 1px solid var(--cream-15);
+    text-align: center;
     position: relative;
-    margin: var(--s-8) 0;
-    background: var(--ink); color: var(--cream);
     overflow: hidden;
   }
-  .photo-essay-inner { max-width: 1440px; margin: 0 auto; padding: var(--s-9) var(--pad-x); }
-  .photo-essay .cat { color: var(--acid); font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; display: block; margin-bottom: var(--s-5); }
-  .photo-essay h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; max-width: 18ch; margin-bottom: var(--s-7); }
-  .photo-strip {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2px;
-    height: 360px;
+  .jrn-quote::before {
+    content: '"';
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    font-family: var(--f-display);
+    font-size: 380px; color: var(--acid);
+    opacity: .08;
+    pointer-events: none;
+    line-height: 1;
   }
-  .photo-strip > div {
-    background-size: cover; background-position: center;
+  .jrn-quote blockquote {
+    max-width: 1100px; margin: 0 auto;
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(28px, 3.6vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    position: relative;
   }
-  .photo-essay .byline { font-family: var(--f-sans); font-size: 12px; letter-spacing: .1em; opacity: .6; margin-top: var(--s-5); }
+  .jrn-quote blockquote .acid { color: var(--acid); }
+  .jrn-quote cite {
+    display: block;
+    margin-top: var(--s-7);
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    opacity: .6;
+    font-style: normal;
+  }
 
   /* Newsletter strip */
-  .newsletter {
+  .jrn-newsletter {
     background: var(--acid);
+    color: var(--ink);
     padding: var(--s-10) var(--pad-x);
-    border-top: 1px solid var(--ink);
-    border-bottom: 1px solid var(--ink);
   }
-  .newsletter-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7); align-items: end; }
-  .newsletter h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .9; letter-spacing: -0.02em; text-transform: uppercase; max-width: 18ch; }
-  .newsletter p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-4); max-width: 46ch; }
-  .nl-form { display: flex; gap: 8px; }
-  .nl-form input { flex: 1; padding: 18px 20px; background: var(--cream); border: 1px solid var(--ink); border-radius: 999px; font-family: var(--f-serif); font-size: 18px; outline: none; }
+  .jrn-newsletter-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: var(--s-8); align-items: end;
+  }
+  .jrn-newsletter h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 16ch;
+    margin: 0;
+  }
+  .jrn-newsletter p {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.5;
+    margin-top: var(--s-5);
+    max-width: 46ch;
+    opacity: .85;
+  }
+  .jrn-form { display: flex; gap: 8px; }
+  .jrn-form input {
+    flex: 1;
+    padding: 18px 22px;
+    background: var(--cream);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-family: var(--f-serif); font-size: 18px;
+    outline: none;
+    color: var(--ink);
+  }
+  .jrn-form .btn-primary { padding: 18px 28px 17px; }
 
   @media (max-width: 960px) {
-    .masthead { padding: var(--hero-pad-top) var(--pad-x) 24px; }
-    .feature { grid-template-columns: 1fr; padding: var(--s-5) 24px; }
-    .grid { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
-    .photo-strip { grid-template-columns: 1fr 1fr; height: 220px; }
-    .newsletter-inner { grid-template-columns: 1fr; }
-    .cats { padding: var(--s-4) 24px; }
+    .jrn-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-4);
+      padding: var(--s-7) var(--pad-x) var(--s-9);
+    }
+    .jrn-card.is-feature { grid-column: span 2; grid-row: auto; aspect-ratio: 4/5; }
+    .jrn-newsletter-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .jrn-grid { grid-template-columns: 1fr; }
+    .jrn-card.is-feature { grid-column: auto; }
   }
 </style>
 </head>
 <body>
-<section class="masthead" data-screen-label="08 Journal · Masthead">
-  <div class="masthead-top">
-    <span>Issue 07 · Apr 2026</span>
-    <span>Published monthly from Gadigal &amp; Kuku Yalanji Country</span>
+
+<section class="jrn-hero" data-screen-label="08 Journal · Hero">
+  <div class="jrn-hero-topo" aria-hidden="true"></div>
+  <div class="jrn-hero-inner">
+    <span class="eyebrow">The Journal</span>
+    <h1>Dispatches<br>from Country.</h1>
+    <p>
+      Long-form essays, field notes, ledger transparency, and conversations with the people leading the work. Published when there's something worth saying, not on a schedule.
+    </p>
   </div>
-  <h1>JOURNAL</h1>
-  <p class="masthead-sub">Field dispatches, long-form essays, and interviews from the bridge between Country and the people helping resource it.</p>
 </section>
 
-<nav class="cats" data-screen-label="08 Journal · Categories">
-  <a href="#" aria-current="true">All</a>
-  <a href="#">Field dispatches</a>
-  <a href="#">Essays</a>
-  <a href="#">Interviews</a>
-  <a href="#">Photo essays</a>
-  <a href="#">Manifesto</a>
-  <a href="#">On the money</a>
-  <a href="#">Campaign</a>
+<nav class="jrn-cats" data-screen-label="08 Journal · Filter">
+  <div class="jrn-cats-inner" role="tablist">
+    <button class="jrn-cat" aria-pressed="true" data-filter="all">All</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="manifesto">Manifesto</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="dispatch">Field dispatches</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="interview">Interviews</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="photo">Photo essays</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="ledger">On the money</button>
+    <span class="jrn-cats-count">Recent</span>
+  </div>
 </nav>
 
-<section class="feature" data-screen-label="08 Journal · Feature">
-  <div class="feature-img">
-    <img src="https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy">
-  </div>
-  <div class="feature-meta">
-    <span class="cat">Manifesto · 14 min read</span>
-    <h2>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h2>
-    <p class="excerpt">For twelve years HalfCut talked about saving the rainforest. In the last eighteen months we've quietly stopped, and the work is getting better for it. A long-form account of what changed, why, and what it took to make the change stick.</p>
-    <div class="byline">By Mia Antonelli · Creative Director · 04 Apr 2026</div>
-  </div>
-</section>
+<section class="jrn-grid" data-screen-label="08 Journal · Grid">
 
-<section class="grid" data-screen-label="08 Journal · Grid">
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>Field dispatch</span><span class="date">27 Mar</span></div>
-    <h3>Three seasons on Jabalbina Country: what the ranger program is doing, in plain language.</h3>
-    <p>Dylan Thompson spent the wet season with the Eastern Kuku Yalanji rangers. This is what the work actually looks like when nobody's watching.</p>
-    <div class="byline">Dylan Thompson · 11 min</div>
-  </a>
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1440342359743-84fcb8c21f21?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>Interview</span><span class="date">18 Mar</span></div>
-    <h3>Aunty Marilyn Wallace on the forest her grandfather knew, and the one her grandchildren will.</h3>
-    <p>An hour on Country with the Kuku Yalanji Elder who sits on HalfCut's board with veto power over every program decision.</p>
-    <div class="byline">Mia Antonelli · 9 min</div>
-  </a>
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1472213984618-c79aaec7fef0?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>On the money</span><span class="date">11 Mar</span></div>
-    <h3>Why we publish our audit notes. And why more environmental NFPs should.</h3>
-    <p>A short piece from our Treasurer on the case for radical financial transparency in a sector that still runs on trust-us.</p>
-    <div class="byline">Harlan Greer · 6 min</div>
-  </a>
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>Essay</span><span class="date">02 Mar</span></div>
-    <h3>Twelve years of shaving: what the August campaign actually accomplishes (and what it doesn't).</h3>
-    <p>An honest accounting of participatory fundraising as both engine and distraction.</p>
-    <div class="byline">Jess O'Connor · 12 min</div>
-  </a>
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>Field dispatch</span><span class="date">22 Feb</span></div>
-    <h3>A new quadrat: what 270 hectares of restoration looks like at Year 2.</h3>
-    <p>Satellite imagery, on-ground measurements, and the ecological rhythm of regeneration on Kuku Yalanji Country.</p>
-    <div class="byline">Dylan Thompson · 8 min</div>
-  </a>
-  <a class="art">
-    <div class="art-img"><img src="https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=900&q=80" loading="lazy"></div>
-    <div class="cat"><span>Campaign</span><span class="date">15 Feb</span></div>
-    <h3>Behind the Yalada Tour: three days, twelve partners, one very long dinner.</h3>
-    <p>A dispatch from the most recent cohort, what changed, what didn't, what the next one will do differently.</p>
-    <div class="byline">Amara Delgado · 7 min</div>
-  </a>
-</section>
-
-<section class="photo-essay" data-screen-label="08 Journal · Photo essay">
-  <div class="photo-essay-inner">
-    <span class="cat">Photo essay</span>
-    <h2>The forest<br>at 4am.</h2>
-    <div class="photo-strip">
-      <div style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
-      <div style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');"></div>
-      <div style="background-image: url('https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=800&q=80');"></div>
-      <div style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80');"></div>
+  <a class="jrn-card is-feature" data-cat="manifesto" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Manifesto</div>
+    <div class="jrn-card-meta">14 min read · Apr 2026</div>
+    <div class="jrn-card-body">
+      <h3>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
     </div>
-    <div class="byline">Photography awaiting Jabalbina approval · Placeholder imagery shown · 14 frames in published essay</div>
-  </div>
+  </a>
+
+  <a class="jrn-card" data-cat="dispatch" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Field dispatch</div>
+    <div class="jrn-card-meta">6 min · Mar 2026</div>
+    <div class="jrn-card-body">
+      <h3>Three seasons on Jabalbina Country.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="interview" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Interview</div>
+    <div class="jrn-card-meta">9 min · Feb 2026</div>
+    <div class="jrn-card-body">
+      <h3>Aunty Marilyn Wallace on the forest her grandfather knew.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="ledger" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">On the money</div>
+    <div class="jrn-card-meta">4 min · Feb 2026</div>
+    <div class="jrn-card-body">
+      <h3>Every dollar, published: reading the Q1 ledger.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="dispatch" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Field dispatch</div>
+    <div class="jrn-card-meta">5 min · Jan 2026</div>
+    <div class="jrn-card-body">
+      <h3>A summer of cassowary track counts.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="photo" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Photo essay</div>
+    <div class="jrn-card-meta">12 frames · Dec 2025</div>
+    <div class="jrn-card-body">
+      <h3>The corridor at year three, in twelve frames.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="interview" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Interview</div>
+    <div class="jrn-card-meta">11 min · Nov 2025</div>
+    <div class="jrn-card-body">
+      <h3>Inside a Jabalbina governance meeting.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="manifesto" href="#">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Manifesto</div>
+    <div class="jrn-card-meta">8 min · Oct 2025</div>
+    <div class="jrn-card-body">
+      <h3>Why a charity should never claim Country.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
 </section>
 
-<section class="newsletter" data-screen-label="08 Journal · Newsletter">
-  <div class="newsletter-inner">
+<section class="jrn-quote" data-screen-label="08 Journal · Quote">
+  <blockquote>
+    The forest my grandfather walked is not the forest I walk. The forest my grandchildren walk will be the one <span class="acid">we make now.</span>
+    <cite>Aunty Marilyn Wallace · Kuku Yalanji Elder</cite>
+  </blockquote>
+</section>
+
+<section class="jrn-newsletter" data-screen-label="08 Journal · Newsletter">
+  <div class="jrn-newsletter-inner">
     <div>
-      <h2>One dispatch<br>a month.</h2>
-      <p>Field notes, long-form essays, and audit transparency, straight to your inbox. No campaign drip. No ask. Unsubscribe in one click.</p>
+      <h2>Field notes,<br>straight to inbox.</h2>
+      <p>Long-form essays, ranger dispatches, and the quarterly ledger. Published when there's something worth saying. No campaign drip.</p>
     </div>
-    <form class="nl-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=\'font-family: var(--f-serif);  font-size: 20px;\'>Subscribed. Welcome.</div>'">
-      <input type="email" placeholder="your@email" required>
+    <form class="jrn-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=&quot;font-family: var(--f-serif); font-size: 20px;&quot;>Subscribed. Welcome.</div>'">
+      <input type="email" placeholder="your@email" required aria-label="Email address">
       <button class="btn btn-primary">Subscribe →</button>
     </form>
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779190580854"></script>
-<script>HC.init('journal');</script>
+<script src="assets/shell.js?v=1779192137808"></script>
+<script>
+  HC.init('journal');
+  // Filter behaviour
+  (function() {
+    const cats = document.querySelectorAll('.jrn-cat');
+    const cards = document.querySelectorAll('.jrn-card');
+    cats.forEach(c => c.addEventListener('click', () => {
+      cats.forEach(x => x.setAttribute('aria-pressed', 'false'));
+      c.setAttribute('aria-pressed', 'true');
+      const f = c.dataset.filter;
+      cards.forEach(card => {
+        const match = f === 'all' || card.dataset.cat === f;
+        card.style.display = match ? '' : 'none';
+      });
+    }));
+  })();
+</script>
 </body>
 </html>
