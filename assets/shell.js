@@ -298,7 +298,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <div>© 2026 HalfCut Ltd. ABN 00 000 000 000. Registered charity.</div>
+        <div>© 2026 HalfCut Organisation. ABN 24 642 788 814. Registered charity.</div>
         <div>We acknowledge the Traditional Owners of the lands on which we work, and pay respects to Elders past and present.</div>
       </div>
     `;

@@ -14,14 +14,17 @@
   --olive: #556B2F;           /* tertiary accent, from approved brand sheet */
 
   /* Derived */
+  --ink-85: rgba(19,20,14,.85);
   --ink-70: rgba(19,20,14,.7);
   --ink-50: rgba(19,20,14,.5);
   --ink-30: rgba(19,20,14,.3);
   --ink-15: rgba(19,20,14,.15);
   --ink-08: rgba(19,20,14,.08);
+  --cream-85: rgba(245,244,236,.85);
   --cream-70: rgba(245,244,236,.7);
   --cream-50: rgba(245,244,236,.5);
   --cream-15: rgba(245,244,236,.15);
+  --acid-glow: rgba(235,252,115,.3);
   --olive-20: rgba(85,107,47,.2);
   --olive-50: rgba(85,107,47,.5);
 
@@ -163,6 +166,34 @@ a { color: inherit; text-decoration: none; }
   opacity: .85;
 }
 .btn-ghost:hover { opacity: 1; background: rgba(255,255,255,.08); }
+/* Acid CTA — high-energy primary action */
+.btn-acid {
+  background: var(--acid);
+  color: var(--ink);
+  border-color: var(--acid);
+}
+.btn-acid:hover {
+  background: var(--ink);
+  color: var(--acid);
+  border-color: var(--ink);
+}
+/* On-dark primary — ink button on a dark surface needs cream border for separation */
+.btn-on-dark.btn-primary {
+  background: var(--cream);
+  color: var(--ink);
+  border-color: var(--cream);
+}
+.btn-on-dark.btn-primary:hover {
+  background: var(--acid);
+  color: var(--ink);
+  border-color: var(--acid);
+}
+/* Larger CTA size — used on flagship calls-to-action */
+.btn-lg, .btn-lg-cta {
+  padding: 18px 28px 17px;
+  font-size: 14px;
+  letter-spacing: .1em;
+}
 
 /* ---------- Type scale ---------- */
 .eyebrow {
