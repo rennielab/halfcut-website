@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HalfCut, Restoring Country, led by Traditional Owners</title>
-<link rel="stylesheet" href="assets/system.css?v=1779223747681">
+<link rel="stylesheet" href="assets/system.css?v=1779224094882">
 <style>
   /* ---- Hero (Inversa-style, full bleed) ---- */
   .hero {
@@ -269,13 +269,13 @@
   }
   .truth-h1 {
     font-family: var(--f-display);
-    font-size: clamp(40px, 4.4vw, 80px);
-    line-height: .9;
-    letter-spacing: -0.025em;
+    font-size: clamp(36px, 3.6vw, 64px);
+    line-height: .92;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 0 0 var(--s-5);
     text-wrap: balance;
-    max-width: 14ch;
+    max-width: 16ch;
   }
   .truth-lede {
     font-family: var(--f-serif);
@@ -299,7 +299,7 @@
   }
   .truth-stat {
     display: grid;
-    grid-template-columns: minmax(140px, 30%) 1fr;
+    grid-template-columns: minmax(170px, 34%) 1fr;
     gap: var(--s-5);
     padding: var(--s-5) 0;
     border-bottom: 1px solid var(--cream-15);
@@ -308,11 +308,11 @@
   .truth-stat:last-child { border-bottom: 0; }
   .truth-stat .big {
     font-family: var(--f-display);
-    font-size: clamp(36px, 3.6vw, 56px);
-    line-height: .9;
-    letter-spacing: -0.025em;
+    font-size: clamp(26px, 2.6vw, 40px);
+    line-height: .95;
+    letter-spacing: -0.02em;
     color: var(--acid);
-    text-wrap: balance;
+    white-space: nowrap;
   }
   .truth-stat .lbl {
     font-family: var(--f-serif);
@@ -1906,7 +1906,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779223747681"></script>
+<script src="assets/shell.js?v=1779224094882"></script>
 <script>
   HC.init('home');
 
@@ -2060,16 +2060,26 @@
   })();
 
   // Truth drawer: open/close behaviour
+  // Use delegated listeners on document because the script block runs
+  // BEFORE the .truth-panel markup is parsed at the bottom of body.
   (function truthDrawer() {
-    const panel = document.getElementById('truthPanel');
-    if (!panel) return;
     function close() {
+      const panel = document.getElementById('truthPanel');
+      if (!panel) return;
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.documentElement.style.overflow = '';
     }
-    panel.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) close(); });
+    document.addEventListener('click', (e) => {
+      // Any [data-close] inside #truthPanel closes the panel
+      const target = e.target.closest && e.target.closest('[data-close]');
+      if (target && target.closest('#truthPanel')) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const panel = document.getElementById('truthPanel');
+      if (panel && panel.classList.contains('open')) close();
+    });
   })();
 </script>
 
