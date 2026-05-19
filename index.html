@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HalfCut, Restoring Country, led by Traditional Owners</title>
-<link rel="stylesheet" href="assets/system.css?v=1779223083367">
+<link rel="stylesheet" href="assets/system.css?v=1779223747681">
 <style>
   /* ---- Hero (Inversa-style, full bleed) ---- */
   .hero {
@@ -114,41 +114,50 @@
     font-weight: 700;
   }
 
-  /* Floating trees ticker (appears after hero scrolls past) */
+  /* Floating trees ticker — fixed bottom-right, click to open Truth drawer */
   .trees-ticker {
     position: fixed;
     bottom: 22px;
-    left: 50%;
-    transform: translate(-50%, 120%);
+    right: 22px;
     z-index: 90;
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    padding: 10px 18px;
-    background: rgba(19,20,14,.82);
+    padding: 12px 18px 12px 18px;
+    background: rgba(19,20,14,.85);
     color: var(--cream);
-    border: 1px solid rgba(238,236,227,.12);
+    border: 1px solid var(--cream-15);
     border-radius: 999px;
     font-family: var(--f-sans);
+    font-weight: 600;
     font-size: 11px;
     letter-spacing: .16em;
     text-transform: uppercase;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s;
+    transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s, background .25s, border-color .25s;
+    transform: translateY(120%);
     opacity: 0;
-    pointer-events: none;
+    cursor: pointer;
     white-space: nowrap;
   }
   .trees-ticker.show {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
     opacity: 1;
+  }
+  .trees-ticker:hover {
+    background: var(--ink);
+    border-color: var(--acid);
+  }
+  .trees-ticker:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 3px;
   }
   .trees-ticker .dot {
     width: 7px; height: 7px; border-radius: 50%; background: #FF6A4A;
     animation: navDotPulse 1.6s ease-out infinite;
   }
-  .trees-ticker .label { opacity: .6; }
+  .trees-ticker .label { opacity: .65; }
   .trees-ticker .count {
     font-family: var(--f-display);
     font-size: 16px;
@@ -157,7 +166,215 @@
     text-transform: none;
     font-variant-numeric: tabular-nums;
   }
-  .trees-ticker .sep { opacity: .25; }
+  .trees-ticker .more {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--cream-15);
+    margin-left: 4px;
+    transition: background .25s, color .25s, border-color .25s;
+    color: var(--acid);
+  }
+  .trees-ticker:hover .more {
+    background: var(--acid);
+    color: var(--ink);
+    border-color: var(--acid);
+  }
+
+  /* ---- Truth drawer (deforestation facts) ---- */
+  .truth-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 220;
+    pointer-events: none;
+  }
+  .truth-panel-scrim {
+    position: absolute; inset: 0;
+    background: rgba(11,12,8,.55);
+    opacity: 0;
+    transition: opacity .4s var(--ease);
+    backdrop-filter: blur(2px);
+  }
+  .truth-panel-card {
+    position: absolute;
+    top: 0; right: 0;
+    height: 100%;
+    width: 50vw;
+    min-width: 480px;
+    background: var(--ink);
+    color: var(--cream);
+    transform: translateX(100%);
+    transition: transform .55s var(--ease-firm);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    box-shadow: -24px 0 64px rgba(0,0,0,.55);
+    position: absolute;
+  }
+  .truth-panel.open { pointer-events: auto; }
+  .truth-panel.open .truth-panel-scrim { opacity: 1; }
+  .truth-panel.open .truth-panel-card { transform: translateX(0); }
+  .truth-head {
+    position: relative;
+    padding: var(--s-7) var(--s-8) var(--s-6);
+    border-bottom: 1px solid var(--cream-15);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--ink);
+  }
+  .truth-head .label {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--acid); font-weight: 700;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .truth-head .label::before {
+    content: ''; width: 7px; height: 7px;
+    border-radius: 50%; background: #FF6A4A;
+    animation: navDotPulse 1.6s ease-out infinite;
+  }
+  .truth-close {
+    background: transparent;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: var(--f-sans); font-weight: 600;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cream);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .truth-close:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+  .truth-body {
+    overflow-y: auto;
+    padding: var(--s-8) var(--s-8) var(--s-9);
+    position: relative;
+  }
+  .truth-body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('assets/topo-pattern.png');
+    background-size: 1100px auto;
+    background-repeat: repeat;
+    opacity: .04;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .truth-body > * { position: relative; z-index: 1; }
+  .truth-eyebrow {
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--acid); font-weight: 700;
+    display: block; margin-bottom: var(--s-5);
+  }
+  .truth-h1 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 4.4vw, 80px);
+    line-height: .9;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-5);
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  .truth-lede {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.45;
+    opacity: .82;
+    max-width: 52ch;
+    margin: 0 0 var(--s-8);
+  }
+  .truth-section {
+    border-top: 1px solid var(--cream-15);
+    padding-top: var(--s-7);
+    margin-top: var(--s-7);
+  }
+  .truth-section-label {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    opacity: .55; font-weight: 700;
+    margin-bottom: var(--s-5); display: block;
+  }
+  .truth-stat {
+    display: grid;
+    grid-template-columns: minmax(140px, 30%) 1fr;
+    gap: var(--s-5);
+    padding: var(--s-5) 0;
+    border-bottom: 1px solid var(--cream-15);
+    align-items: baseline;
+  }
+  .truth-stat:last-child { border-bottom: 0; }
+  .truth-stat .big {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 3.6vw, 56px);
+    line-height: .9;
+    letter-spacing: -0.025em;
+    color: var(--acid);
+    text-wrap: balance;
+  }
+  .truth-stat .lbl {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.45;
+    opacity: .82;
+    max-width: 50ch;
+  }
+  .truth-stat .src {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    opacity: .45; font-weight: 700;
+  }
+  .truth-pull {
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    padding: var(--s-6);
+    margin: var(--s-7) 0 0;
+    background: rgba(245,244,236,.03);
+  }
+  .truth-pull blockquote {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .truth-pull cite {
+    display: block;
+    margin-top: var(--s-4);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    opacity: .55;
+    font-style: normal;
+  }
+  .truth-foot {
+    padding: var(--s-5) var(--s-8);
+    border-top: 1px solid var(--cream-15);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-5); flex-wrap: wrap;
+    background: var(--ink);
+  }
+  .truth-foot .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .truth-foot .actions .btn { padding: 12px 20px 11px; font-size: 11px; }
+  .truth-foot .meta {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    opacity: .5;
+  }
+
+  @media (max-width: 960px) {
+    .truth-panel-card { width: 92vw; min-width: 0; }
+    .truth-head, .truth-body, .truth-foot { padding-left: var(--s-5); padding-right: var(--s-5); }
+    .truth-stat { grid-template-columns: 1fr; }
+    .truth-stat .big { font-size: clamp(32px, 7vw, 44px); }
+    .trees-ticker { right: 12px; bottom: 12px; padding: 10px 14px; }
+  }
 
   .manifesto {
     font-family: var(--f-display);
@@ -1689,7 +1906,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779223083367"></script>
+<script src="assets/shell.js?v=1779223747681"></script>
 <script>
   HC.init('home');
 
@@ -1729,16 +1946,29 @@
     const ha = document.getElementById('trk-ha');
     if (!trees || !ha) return;
 
-    // Floating ticker (appears after hero)
-    const floatTicker = document.createElement('div');
+    // Floating ticker (appears after hero) — click opens Truth drawer
+    const floatTicker = document.createElement('button');
     floatTicker.className = 'trees-ticker';
+    floatTicker.type = 'button';
+    floatTicker.setAttribute('aria-label', 'Open deforestation truth drawer');
     floatTicker.innerHTML = `
       <span class="dot" aria-hidden="true"></span>
       <span class="label">Trees lost since you arrived</span>
       <span class="count" id="trk-trees-float">0</span>
+      <span class="more" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg>
+      </span>
     `;
     document.body.appendChild(floatTicker);
     const treesFloat = document.getElementById('trk-trees-float');
+    floatTicker.addEventListener('click', () => {
+      const panel = document.getElementById('truthPanel');
+      if (panel) {
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = 'hidden';
+      }
+    });
 
     const TREES_PER_SEC = 149;
     const HA_PER_SEC = 27400 / 86400;       // ~0.317 ha/sec
@@ -1828,7 +2058,117 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
   })();
+
+  // Truth drawer: open/close behaviour
+  (function truthDrawer() {
+    const panel = document.getElementById('truthPanel');
+    if (!panel) return;
+    function close() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+    }
+    panel.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) close(); });
+  })();
 </script>
+
+<!-- ============== TRUTH DRAWER (deforestation source-of-truth) ============== -->
+<div class="truth-panel" id="truthPanel" aria-hidden="true">
+  <div class="truth-panel-scrim" data-close></div>
+  <aside class="truth-panel-card" role="dialog" aria-modal="true" aria-labelledby="truthPanelTitle">
+    <header class="truth-head">
+      <span class="label">Live · The truth about forests</span>
+      <button class="truth-close" data-close aria-label="Close truth drawer">Close <span aria-hidden="true">✕</span></button>
+    </header>
+
+    <div class="truth-body">
+      <span class="truth-eyebrow">Source of truth</span>
+      <h2 class="truth-h1" id="truthPanelTitle">Half the world's<br>forests are gone.</h2>
+      <p class="truth-lede">
+        Not a slogan. A documented fact. The numbers below are drawn from public data, audited research, and the ground itself. They're why HalfCut exists.
+      </p>
+
+      <div class="truth-section">
+        <span class="truth-section-label">Global · what's left</span>
+        <div class="truth-stat">
+          <div class="big">&lt; 3%</div>
+          <div class="lbl">of the world's original rainforest still standing. The rest is gone, fragmented, or in the queue to be cleared.<span class="src">Source: HalfCut Organisation · halfcut.org/impact</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">10 M ha</div>
+          <div class="lbl">of forest lost worldwide every year, roughly 27,400 hectares a day. That's 149 trees per second, every second, today.<span class="src">Source: Global Forest Watch · FAO Forest Resources Assessment</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">80%</div>
+          <div class="lbl">of terrestrial biodiversity lives in forests. When forests fall, so do the species that exist nowhere else.<span class="src">Source: UN Convention on Biological Diversity</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">~10%</div>
+          <div class="lbl">of global greenhouse-gas emissions come directly from deforestation and forest degradation.<span class="src">Source: IPCC AR6 · Working Group III</span></div>
+        </div>
+      </div>
+
+      <div class="truth-section">
+        <span class="truth-section-label">Australia · the quiet crisis</span>
+        <div class="truth-stat">
+          <div class="big">Top 5</div>
+          <div class="lbl">deforesting nations in the developed world. Australia is the only OECD country on the global deforestation hotlist.<span class="src">Source: WWF Deforestation Fronts report</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">50%</div>
+          <div class="lbl">of Australia's forests have already been destroyed. Most of it on Country that was never ceded.<span class="src">Source: HalfCut Organisation · halfcut.org/about</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">50%</div>
+          <div class="lbl">of Australia's landmass is used for cattle. Forest clearing for pasture remains the single largest driver of habitat loss.<span class="src">Source: HalfCut Organisation · ABARES land-use survey</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">50%</div>
+          <div class="lbl">of Australia's land is under First Nations ownership, management, or co-management. The people who have cared for Country longest hold the deepest part of the answer.<span class="src">Source: HalfCut Organisation · National Native Title Tribunal</span></div>
+        </div>
+      </div>
+
+      <div class="truth-section">
+        <span class="truth-section-label">The Daintree · what we're protecting</span>
+        <div class="truth-stat">
+          <div class="big">120 M yrs</div>
+          <div class="lbl">old. The Daintree Lowland Rainforest is the oldest tropical rainforest on Earth, and the largest continuous area of tropical rainforest remaining in Australia.<span class="src">Source: HalfCut Organisation · UNESCO Wet Tropics World Heritage Area</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">203 ha</div>
+          <div class="lbl">currently in active buyback. Daintree River Station, a once-in-a-generation rainforest acquisition, with 170+ hectares targeted for rewilding as cassowary habitat.<span class="src">Source: HalfCut Organisation · halfcut.org/impact</span></div>
+        </div>
+        <div class="truth-stat">
+          <div class="big">150+</div>
+          <div class="lbl">rainforest fruits eaten and dispersed by the Southern Cassowary. Without them, the seeds don't move, the forest doesn't regenerate. They're listed Vulnerable to extinction.<span class="src">Source: Australian Government · EPBC Act listing</span></div>
+        </div>
+      </div>
+
+      <div class="truth-pull">
+        <blockquote>
+          &ldquo;If you don't do it now, you'll probably never get another chance.&rdquo;
+        </blockquote>
+        <cite>— Dean Anderson · current caretaker, Daintree River Station</cite>
+      </div>
+
+      <div class="truth-section">
+        <span class="truth-section-label">What we do about it</span>
+        <p style="font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; opacity: .85; max-width: 56ch; margin: 0;">
+          HalfCut funds First Nations-led conservation. One hundred per cent of profits go to Country, through Jabalbina Yalanji Aboriginal Corporation, into eight pillars: land acquisition, rewilding, Indigenous employment, affordable housing, regenerative agriculture, language revitalisation, education, and cultural healing. Registered Australian charity since 2019. ACNC public record.
+        </p>
+      </div>
+    </div>
+
+    <footer class="truth-foot">
+      <div class="actions">
+        <a href="donate.html" class="btn btn-primary btn-on-dark">Resource the work →</a>
+        <a href="impact.html" class="btn btn-secondary on-ink">Full impact report</a>
+      </div>
+      <div class="meta">HalfCut · ABN 24 642 788 814</div>
+    </footer>
+  </aside>
+</div>
 
 </body>
 </html>
