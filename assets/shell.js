@@ -277,23 +277,22 @@
         </div>
       </div>
       <div class="footer-partners" aria-label="Our sponsors and partners">
-        <div class="footer-partners-head">
-          <span class="eyebrow">Our sponsors</span>
-          <span class="footer-partners-count">Resourcing the work · FY26</span>
-        </div>
-        <div class="footer-partners-row">
-          <span class="partner-mark"><img src="assets/sponsors/ben-jerrys.png" alt="Ben &amp; Jerry's" loading="lazy"></span>
-          <span class="partner-mark"><img src="assets/sponsors/dr-v.svg" alt="Dr.V" loading="lazy"></span>
-          <span class="partner-mark"><img src="assets/sponsors/seven-mile.png" alt="Seven Mile Brewing Co." loading="lazy"></span>
-          <span class="partner-mark"><img src="assets/sponsors/laidre.png" alt="Laidre" loading="lazy"></span>
-          <span class="partner-mark"><img src="assets/sponsors/forest-tree-service.png" alt="Forest Tree Service" loading="lazy"></span>
-        </div>
-        <div class="footer-to-partner" aria-label="Traditional Owner partner">
-          <span class="label">Our Traditional Owner partner</span>
-          <img src="assets/sponsors/jabalbina.png" alt="Jabalbina Yalanji Aboriginal Corporation" loading="lazy">
-        </div>
-        <div class="footer-partners-foot">
-          <a href="contact.html" class="footer-partners-cta">Become a sponsor →</a>
+        <div class="footer-partners-inner">
+          <div class="footer-partners-head">
+            <span class="eyebrow">Our sponsors</span>
+            <span class="footer-partners-count">Resourcing the work · FY26</span>
+          </div>
+          <div class="footer-partners-row">
+            <span class="partner-mark"><img src="assets/sponsors/ben-jerrys.png" alt="Ben &amp; Jerry's" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/dr-v.svg" alt="Dr.V" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/seven-mile.png" alt="Seven Mile Brewing Co." loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/laidre.png" alt="Laidre" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/forest-tree-service.png" alt="Forest Tree Service" loading="lazy"></span>
+          </div>
+          <div class="footer-to-partner" aria-label="Traditional Owner partner">
+            <span class="label">Our Traditional Owner partner</span>
+            <img src="assets/sponsors/jabalbina.png" alt="Jabalbina Yalanji Aboriginal Corporation" loading="lazy">
+          </div>
         </div>
       </div>
       <div class="footer-bottom">

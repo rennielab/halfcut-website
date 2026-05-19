@@ -941,18 +941,23 @@ img.footer-wordmark {
 
 
 /* ---------- Footer partner strip ---------- */
+/* Sponsors band — cream surface so brand logos show natural colour */
 .footer-partners {
+  background: var(--cream);
+  color: var(--ink);
+  padding: var(--s-9) var(--pad-x) var(--s-8);
+  margin: 0 calc(-1 * var(--pad-x));
+}
+.footer-partners-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: var(--s-8) 0 var(--s-7);
-  border-bottom: 1px solid var(--cream-15);
 }
 .footer-partners-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 24px;
-  margin-bottom: var(--s-5);
+  margin-bottom: var(--s-6);
   flex-wrap: wrap;
 }
 .footer-partners-head .eyebrow {
@@ -961,53 +966,47 @@ img.footer-wordmark {
   letter-spacing: .22em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--acid);
+  color: var(--ink);
 }
 .footer-partners-count {
   font-family: var(--f-sans);
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--cream);
-  opacity: .5;
+  color: var(--ink);
+  opacity: .45;
 }
 .footer-partners-row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--cream-15);
-  border-left: 1px solid var(--cream-15);
+  gap: var(--s-4);
 }
 .partner-mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 110px;
-  padding: 22px 20px;
-  border-right: 1px solid var(--cream-15);
-  border-bottom: 1px solid var(--cream-15);
-  transition: opacity .25s ease, background .25s ease;
+  min-height: 130px;
+  padding: 22px 24px;
+  background: var(--stone);
+  border-radius: 4px;
+  transition: background .25s ease;
 }
 .partner-mark img {
-  max-height: 56px;
+  max-height: 72px;
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  /* Render any logo (black, full-colour, white) as uniform cream silhouette */
-  filter: brightness(0) invert(1);
-  opacity: .72;
-  transition: opacity .25s ease, filter .25s ease;
+  transition: transform .25s ease;
 }
-.partner-mark:hover { background: rgba(235,252,115,.04); }
-.partner-mark:hover img {
-  filter: none;
-  opacity: 1;
-}
-/* TO partner (Jabalbina) separate row, full-colour treatment */
+.partner-mark:hover { background: rgba(235,252,115,.45); }
+.partner-mark:hover img { transform: scale(1.04); }
+
+/* TO partner (Jabalbina) separate row, on ink for emphasis */
 .footer-to-partner {
   margin-top: var(--s-7);
-  padding-top: var(--s-6);
-  border-top: 1px solid var(--cream-15);
+  padding: var(--s-6) var(--s-7);
+  background: var(--ink);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1025,8 +1024,9 @@ img.footer-wordmark {
 .footer-to-partner img {
   max-height: 64px;
   width: auto;
+  /* Jabalbina logo is dark on light — invert for ink background */
   filter: brightness(0) invert(1);
-  opacity: .85;
+  opacity: .9;
 }
 
 .footer-partners-foot {
