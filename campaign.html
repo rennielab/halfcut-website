@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Campaign, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1779225169214">
+<link rel="stylesheet" href="assets/system.css?v=1779225343208">
 <style>
   body { background: var(--ink); color: var(--cream); }
 
@@ -433,7 +433,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779225169214"></script>
+<script src="assets/shell.js?v=1779225343208"></script>
 <script>
   HC.init('projects');
 
@@ -441,7 +441,7 @@
   const CAMPAIGNS = {
     daintree: {
       tag: 'Flagship · Active 2026',
-      title: 'Daintree River Station — the rainforest buyback.',
+      title: 'Daintree River Station, the rainforest buyback.',
       lede: '203 hectares of Daintree Lowland Rainforest, with 170+ hectares targeted for rewilding as cassowary habitat, returned to the care of the Eastern Kuku Yalanji Bama people.',
       hero: 'https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=2400&q=80',
       issue: "Daintree River Station is a 203-hectare freehold parcel inside the world's oldest tropical rainforest. Without buyback, it sits exposed to further development. Once it's gone, it doesn't come back.",
@@ -460,7 +460,7 @@
         <div class="cmp-pull">
           <blockquote>
             "If you don't do it now, you'll probably never get another chance."
-            <cite>— Dean Anderson · current caretaker, Daintree River Station</cite>
+            <cite>Dean Anderson · current caretaker, Daintree River Station</cite>
           </blockquote>
         </div>
         <p>The campaign funds the acquisition in full, transfers title to Jabalbina, and resources the first three years of the rewilding plan. It is not a perpetual ask. It is a one-time, time-sensitive moment.</p>
@@ -475,11 +475,11 @@
     },
     yalada: {
       tag: 'Annual program',
-      title: 'The Yalada Tour — values-aligned giving on Country.',
+      title: 'The Yalada Tour, values-aligned giving on Country.',
       lede: 'Three days on Eastern Kuku Yalanji Country with a small cohort of values-aligned partners. Immersive cultural exchange, shared governance, deep briefing on the restoration work they help resource.',
       hero: 'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=2400&q=80',
       issue: "Conservation funding usually happens in boardrooms, far from Country and far from the people doing the work. The result: well-intentioned money attached to badly-aligned outcomes.",
-      approach: "Once a year, HalfCut brings a small cohort of values-aligned partners onto Kuku Yalanji Country. Hosted by Jabalbina rangers. Briefing, ceremony, and shared governance &mdash; in that order.",
+      approach: "Once a year, HalfCut brings a small cohort of values-aligned partners onto Kuku Yalanji Country. Hosted by Jabalbina rangers. Briefing, ceremony, and shared governance , in that order.",
       email: "Yalada Tour spots are by invitation. Email partners@halfcut.org if your organisation is interested in joining a future cohort.",
       stats: [
         { k: 'Frequency',     v: 'Annual',    note: 'Three days, once per year.' },
@@ -502,7 +502,7 @@
     },
     capacity: {
       tag: 'Replicable model',
-      title: 'Capacity codified — documenting the Jabalbina model.',
+      title: 'Capacity codified, documenting the Jabalbina model.',
       lede: 'A long-term project to document the governance, funding flow, and accountability structures HalfCut has built with Jabalbina, so other Traditional Owner corporations can adopt and adapt them.',
       hero: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=80',
       issue: "The Jabalbina x HalfCut model works. It is one of the few First Nations-led conservation partnerships in Australia that has held together for six years and continues to scale. But the model lives in heads, emails, and informal conventions, not in a usable document.",
@@ -530,11 +530,11 @@
     },
     southern: {
       tag: 'Scoping · 2026',
-      title: 'Southern Rainforests — a second partnership in development.',
+      title: 'Southern Rainforests, a second partnership in development.',
       lede: 'Scoping a second long-form partnership with a Traditional Owner corporation in the Gondwana rainforest region of northern New South Wales.',
       hero: 'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=2400&q=80',
       issue: "The Gondwana rainforests of northern NSW are a UNESCO World Heritage Area, the oldest continuous rainforests outside the Tropics. Fire, fragmentation, and underfunding for Traditional Owner-led management are stacking risks faster than the system can absorb them.",
-      approach: "HalfCut is in early-stage conversation with a Traditional Owner corporation in the region. Scoping work begins with cultural authority, governance design, and funding architecture &mdash; before any specific restoration plan.",
+      approach: "HalfCut is in early-stage conversation with a Traditional Owner corporation in the region. Scoping work begins with cultural authority, governance design, and funding architecture , before any specific restoration plan.",
       email: "Scoping is private at this stage. We will publish more when our partner is ready to be named publicly.",
       stats: [
         { k: 'Status',        v: 'Scoping',      note: 'Cultural authority and governance design.' },
@@ -561,7 +561,7 @@
   const key = urlParam('c') || 'daintree';
   const c = CAMPAIGNS[key] || CAMPAIGNS.daintree;
 
-  document.title = c.title.split(/[—.]/)[0].trim() + ' · HalfCut';
+  document.title = c.title.split('.')[0].trim() + ' · HalfCut';
   document.getElementById('cmpHeroBg').style.backgroundImage = `url('${c.hero}')`;
   document.getElementById('cmpTag').textContent = c.tag;
   document.getElementById('cmpTitle').textContent = c.title;
