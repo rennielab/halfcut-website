@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HalfCut, Restoring Country, led by Traditional Owners</title>
-<link rel="stylesheet" href="assets/system.css?v=1779192391601">
+<link rel="stylesheet" href="assets/system.css?v=1779192829786">
 <style>
   /* ---- Hero (Inversa-style, full bleed) ---- */
   .hero {
@@ -674,13 +674,16 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    align-items: stretch;
     gap: 0;
     border-bottom: 1px solid var(--cream-15);
   }
   .pillar:last-child { border-bottom: 0; }
   .pillar-text {
-    padding: 120px 80px;
+    padding: var(--s-9) var(--s-9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .pillar-text .eyebrow { color: var(--acid); margin-bottom: 24px; display: block; }
   .pillar-text h2 {
@@ -701,7 +704,8 @@
   }
   .pillar-media {
     position: relative;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     overflow: hidden;
   }
   .pillar-media img, .pillar-media .media-solid {
@@ -1614,7 +1618,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779192391601"></script>
+<script src="assets/shell.js?v=1779192829786"></script>
 <script>
   HC.init('home');
 
