@@ -42,20 +42,22 @@
   function buildNav() {
     const nav = document.createElement('header');
     nav.className = 'nav';
-    const dotCls = totalFresh() > 0 ? 'nav-dot pulse' : 'nav-dot';
+    const hasFresh = totalFresh() > 0;
+    const dotCls = hasFresh ? 'nav-dot pulse' : 'nav-dot';
     nav.innerHTML = `
       <a href="index.html" class="nav-logo" aria-label="HalfCut home">
         <img src="assets/logo-wordmark-transparent.png" alt="HalfCut">
       </a>
       <div class="nav-right">
-        <button class="nav-item" data-open="updates" aria-label="Latest updates">
-          <span class="${dotCls}" aria-hidden="true"></span>Updates
-        </button>
+        <a href="take-action.html" class="nav-item" aria-label="Take action">
+          Take Action
+        </a>
         <a href="donate.html" class="nav-item nav-donate-pill" aria-label="Donate">
           <span class="nav-donate-topo" aria-hidden="true"></span>
           <span class="nav-donate-label">Donate</span>
         </a>
-        <button class="nav-item nav-menu-btn" data-open="menu" aria-label="Open menu">
+        <button class="nav-item nav-menu-btn" data-open="menu" aria-label="Open menu${hasFresh ? ' — new updates available' : ''}">
+          ${hasFresh ? `<span class="${dotCls}" aria-hidden="true"></span>` : ''}
           <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
           Menu
         </button>
@@ -64,7 +66,6 @@
     document.body.prepend(nav);
 
     nav.querySelector('[data-open="menu"]').addEventListener('click', () => openPanel('menu'));
-    nav.querySelector('[data-open="updates"]').addEventListener('click', () => openPanel('updates'));
   }
 
   // =========================================================================
@@ -94,6 +95,11 @@
     document.body.appendChild(p);
 
     p.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closePanel));
+    // Delegated: a link inside the menu can switch the panel to Updates
+    p.addEventListener('click', (e) => {
+      const sw = e.target.closest && e.target.closest('[data-open-from-menu]');
+      if (sw) { e.preventDefault(); openPanel(sw.getAttribute('data-open-from-menu')); }
+    });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closePanel();
       trapFocus(e);
@@ -169,6 +175,9 @@
         ).join('')}
       </nav>
       <div class="menu-secondary">
+        <button class="menu-secondary-link" data-open-from-menu="updates">
+          ${totalFresh() > 0 ? '<span class="menu-fresh-dot" aria-hidden="true"></span>' : ''}Updates${totalFresh() > 0 ? ' · new' : ''} <span aria-hidden="true">→</span>
+        </button>
         <a href="https://halfcut.gumroad.com" target="_blank" rel="noopener" class="menu-secondary-link">Store <span aria-hidden="true">↗</span></a>
         <div class="menu-social">
           <a href="#">Instagram</a>

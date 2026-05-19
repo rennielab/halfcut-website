@@ -614,9 +614,25 @@ a { color: inherit; text-decoration: none; }
   color: var(--cream);
   opacity: .8;
   text-decoration: none;
-  transition: opacity .2s;
+  transition: opacity .2s, color .2s;
+  /* button reset (the Updates entry is a <button>) */
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
 }
 .menu-secondary-link:hover { opacity: 1; color: var(--acid); }
+.menu-fresh-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #FF6A4A;
+  display: inline-block;
+  animation: navDotPulse 1.8s ease-out infinite;
+}
 .menu-social {
   display: flex;
   gap: 24px;
