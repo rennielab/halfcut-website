@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HalfCut, Restoring Country, led by Traditional Owners</title>
-<link rel="stylesheet" href="assets/system.css?v=1779193088291">
+<link rel="stylesheet" href="assets/system.css?v=1779222817494">
 <style>
   /* ---- Hero (Inversa-style, full bleed) ---- */
   .hero {
@@ -985,60 +985,112 @@
     line-height: .9; letter-spacing: -0.02em; text-transform: uppercase;
   }
 
-  /* ---- Journal preview ---- */
+  /* ---- Journal preview — matches journal.html dark card grid ---- */
   .journal {
     padding: var(--s-10) var(--pad-x) var(--s-11);
-    background: var(--cream);
+    background: var(--ink);
+    color: var(--cream);
   }
   .journal-head {
     max-width: 1440px; margin: 0 auto var(--s-8);
     display: flex; justify-content: space-between; align-items: baseline;
+    gap: var(--s-6); flex-wrap: wrap;
   }
   .journal-head h2 {
     font-family: var(--f-display); font-size: clamp(42px, 5.25vw, 90px);
     line-height: .9; letter-spacing: -0.02em; text-transform: uppercase;
+    max-width: 14ch;
   }
   .journal-grid {
     max-width: 1440px; margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-7);
-    align-items: stretch;
-  }
-  .journal-right {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-6);
-    align-content: start;
-  }
-  .journal-right .jcard { padding-top: var(--s-4); }
-  .journal-right .jcard-img { aspect-ratio: 4/3; margin-bottom: 14px; }
-  .journal-right .jcard h3 { font-size: clamp(17px, 1.2vw, 20px); line-height: 1.2; }
-  .journal-right .jcard .meta { font-size: 10px; margin-bottom: 8px; }
-  @media (max-width: 900px) {
-    .journal-grid { grid-template-columns: 1fr; }
-    .journal-right { grid-template-columns: 1fr 1fr; }
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--s-5);
   }
   .jcard {
-    display: flex; flex-direction: column;
-    border-top: 1px solid var(--ink-15);
-    padding-top: var(--s-5);
+    position: relative; display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px; overflow: hidden;
+    background: var(--ink); color: var(--cream);
+    text-decoration: none;
+    isolation: isolate;
+    transition: transform .35s var(--ease);
   }
-  .jcard:hover .jcard-img img { transform: scale(1.04); }
-  .jcard-img { overflow: hidden; margin-bottom: var(--s-5); aspect-ratio: 4/3; background: var(--stone); }
-  .jcard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
-  .jcard .meta { font-family: var(--f-sans); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .55; margin-bottom: 12px; display: flex; justify-content: space-between; }
+  .jcard.feature {
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+  .jcard-img {
+    position: absolute; inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .jcard-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.6) saturate(.85);
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+  }
+  .jcard:hover .jcard-img img { transform: scale(1.04); filter: brightness(.75) saturate(1); }
+  .jcard::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.4) 0%, rgba(19,20,14,.2) 45%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
+  }
+  .jcard .meta {
+    position: absolute; top: 22px; left: 22px; right: 22px;
+    z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--cream);
+  }
+  .jcard .meta > span:first-child {
+    padding: 8px 14px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--acid);
+    font-weight: 700;
+    letter-spacing: .18em;
+  }
+  .jcard .meta > span:last-child { opacity: .65; }
+  .jcard .meta-row {
+    position: absolute; left: 26px; right: 26px; bottom: 26px;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  }
   .jcard h3 {
-    font-family: var(--f-serif);
+    font-family: var(--f-display);
     font-weight: 400;
-    font-size: clamp(22px, 1.7vw, 30px);
-    line-height: 1.15;
-    letter-spacing: -0.005em;
-    margin-bottom: 12px;
+    font-size: clamp(20px, 1.8vw, 28px);
+    line-height: .95;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0;
     text-wrap: balance;
+    color: var(--cream);
   }
-  .jcard.feature h3 { font-size: clamp(36px, 3.5vw, 54px); line-height: 1.05; }
-  .jcard p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; opacity: .7; }
+  .jcard.feature h3 {
+    font-size: clamp(32px, 3.4vw, 56px);
+  }
+  .jcard .plus {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .jcard:hover .plus { background: var(--acid); color: var(--ink); }
+  .jcard .plus svg { width: 16px; height: 16px; }
+  @media (max-width: 900px) {
+    .journal-grid { grid-template-columns: 1fr; }
+    .jcard.feature { grid-row: auto; aspect-ratio: 4/5; }
+  }
 
   /* ---- CTA band ---- */
   .cta-band {
@@ -1561,48 +1613,66 @@
 <!-- =================== JOURNAL PREVIEW =================== -->
 <section class="journal" data-screen-label="01 Home · Journal">
   <div class="journal-head">
-    <h2>Field notes from<br>Country.</h2>
-    <a href="journal.html" class="btn btn-secondary">All dispatches →</a>
+    <h2>Field notes<br>from Country.</h2>
+    <a href="journal.html" class="btn btn-primary btn-on-dark">All dispatches →</a>
   </div>
   <div class="journal-grid">
+
     <a class="jcard feature" href="journal.html">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=1600&q=80" alt="Long-form essay cover" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80" alt="Long-form essay cover">
       </div>
-      <div class="meta"><span>Manifesto · 14 min read</span><span>April 2026</span></div>
-      <h3>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h3>
-      <p>A long-form essay on why HalfCut's job is to resource, not to lead, and what that means for how we write, partner, and govern ourselves from here.</p>
+      <div class="meta"><span>Manifesto · 14 min</span><span>Apr 2026</span></div>
+      <div class="meta-row">
+        <h3>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
     </a>
-    <div class="journal-right">
-      <a class="jcard" href="journal.html">
-        <div class="jcard-img">
-          <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=900&q=80" alt="Dispatch cover" loading="lazy">
-        </div>
-        <div class="meta"><span>Dispatch · 6 min</span><span>Mar 2026</span></div>
-        <h3>Three seasons on Jabalbina Country: what the ranger program is doing, in plain language.</h3>
-      </a>
-      <a class="jcard" href="journal.html">
-        <div class="jcard-img">
-          <img src="https://images.unsplash.com/photo-1440342359743-84fcb8c21f21?auto=format&fit=crop&w=900&q=80" alt="Interview cover" loading="lazy">
-        </div>
-        <div class="meta"><span>Interview · 9 min</span><span>Feb 2026</span></div>
-        <h3>Aunty Marilyn Wallace on the forest her grandfather knew, and the one her grandchildren will.</h3>
-      </a>
-      <a class="jcard" href="journal.html">
-        <div class="jcard-img">
-          <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=900&q=80" alt="Ledger cover" loading="lazy">
-        </div>
-        <div class="meta"><span>Ledger · 4 min</span><span>Feb 2026</span></div>
-        <h3>Every dollar, published: reading the Q1 ledger the same way we publish it.</h3>
-      </a>
-      <a class="jcard" href="journal.html">
-        <div class="jcard-img">
-          <img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80" alt="Field note cover" loading="lazy">
-        </div>
-        <div class="meta"><span>Field note · 5 min</span><span>Jan 2026</span></div>
-        <h3>What we learned from a summer of cassowary track counts on Kuku Yalanji Country.</h3>
-      </a>
-    </div>
+
+    <a class="jcard" href="journal.html">
+      <div class="jcard-img">
+        <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80" alt="Dispatch cover">
+      </div>
+      <div class="meta"><span>Dispatch · 6 min</span><span>Mar 2026</span></div>
+      <div class="meta-row">
+        <h3>Three seasons on Jabalbina Country.</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+
+    <a class="jcard" href="journal.html">
+      <div class="jcard-img">
+        <img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80" alt="Interview cover">
+      </div>
+      <div class="meta"><span>Interview · 9 min</span><span>Feb 2026</span></div>
+      <div class="meta-row">
+        <h3>Aunty Marilyn Wallace on the forest her grandfather knew.</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+
+    <a class="jcard" href="journal.html">
+      <div class="jcard-img">
+        <img src="https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80" alt="Ledger cover">
+      </div>
+      <div class="meta"><span>On the money · 4 min</span><span>Feb 2026</span></div>
+      <div class="meta-row">
+        <h3>Every dollar, published.</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+
+    <a class="jcard" href="journal.html">
+      <div class="jcard-img">
+        <img src="https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1200&q=80" alt="Field note cover">
+      </div>
+      <div class="meta"><span>Field note · 5 min</span><span>Jan 2026</span></div>
+      <div class="meta-row">
+        <h3>A summer of cassowary track counts.</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+
   </div>
 </section>
 
@@ -1619,7 +1689,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779193088291"></script>
+<script src="assets/shell.js?v=1779222817494"></script>
 <script>
   HC.init('home');
 
