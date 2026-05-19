@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>About, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1779190341979">
+<link rel="stylesheet" href="assets/system.css?v=1779190580854">
 <style>
   .about-hero {
-    padding: var(--hero-pad-top) var(--pad-x) 120px;
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom);
     background: var(--cream);
     position: relative;
     border-bottom: 1px solid var(--ink-15);
@@ -238,7 +238,7 @@
   }
 
   @media (max-width: 960px) {
-    .about-hero { padding: var(--hero-pad-top) var(--pad-x) 64px; }
+    .about-hero { padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm); }
     .about-hero-bottom, .values-head, .framework-cols { grid-template-columns: 1fr; gap: var(--s-6); }
     .values-grid { grid-template-columns: 1fr 1fr; }
     .value:nth-child(2n) { border-right: 0; }
@@ -384,7 +384,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779190341979"></script>
+<script src="assets/shell.js?v=1779190580854"></script>
 <script>HC.init('about');</script>
 </body>
 </html>

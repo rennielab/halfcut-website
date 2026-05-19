@@ -53,7 +53,9 @@
   --pad-section-lg: var(--s-11);  /* feature section vertical padding, 192px */
   --pad-section-sm: var(--s-9);   /* tighter sections, 96px */
   --hero-pad-top:    180px;       /* below fixed nav, all page heroes */
-  --hero-pad-bottom: var(--s-10); /* base of a page hero */
+  --hero-pad-top-sm: 140px;       /* tighter top for smaller/text-only heroes */
+  --hero-pad-bottom: var(--s-10); /* base of a page hero (128px) */
+  --hero-pad-bottom-sm: var(--s-8); /* tighter base of a smaller hero (64px) */
 
   /* Motion tokens — one easing curve across the site */
   --ease:      cubic-bezier(.2,.7,.2,1);

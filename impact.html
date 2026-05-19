@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Impact, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1779190341979">
+<link rel="stylesheet" href="assets/system.css?v=1779190580854">
 <style>
   .imp-hero {
-    padding: var(--hero-pad-top) var(--pad-x) 120px;
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom);
     background: var(--ink);
     color: var(--cream);
     position: relative;
@@ -519,7 +519,7 @@
   .story-xl-cite-meta { font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; opacity: .4; text-align: right; max-width: 22ch; }
 
   @media (max-width: 960px) {
-    .imp-hero { padding: var(--hero-pad-top) var(--pad-x) 64px; }
+    .imp-hero { padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm); }
     .imp-hero-bottom, .dollar-inner, .story-inner, .method-inner { grid-template-columns: 1fr; }
     .ledger-row { grid-template-columns: 60px 1fr 1fr; font-size: 14px; }
     .ledger-row > :nth-child(4), .ledger-row > :nth-child(5), .ledger-row > :nth-child(6) { display: none; }
@@ -756,7 +756,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779190341979"></script>
+<script src="assets/shell.js?v=1779190580854"></script>
 <script>HC.init('impact');</script>
 <script>
 // H-emerge fallback for browsers without scroll-driven animations (Safari/Firefox)
