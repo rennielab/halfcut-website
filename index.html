@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HalfCut, Restoring Country, led by Traditional Owners</title>
-<link rel="stylesheet" href="assets/system.css?v=1779226177150">
+<link rel="stylesheet" href="assets/system.css?v=1779230109547">
 <style>
   /* ---- Hero (Inversa-style, full bleed) ---- */
   .hero {
@@ -135,7 +135,7 @@
     text-transform: uppercase;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s, background .25s, border-color .25s;
+    transition: transform .5s var(--ease), opacity .4s, background .25s, border-color .25s;
     transform: translateY(120%);
     opacity: 0;
     cursor: pointer;
@@ -461,7 +461,7 @@
     position: absolute; left: 0; top: 0; height: 100%;
     background: var(--acid);
     width: 0%;
-    transition: width .5s cubic-bezier(.2,.7,.2,1);
+    transition: width .5s var(--ease);
   }
   .geomap-chapter-key {
     font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
@@ -1110,7 +1110,7 @@
   }
   .project-card img {
     width: 100%; height: 100%; object-fit: cover;
-    transition: transform .9s cubic-bezier(.2,.7,.2,1);
+    transition: transform .9s var(--ease);
   }
   .project-card:hover img { transform: scale(1.04); }
   .project-card .overlay {
@@ -1906,7 +1906,7 @@
   </div>
 </section>
 
-<script src="assets/shell.js?v=1779226177150"></script>
+<script src="assets/shell.js?v=1779230109547"></script>
 <script>
   HC.init('home');
 

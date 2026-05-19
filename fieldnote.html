@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Field Note, HalfCut</title>
-<link rel="stylesheet" href="assets/system.css?v=1779226177150">
+<link rel="stylesheet" href="assets/system.css?v=1779230109547">
 <style>
   body { background: var(--ink); color: var(--cream); }
 
@@ -17,10 +17,11 @@
     color: var(--cream);
   }
   .fn-hero-bg {
-    position: absolute; inset: 0;
+    position: absolute; inset: -10% 0;
     z-index: 0;
     background-size: cover; background-position: center;
     filter: brightness(.45) saturate(.85);
+    will-change: transform;
   }
   .fn-hero::after {
     content: '';
@@ -38,14 +39,14 @@
   }
   .fn-cat {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px;
+    padding: 7px 13px;
     border: 1px solid var(--cream-15);
     border-radius: 999px;
     background: rgba(19,20,14,.5);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     font-family: var(--f-sans);
-    font-size: 10px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
     color: var(--acid);
     width: max-content;
     margin-bottom: var(--s-5);
@@ -287,7 +288,7 @@
 <body>
 
 <section class="fn-hero" data-screen-label="08 Field Note · Hero">
-  <div class="fn-hero-bg" id="fnHeroBg"></div>
+  <div class="fn-hero-bg" id="fnHeroBg" data-parallax="0.08"></div>
   <div class="fn-hero-inner">
     <span class="fn-cat" id="fnCat">Field Notes</span>
     <h1 class="fn-title" id="fnTitle">Loading…</h1>
@@ -330,7 +331,7 @@
   <div class="fn-related-grid" id="fnRelated"></div>
 </section>
 
-<script src="assets/shell.js?v=1779226177150"></script>
+<script src="assets/shell.js?v=1779230109547"></script>
 <script>
   HC.init('journal');
 
@@ -350,7 +351,7 @@
         <p>The first thing to say is that we were not lying. When HalfCut wrote, for most of its first decade, about &ldquo;saving the Daintree&rdquo;, the people who wrote those words believed them, and many of the people who donated against them believed them too. Belief is not the problem. The problem is the shape of the sentence.</p>
         <p>&ldquo;HalfCut saves the Daintree&rdquo; puts a verb in HalfCut's hands and an object on the receiving end. It makes the rainforest into something acted upon, and the organisation into the actor. It makes the Eastern Kuku Yalanji Bama people, who have been the actor on this Country for sixty thousand years, invisible by grammar.</p>
         <h2>What we changed</h2>
-        <p>We stopped writing ourselves as the verb. We started writing in the voice of the bridge. HalfCut funds. HalfCut holds the governance. HalfCut publishes the audit. The acting verbs , restoring, healing, deciding, returning , belong to the people on Country. We do not own them.</p>
+        <p>We stopped writing ourselves as the verb. We started writing in the voice of the bridge. HalfCut funds. HalfCut holds the governance. HalfCut publishes the audit. The acting verbs, restoring, healing, deciding, returning, all belong to the people on Country. We do not own them.</p>
         <blockquote>
           The forest my grandfather walked is not the forest I walk. The forest my grandchildren walk will be the one we make now.
           <cite>Lee Yeatman · Chairperson, Jabalbina Yalanji Aboriginal Corporation</cite>
@@ -377,7 +378,7 @@
       hero: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=2400&q=80',
       lede: "An on-Country dispatch from three visits across the Wet, the Dry, and the Knock-em-down. What the ranger team is doing right now, what's working, what's hard, and what the next season looks like.",
       body: `
-        <p>The Wet started early this year. By mid-November the access road into one of the restoration sites was knee-deep in clay and the rangers were planning around it , not against it. The work doesn't stop for the Wet. It just changes shape.</p>
+        <p>The Wet started early this year. By mid-November the access road into one of the restoration sites was knee-deep in clay and the rangers were planning around it, not against it. The work doesn't stop for the Wet. It just changes shape.</p>
         <h2>Wet season: seed</h2>
         <p>This is when the ranger team does the slow, careful work of seed collection. Native species, hand-collected from intact patches of forest, sorted, dried, catalogued. The work that pays off in the next planting cycle, but doesn't photograph well.</p>
         <h2>Dry season: plant</h2>

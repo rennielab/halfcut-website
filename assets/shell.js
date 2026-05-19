@@ -370,6 +370,35 @@
     window.addEventListener('resize', onScroll);
   }
 
+  // =========================================================================
+  // PARALLAX — generalized scroll parallax for [data-parallax] elements.
+  // Honours prefers-reduced-motion. data-parallax = speed factor (e.g. 0.12).
+  // Element translates on the Y axis as it passes through the viewport.
+  // =========================================================================
+  function parallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const els = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (!els.length) return;
+    const items = els.map(el => ({ el, speed: parseFloat(el.dataset.parallax) || 0.12 }));
+    let raf = 0;
+    function update() {
+      raf = 0;
+      const vh = window.innerHeight;
+      for (const { el, speed } of items) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) continue; // skip far-offscreen
+        // centre-relative progress: 0 when element centre is at viewport centre
+        const centre = r.top + r.height / 2;
+        const offset = (centre - vh / 2) * speed;
+        el.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0)`;
+      }
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
   window.HC = {
     init(active) {
       currentActive = active || '';
@@ -378,6 +407,7 @@
       buildFooter();
       revealObserver();
       adaptiveNav();
+      parallax();
     }
   };
 })();
