@@ -320,6 +320,44 @@
     document.querySelectorAll('.reveal, .reveal-children').forEach(el => io.observe(el));
   }
 
+  // =========================================================================
+  // ADAPTIVE NAV — sample the section under the nav and switch nav colour
+  // to cream over dark sections (hero, pillars, ink/coral/acid bands).
+  // Uses background-color check on the section behind the nav center.
+  // =========================================================================
+  function adaptiveNav() {
+    const nav = document.querySelector('.nav');
+    if (!nav) return;
+    // Sections whose background is dark/saturated; nav goes cream.
+    const DARK_BG_SELECTORS = [
+      '.hero', '.pillar', '.geomap', '.cta-band', '.campaign',
+      '.on-ink', '.on-country', '.dollar', '.cinematic', '.ambient',
+      '.ambient-quote', '.dark', '.ink-section'
+    ].join(',');
+
+    function update() {
+      // Probe a point ~30px below the nav, at the horizontal centre.
+      const x = window.innerWidth / 2;
+      const y = 28;
+      const els = document.elementsFromPoint(x, y);
+      let dark = false;
+      for (const el of els) {
+        if (el === nav || nav.contains(el)) continue;
+        if (el.matches && el.matches(DARK_BG_SELECTORS)) { dark = true; break; }
+        if (el.closest && el.closest(DARK_BG_SELECTORS)) { dark = true; break; }
+      }
+      nav.classList.toggle('is-dark', dark);
+    }
+
+    let raf = 0;
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); });
+    }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
   window.HC = {
     init(active) {
       currentActive = active || '';
@@ -327,6 +365,7 @@
       buildPanel();
       buildFooter();
       revealObserver();
+      adaptiveNav();
     }
   };
 })();
