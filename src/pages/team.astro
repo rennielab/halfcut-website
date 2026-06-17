@@ -1,92 +1,594 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import PageHero from '~/components/PageHero.astro';
-import Placeholder from '~/components/Placeholder.astro';
-import { getBoardMembers, urlFor } from '~/lib/sanity';
-
-let board: any[] = [];
-try { board = await getBoardMembers(); } catch {}
-
-// Hard gate: only render board members whose quote has been approved.
-const approved = board.filter((m) => m.quoteApproved === true);
 ---
 
 <BaseLayout
   title="Team"
-  description="The HalfCut board. Every member's bio and quote has been signed off by them. Photos are real."
+  description="The HalfCut board. Each member has signed off on their bio, quote, and portrait."
   current="team"
   dark={true}
 >
-  <PageHero
-    eyebrow="The board"
-    title={'A small board.\nA serious obligation.'}
-    lede="HalfCut is governed by an unpaid voluntary board. Every director below has signed off on their bio, their quote, and their photo."
-    dark={true}
-  />
+<section class="team-hero" data-screen-label="07 Team · Hero">
+  <div class="team-hero-topo" aria-hidden="true"></div>
+  <div class="team-hero-inner">
+    <span class="eyebrow">Team &amp; Board</span>
+    <h1>Who<br>we are.</h1>
+    <p>
+      A small but mighty crew backing big ideas, and we're in this for the long haul. From grassroots organisers to number-crunchers and policy nerds, every person on this team shares one drive, to protect the Daintree and back the Eastern Kuku Yalanji Bama people to lead the way.
+    </p>
+  </div>
+</section>
 
-  {approved.length === 0 ? (
-    <div class="approved-empty">
-      <Placeholder
-        what="The board roster"
-        fromWho="each director. Only members who have signed off on their bio, quote and portrait render here. Set `quoteApproved: true` in Sanity once sign-off is on file."
-      />
+<div class="team-sec-head" data-screen-label="07 Team · Board">
+  <h2>Board of<br>directors.</h2>
+  <span class="count">08 directors · Co-founders + governance</span>
+</div>
+
+<div class="board-grid" data-screen-label="07 Team · Grid">
+
+  <button class="board-card" data-bio="jsc" aria-label="Open bio for James Stanton-Cooke">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">CEO &amp; Co-founder</span>
+    <div class="board-card-foot">
+      <h3>James<br>Stanton-Cooke</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
     </div>
-  ) : (
-    <ul class="board-grid">
-      {approved.map((m: any) => {
-        const portrait = m.portrait?.asset ? urlFor(m.portrait).width(900).quality(80).url() : null;
-        return (
-          <li>
-            <article class="board-card">
-              {portrait && <img src={portrait} alt={m.portrait.alt ?? m.name} loading="lazy" />}
-              <span class="role">{m.role}</span>
-              <h2>{m.name}</h2>
-              {m.whyJoined && <blockquote>"{m.whyJoined}"</blockquote>}
-            </article>
-          </li>
-        );
-      })}
-    </ul>
-  )}
+  </button>
+
+  <button class="board-card" data-bio="jc" aria-label="Open bio for Jessica Clarke">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Co-founder</span>
+    <div class="board-card-foot">
+      <h3>Jessica<br>Clarke</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="ca" aria-label="Open bio for Chris Andrew">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Chair</span>
+    <div class="board-card-foot">
+      <h3>Chris<br>Andrew</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="ksc" aria-label="Open bio for Katherine Stanton-Cook">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Director</span>
+    <div class="board-card-foot">
+      <h3>Katherine<br>Stanton-Cook</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="nc" aria-label="Open bio for Nicole Canale">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Director &amp; Treasurer</span>
+    <div class="board-card-foot">
+      <h3>Nicole<br>Canale</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="nrb" aria-label="Open bio for Nathan Robertson-Ball">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Director</span>
+    <div class="board-card-foot">
+      <h3>Nathan<br>Robertson-Ball</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="lv" aria-label="Open bio for Louisa Vorreiter">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Director &amp; Secretary</span>
+    <div class="board-card-foot">
+      <h3>Louisa<br>Vorreiter</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+  <button class="board-card" data-bio="rs" aria-label="Open bio for Rory Sinclair">
+    <div class="board-card-img" style="background-image: url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=80');"></div>
+    <span class="role-pill">Director</span>
+    <div class="board-card-foot">
+      <h3>Rory<br>Sinclair</h3>
+      <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+    </div>
+  </button>
+
+</div>
+
+<section class="on-country" data-screen-label="07 Team · On-Country">
+  <div class="on-country-inner">
+    <div>
+      <span class="eyebrow">On-Country partners</span>
+      <h2>Who actually<br>does the work.</h2>
+      <p>
+        The rangers, Elders, and corporation staff of Jabalbina Yalanji Aboriginal Corporation are not HalfCut employees. They are the reason HalfCut exists. We publish their work at their invitation, in their words, and with their approval.
+      </p>
+      <p style="margin-top: 16px;">
+        Meet the Eastern Kuku Yalanji ranger program on the Projects page, or visit Jabalbina's own site for the fullest picture of their work.
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: var(--s-6); flex-wrap: wrap;">
+        <a class="btn btn-acid" href="/campaigns">Projects →</a>
+        <a class="btn btn-secondary" style="color: var(--cream); border-color: var(--cream);" href="https://www.jabalbina.com.au" target="_blank" rel="noopener">Visit Jabalbina ↗</a>
+      </div>
+    </div>
+    <div style="aspect-ratio: 4/3; background: var(--ink-85); position: relative; overflow: hidden; border-radius: 4px;">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" style="position:absolute; top:-8%; left:0; width:100%; height:116%; object-fit: cover; opacity: .85; will-change: transform;" data-parallax="0.06" alt="Tropical rainforest" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<div class="bio-panel" id="bioPanel" aria-hidden="true">
+  <div class="bio-panel-scrim" data-close></div>
+  <aside class="bio-panel-card" role="dialog" aria-modal="true" aria-labelledby="bioPanelName">
+    <header class="bio-head">
+      <span class="bio-head-label">Board profile</span>
+      <button class="bio-close" data-close aria-label="Close bio">Close <span aria-hidden="true">✕</span></button>
+    </header>
+    <div class="bio-body" id="bioBody"></div>
+    <footer class="bio-foot">
+      <div class="bio-social" id="bioSocial"></div>
+      <div class="bio-foot-meta">HalfCut Organisation · ABN 24 642 788 814</div>
+    </footer>
+  </aside>
+</div>
+
+
+<script>
+  HC.init('team');
+
+  const BIOS = {
+    jsc: {
+      name: "James Stanton-Cooke",
+      role: "Co-founder &amp; CEO",
+      company: "HalfCut Organisation",
+      yearsOnBoard: "Since 2019 · 6+ years",
+      whyJoined: "Co-founded HalfCut in 2019 to fund First Nations-led conservation. After two decades campaigning to keep fossil fuels in the ground and forests standing, I wanted to build the model I'd been looking for, an organisation that resources Traditional Owners rather than speaking over them.",
+      bio: "Twenty years working in forest protection, environmental justice, and First Nations-led conservation across Australia. An experienced forest, coal, and gas campaigner, has helped defend ecosystems and keep fossil fuels in the ground. As co-founder and founding director of HalfCut, has worked closely with First Nations peoples for decades to protect, restore, and heal Country, centring cultural authority and Traditional Owner-led decision-making. Specialised in fundraising, philanthropy, and corporate engagement, building national campaigns and impact models that have raised millions for conservation and community-led programs. Also a qualified high school teacher with a background in education, youth engagement, and community mobilisation.",
+      portrait: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" },
+        { label: "Email →", href: "mailto:jimmy@halfcut.org" }
+      ]
+    },
+    jc: {
+      name: "Jessica Clarke",
+      role: "Co-founder",
+      company: "HalfCut Organisation",
+      yearsOnBoard: "Since 2019 · 6+ years",
+      whyJoined: "Spent a decade running forest campaigns and realised the missing piece wasn't more advocacy, it was an organisation that could actually move money to First Nations partners at the speed they needed. So we built one.",
+      bio: "Over a decade working in forest conservation and environmental advocacy across Australia. Has founded, developed, and co-managed not-for-profit organisations and national fundraising programs dedicated to protecting and restoring rainforest ecosystems. As co-founder and founding director of HalfCut, brings deep expertise in fundraising, digital marketing, and impact storytelling, helping to build campaigns that engage communities and resource First Nations-led conservation work. Holds a degree in Education, grounding her work in strong communication, community engagement, and public awareness.",
+      portrait: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" },
+        { label: "Email →", href: "mailto:jess@halfcut.org" }
+      ]
+    },
+    ca: {
+      name: "Chris Andrew",
+      role: "Chair",
+      company: "Independent · NFP governance",
+      yearsOnBoard: "Chair since 2024 · 2 years on board",
+      whyJoined: "After forty years moving money in investment banking and energy, I wanted to spend the last chapter moving it the right way, into First Nations-led enterprises that can actually solve what the rest of the system has been making worse.",
+      bio: "Almost forty years of working experience, leveraging a professional background in global investment banking and energy sectors to apply expertise to the for-purpose sector. Experienced board member and chair in the NFP sector and currently engaged by First Nations enterprises, focusing on systemic challenges like climate change and financial disadvantage. Passionate advocate for ethical and Indigenous-led finance models, helping shape HalfCut's mission at the intersection of conservation, community engagement, and First Nations leadership. Holds degrees in Chemical Engineering and Teaching.",
+      portrait: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" }
+      ]
+    },
+    ksc: {
+      name: "Katherine Stanton-Cook",
+      role: "Director",
+      company: "Independent · conservation activism",
+      yearsOnBoard: "Since 2021 · 5 years",
+      whyJoined: "I've spent forty years on the ground for forests and wildlife. Joining HalfCut's board was about making sure that activism comes inside the room when this organisation decides where to put the next dollar.",
+      bio: "Forty years as an activist and campaigner for wildlife, animal protection, and environmental conservation. Has supported and volunteered across major national and international campaigns, advocating passionately for forests, wildlife habitats, and the protection of threatened ecosystems. Over thirty years of experience in activism and fundraising for forest conservation and charitable causes. A trained Public High School teacher specialising in History and Social Sciences, bringing strong educational and community-engagement skills to her advocacy work.",
+      portrait: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+      social: []
+    },
+    nc: {
+      name: "Nicole Canale",
+      role: "Director &amp; Treasurer",
+      company: "Canale Financial Group",
+      yearsOnBoard: "Founding director · Since 2019",
+      whyJoined: "Founding director since inception. The financial-stewardship piece of First Nations-led conservation is where trust gets built or lost, I wanted to make sure HalfCut got that right from day one.",
+      bio: "Founding director of HalfCut since inception. Director of Canale Financial Group and a Registered Public Accountant with more than fifteen years of experience in business and financial management. Has built a strong reputation for providing clear, practical financial guidance to individuals and businesses, with a focus on strategic planning, compliance, and long-term sustainability. As Director, oversees key functions across taxation, advisory, and client operations. Leadership style emphasises transparency, accountability, and forward-thinking financial stewardship.",
+      portrait: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" }
+      ]
+    },
+    nrb: {
+      name: "Nathan Robertson-Ball",
+      role: "Director",
+      company: "Independent · ESG &amp; sustainability",
+      yearsOnBoard: "Since 2023 · 3 years",
+      whyJoined: "Two decades inside Australia's biggest organisations taught me what good ESG looks like, and what's window-dressing. HalfCut is the first model I've come across that puts First Nations leadership at the centre rather than the edge of the page.",
+      bio: "A recognised sustainability, ESG and innovation practitioner with experience spanning multiple sectors and a range of subject matter areas. Passionate advocate for better business performance that takes into account and pays respect to environmental regeneration, human rights and social inclusion. For two decades has worked with and inside of many of Australia's largest organisations to drive change. Holds degrees in climate science, environmental economics and environmental management.",
+      portrait: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" }
+      ]
+    },
+    lv: {
+      name: "Louisa Vorreiter",
+      role: "Director &amp; Secretary",
+      company: "Independent · water &amp; environment",
+      yearsOnBoard: "Since 2022 · 4 years",
+      whyJoined: "Thirty years working on rivers, streams, and wetlands taught me that you can't restore Country in isolation, you have to back the people who already understand the whole system. That's what HalfCut does.",
+      bio: "Over thirty years in the water and environment industry. Experience across conservation, water quality issues in rivers, urban streams and estuaries, and wastewater management. Experience in asset management and driving better planning of assets to meet current and future climate impacts. Has also worked on research projects relating to river water quality and impacts on ecosystems. Holds an Honours degree in Science and a Master of Engineering.",
+      portrait: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" }
+      ]
+    },
+    rs: {
+      name: "Rory Sinclair",
+      role: "Director",
+      company: "Independent · strategic communications",
+      yearsOnBoard: "Since 2024 · 2 years",
+      whyJoined: "The story of who's leading the work is the story that decides the funding. I joined HalfCut to make sure the people doing the actual work get the credit, the platform, and the resourcing.",
+      bio: "A communications leader with experience building brands across the commercial, not-for-profit and philanthropic sectors. Work focuses on strategic communications and storytelling to drive systemic change. For several years, has worked with Australia's leading environmental and First Nations organisations.",
+      portrait: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80",
+      social: [
+        { label: "LinkedIn ↗", href: "#" }
+      ]
+    }
+  };
+
+  (function() {
+    const panel = document.getElementById('bioPanel');
+    const body = document.getElementById('bioBody');
+    const social = document.getElementById('bioSocial');
+    const cards = document.querySelectorAll('.board-card');
+
+    function open(key) {
+      const b = BIOS[key];
+      if (!b) return;
+      body.innerHTML = `
+        <div class="bio-portrait" style="background-image: url('${b.portrait}');" aria-hidden="true"></div>
+        <h2 class="bio-name" id="bioPanelName">${b.name}</h2>
+        <div class="bio-role">${b.role}</div>
+        <div class="bio-stats">
+          <div class="bio-stat"><div class="k">Company</div><div class="v">${b.company}</div></div>
+          <div class="bio-stat"><div class="k">On the board</div><div class="v">${b.yearsOnBoard}</div></div>
+        </div>
+        <div class="bio-section">
+          <h3>Why I joined HalfCut</h3>
+          <p>${b.whyJoined}</p>
+        </div>
+        <div class="bio-section">
+          <h3>Background</h3>
+          <p>${b.bio}</p>
+        </div>
+      `;
+      social.innerHTML = b.social.length
+        ? b.social.map(s => `<a href="${s.href}">${s.label}</a>`).join('')
+        : '<span style="font-family: var(--f-sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .5;">No public profiles</span>';
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function close() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+    }
+
+    cards.forEach(c => c.addEventListener('click', () => open(c.dataset.bio)));
+    panel.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  })();
+</script>
 </BaseLayout>
 
-<style>
-  .approved-empty { padding: var(--s-8, 64px) var(--pad-x, 32px); }
+<style is:global>
+body { background: var(--ink); color: var(--cream); }
+
+  .team-hero {
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm);
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--cream-15);
+  }
+  .team-hero-topo {
+    position: absolute; inset: 0;
+    background-image: url('/assets-legacy/topo-pattern.png');
+    background-size: 1400px auto;
+    background-repeat: repeat;
+    opacity: .06;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .team-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .team-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .team-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin: 0;
+  }
+  .team-hero p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin-top: var(--s-6);
+    max-width: 56ch;
+    opacity: .8;
+  }
+
+  .team-sec-head {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-9) var(--pad-x) var(--s-6);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: var(--s-6); flex-wrap: wrap;
+  }
+  .team-sec-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(42px, 5.25vw, 90px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .team-sec-head .count {
+    font-family: var(--f-sans); font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase;
+    opacity: .5;
+  }
+
   .board-grid {
-    list-style: none; margin: 0; padding: var(--s-8, 64px) var(--pad-x, 32px);
-    max-width: 1440px; margin-inline: auto;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--s-5, 24px);
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 var(--pad-x) var(--s-11);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-5);
   }
   .board-card {
-    background: rgba(245,244,236,.04);
-    border: 1px solid var(--cream-15);
+    position: relative;
+    aspect-ratio: 4 / 5;
     border-radius: 6px;
     overflow: hidden;
-    padding-bottom: var(--s-6, 32px);
-  }
-  .board-card img {
-    width: 100%; aspect-ratio: 4/5; object-fit: cover;
-    filter: grayscale(.1) contrast(1.05);
-  }
-  .role {
-    display: block;
-    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
-    letter-spacing: .22em; text-transform: uppercase;
-    color: var(--acid);
-    margin: var(--s-5, 24px) var(--s-5, 24px) 8px;
-  }
-  .board-card h2 {
-    font-family: var(--f-display);
-    font-size: clamp(22px, 2vw, 32px);
-    line-height: .95; letter-spacing: -0.015em; text-transform: uppercase;
-    margin: 0 var(--s-5, 24px);
+    background: var(--ink);
+    cursor: pointer;
+    isolation: isolate;
+    transition: transform .35s var(--ease);
+    border: 0;
+    padding: 0;
     color: var(--cream);
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
   }
-  .board-card blockquote {
+  .board-card-img {
+    position: absolute; inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center top;
+    filter: brightness(.55) saturate(.8) grayscale(.25);
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+  }
+  .board-card:hover .board-card-img { transform: scale(1.04); filter: brightness(.7) saturate(1) grayscale(0); }
+  .board-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.2) 40%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
+  }
+  .board-card .role-pill {
+    position: absolute; top: 22px; left: 22px;
+    z-index: 2;
+    padding: 7px 13px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: var(--acid);
+  }
+  .board-card-foot {
+    position: absolute;
+    left: 24px; right: 24px; bottom: 24px;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 14px;
+  }
+  .board-card h3 {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 1.7vw, 26px);
+    line-height: .95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--cream);
+    max-width: 16ch;
+  }
+  .board-card .plus {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .board-card:hover .plus { background: var(--acid); color: var(--ink); }
+  .board-card .plus svg { width: 16px; height: 16px; }
+  .board-card:focus-visible { outline: 2px solid var(--acid); outline-offset: 4px; }
+
+  .on-country {
+    background: var(--ink); color: var(--cream);
+    padding: var(--s-10) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+  }
+  .on-country-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
+  .on-country h2 { font-family: var(--f-display); font-size: clamp(48px, 6vw, 96px); line-height: .92; letter-spacing: -0.02em; text-transform: uppercase; }
+  .on-country .eyebrow { color: var(--acid); display: block; margin-bottom: var(--s-5); }
+  .on-country p { font-family: var(--f-serif); font-weight: 300; font-size: 20px; line-height: 1.5; margin-top: var(--s-5); opacity: .85; max-width: 52ch; }
+
+  /* ---- Bio slide-out panel ---- */
+  .bio-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .bio-panel-scrim {
+    position: absolute; inset: 0;
+    background: rgba(11,12,8,.55);
+    opacity: 0;
+    transition: opacity .4s var(--ease);
+    backdrop-filter: blur(2px);
+  }
+  .bio-panel-card {
+    position: absolute;
+    top: 0; right: 0;
+    height: 100%;
+    width: 50vw;
+    min-width: 480px;
+    background: var(--cream);
+    color: var(--ink);
+    transform: translateX(100%);
+    transition: transform .55s var(--ease-firm);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    box-shadow: -24px 0 64px rgba(0,0,0,.4);
+  }
+  .bio-panel.open { pointer-events: auto; }
+  .bio-panel.open .bio-panel-scrim { opacity: 1; }
+  .bio-panel.open .bio-panel-card { transform: translateX(0); }
+  .bio-head {
+    position: relative;
+    padding: var(--s-7) var(--s-8) var(--s-6);
+    border-bottom: 1px solid var(--ink-15);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bio-head-label {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    opacity: .5; font-weight: 700;
+  }
+  .bio-close {
+    background: transparent;
+    border: 1px solid var(--ink-15);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: var(--f-sans); font-weight: 600;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .bio-close:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .bio-body {
+    overflow-y: auto;
+    padding: var(--s-7) var(--s-8) var(--s-9);
+  }
+  .bio-portrait {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--stone);
+    background-size: cover; background-position: center top;
+    margin-bottom: var(--s-6);
+    border: 1px solid var(--ink-15);
+  }
+  .bio-name {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 3.6vw, 56px);
+    line-height: .92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+  .bio-role {
+    font-family: var(--f-sans);
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink);
+    opacity: .7;
+    font-weight: 700;
+    margin-bottom: var(--s-5);
+  }
+  .bio-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5);
+    margin-bottom: var(--s-6);
+    padding: var(--s-5) 0;
+    border-top: 1px solid var(--ink-15);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .bio-stat .k {
+    font-family: var(--f-sans); font-size: 10px;
+    letter-spacing: .2em; text-transform: uppercase;
+    opacity: .5; margin-bottom: 6px; font-weight: 700;
+  }
+  .bio-stat .v {
+    font-family: var(--f-display);
+    font-size: 18px; line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .bio-section h3 {
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    opacity: .55; font-weight: 700;
+    margin: var(--s-6) 0 var(--s-3);
+  }
+  .bio-section p {
     font-family: var(--f-serif); font-weight: 300;
-    font-size: 15px; line-height: 1.55;
-    margin: var(--s-4, 16px) var(--s-5, 24px) 0;
-    opacity: .8; color: var(--cream);
+    font-size: 18px; line-height: 1.55;
+    margin: 0 0 var(--s-4);
+    max-width: 56ch;
+  }
+  .bio-foot {
+    padding: var(--s-5) var(--s-8);
+    border-top: 1px solid var(--ink-15);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-5); flex-wrap: wrap;
+    background: var(--stone);
+  }
+  .bio-social {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .bio-social a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid var(--ink-15);
+    border-radius: 999px;
+    font-family: var(--f-sans); font-size: 11px;
+    letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .bio-social a:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .bio-foot-meta {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    opacity: .5;
+  }
+
+  @media (max-width: 1100px) {
+    .board-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 960px) {
+    .board-grid { grid-template-columns: 1fr 1fr; }
+    .bio-panel-card { width: 92vw; min-width: 0; }
+    .bio-head, .bio-body, .bio-foot { padding-left: var(--s-5); padding-right: var(--s-5); }
+    .on-country-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .board-grid { grid-template-columns: 1fr; }
+    .bio-stats { grid-template-columns: 1fr; }
   }
 </style>

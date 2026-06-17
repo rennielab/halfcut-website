@@ -73,6 +73,87 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <slot />
   </main>
   <Footer />
+
+  <script>
+    /* Shared client behaviours (ported from legacy shell.js):
+       - revealObserver: adds .in to .reveal / .reveal-children when scrolled into view
+       - parallax: translates [data-parallax] based on scroll position
+       - adaptiveNav: toggles .is-dark on .nav when the band behind it is a dark section
+    */
+    function revealObserver() {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.01 }
+      );
+      document.querySelectorAll('.reveal, .reveal-children').forEach((el) => io.observe(el));
+    }
+
+    function parallax() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const els = Array.from(document.querySelectorAll('[data-parallax]'));
+      if (!els.length) return;
+      const items = els.map((el) => ({
+        el: el as HTMLElement,
+        speed: parseFloat((el as HTMLElement).dataset.parallax || '0.12') || 0.12,
+      }));
+      let raf = 0;
+      function update() {
+        raf = 0;
+        const vh = window.innerHeight;
+        for (const { el, speed } of items) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const centre = r.top + r.height / 2;
+          const offset = (centre - vh / 2) * speed;
+          el.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0)`;
+        }
+      }
+      function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+    }
+
+    function adaptiveNav() {
+      const nav = document.querySelector('.nav') as HTMLElement | null;
+      if (!nav) return;
+      const DARK = '.hero,.pillar,.geomap,.cta-band,.campaign,.on-ink,.on-country,.dollar,.cinematic,.ambient,.ambient-quote,.dark,.ink-section,.site-footer';
+      function update() {
+        const x = window.innerWidth / 2;
+        const y = 28;
+        const els = document.elementsFromPoint(x, y);
+        let dark = false;
+        for (const el of els) {
+          if (el === nav || nav.contains(el)) continue;
+          if ((el as HTMLElement).matches?.(DARK) || (el as HTMLElement).closest?.(DARK)) {
+            dark = true;
+            break;
+          }
+        }
+        nav.classList.toggle('is-dark', dark);
+      }
+      let raf = 0;
+      function onScroll() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); }); }
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+    }
+
+    function init() {
+      revealObserver();
+      parallax();
+      adaptiveNav();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  </script>
 </body>
 </html>
 

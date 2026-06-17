@@ -1,102 +1,465 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import PageHero from '~/components/PageHero.astro';
-import Placeholder from '~/components/Placeholder.astro';
-import { getFieldNotes, urlFor } from '~/lib/sanity';
-
-let notes: any[] = [];
-try { notes = await getFieldNotes(); } catch {}
-
-const CAT_LABEL: Record<string, string> = {
-  dispatch: 'Dispatch',
-  interview: 'Interview',
-  'long-form': 'Long-form',
-  ledger: 'Ledger',
-};
-
-const fmtDate = (d: string) =>
-  d ? new Date(d).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
 ---
 
 <BaseLayout
   title="Field Notes"
-  description="Long-form dispatches, interviews, and ledger updates from HalfCut and its partners on Country."
+  description="Long-form dispatches, interviews, and ledger updates from HalfCut and partners."
   current="fieldnotes"
   dark={true}
 >
-  <PageHero
-    eyebrow="Field Notes"
-    title={'From the field\nand the ledger.'}
-    lede="Dispatches, interviews, and accounting in plain language. Published when there's something real to say."
-    dark={true}
-  />
+<section class="jrn-hero" data-screen-label="08 Journal · Hero">
+  <div class="jrn-hero-topo" aria-hidden="true"></div>
+  <div class="jrn-hero-inner">
+    <span class="eyebrow">Field Notes</span>
+    <h1>Dispatches<br>from Country.</h1>
+    <p>
+      Long-form essays, field notes, ledger transparency, and conversations with the people leading the work. Published when there's something worth saying, not on a schedule.
+    </p>
+  </div>
+</section>
 
-  {notes.length === 0 ? (
-    <div class="empty-wrap"><Placeholder what="Published Field Notes" fromWho="HalfCut + named contributors" /></div>
-  ) : (
-    <ul class="notes-grid">
-      {notes.map((n: any) => {
-        const cover = n.cover?.asset ? urlFor(n.cover).width(1200).quality(80).url() : null;
-        return (
-          <li>
-            <a class="note-card" href={`/fieldnotes/${n.slug.current}`}>
-              {cover && <div class="cover" style={`background-image: url('${cover}');`} aria-hidden="true"></div>}
-              <div class="body">
-                <span class="cat">{CAT_LABEL[n.category] ?? n.category}</span>
-                <h2>{n.title}</h2>
-                <p>{n.excerpt}</p>
-                <span class="meta">{fmtDate(n.publishedAt)}{n.author?.name ? ` · ${n.author.name}` : ''}</span>
-              </div>
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  )}
+<nav class="jrn-cats" data-screen-label="08 Journal · Filter">
+  <div class="jrn-cats-inner" role="tablist">
+    <button class="jrn-cat" aria-pressed="true" data-filter="all">All</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="manifesto">Manifesto</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="dispatch">Field dispatches</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="interview">Interviews</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="photo">Photo essays</button>
+    <button class="jrn-cat" aria-pressed="false" data-filter="ledger">On the money</button>
+    <span class="jrn-cats-count">Recent</span>
+  </div>
+</nav>
+
+<section class="jrn-grid" data-screen-label="08 Journal · Grid">
+
+  <a class="jrn-card is-feature" data-cat="manifesto" href="fieldnote.html?p=bridge-not-saviour">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Manifesto</div>
+    <div class="jrn-card-meta">14 min read · Apr 2026</div>
+    <div class="jrn-card-body">
+      <h3>The bridge, not the saviour: what we learned when we stopped writing ourselves into the middle of the story.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="dispatch" href="fieldnote.html?p=three-seasons">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Field dispatch</div>
+    <div class="jrn-card-meta">6 min · Mar 2026</div>
+    <div class="jrn-card-body">
+      <h3>Three seasons on Jabalbina Country.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="interview" href="fieldnote.html?p=marilyn-interview">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Interview</div>
+    <div class="jrn-card-meta">9 min · Feb 2026</div>
+    <div class="jrn-card-body">
+      <h3>Aunty Marilyn Wallace on the forest her grandfather knew.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="ledger" href="fieldnote.html?p=q1-ledger">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">On the money</div>
+    <div class="jrn-card-meta">4 min · Feb 2026</div>
+    <div class="jrn-card-body">
+      <h3>Every dollar, published: reading the Q1 ledger.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="dispatch" href="fieldnote.html?p=cassowary-tracks">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Field dispatch</div>
+    <div class="jrn-card-meta">5 min · Jan 2026</div>
+    <div class="jrn-card-body">
+      <h3>A summer of cassowary track counts.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="photo" href="fieldnote.html?p=triptych-corridor">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Photo essay</div>
+    <div class="jrn-card-meta">12 frames · Dec 2025</div>
+    <div class="jrn-card-body">
+      <h3>The corridor at year three, in twelve frames.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="interview" href="fieldnote.html?p=jabalbina-governance">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Interview</div>
+    <div class="jrn-card-meta">11 min · Nov 2025</div>
+    <div class="jrn-card-body">
+      <h3>Inside a Jabalbina governance meeting.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+  <a class="jrn-card" data-cat="manifesto" href="fieldnote.html?p=never-claim-country">
+    <div class="jrn-card-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80');"></div>
+    <div class="jrn-card-overlay"></div>
+    <div class="jrn-card-cat">Manifesto</div>
+    <div class="jrn-card-meta">8 min · Oct 2025</div>
+    <div class="jrn-card-body">
+      <h3>Why a charity should never claim Country.</h3>
+      <span class="jrn-card-plus" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+    </div>
+  </a>
+
+</section>
+
+<section class="jrn-quote" data-screen-label="08 Journal · Quote">
+  <blockquote>
+    The forest my grandfather walked is not the forest I walk. The forest my grandchildren walk will be the one <span class="acid">we make now.</span>
+    <cite>Aunty Marilyn Wallace · Kuku Yalanji Elder</cite>
+  </blockquote>
+</section>
+
+<section class="jrn-newsletter" data-screen-label="08 Journal · Newsletter">
+  <div class="jrn-newsletter-inner">
+    <div>
+      <h2>Field notes,<br>straight to inbox.</h2>
+      <p>Long-form essays, ranger dispatches, and the quarterly ledger. Published when there's something worth saying. No campaign drip.</p>
+    </div>
+    <form class="jrn-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=&quot;font-family: var(--f-serif); font-size: 20px;&quot;>Subscribed. Welcome.</div>'">
+      <input type="email" placeholder="your@email" required aria-label="Email address">
+      <button class="btn btn-primary">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+
+<script>
+  HC.init('journal');
+  // Filter behaviour
+  (function() {
+    const cats = document.querySelectorAll('.jrn-cat');
+    const cards = document.querySelectorAll('.jrn-card');
+    cats.forEach(c => c.addEventListener('click', () => {
+      cats.forEach(x => x.setAttribute('aria-pressed', 'false'));
+      c.setAttribute('aria-pressed', 'true');
+      const f = c.dataset.filter;
+      cards.forEach(card => {
+        const match = f === 'all' || card.dataset.cat === f;
+        card.style.display = match ? '' : 'none';
+      });
+    }));
+  })();
+</script>
 </BaseLayout>
 
-<style>
-  .empty-wrap { padding: var(--s-8, 64px) var(--pad-x, 32px); }
-  .notes-grid {
-    list-style: none; margin: 0;
-    padding: var(--s-9, 96px) var(--pad-x, 32px);
-    max-width: 1440px; margin-inline: auto;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    gap: var(--s-6, 32px);
+<style is:global>
+/* ---- Journal — dark editorial card grid (Bob Brown-inspired) ---- */
+  body { background: var(--ink); color: var(--cream); }
+
+  .jrn-hero {
+    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm);
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--cream-15);
   }
-  .note-card {
-    display: block; text-decoration: none; color: var(--cream);
-    background: rgba(245,244,236,.04);
+  .jrn-hero-topo {
+    position: absolute; inset: 0;
+    background-image: url('/assets-legacy/topo-pattern.png');
+    background-size: 1400px auto;
+    background-repeat: repeat;
+    background-position: center;
+    opacity: .06;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .jrn-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .jrn-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .jrn-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin: 0;
+  }
+  .jrn-hero p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin-top: var(--s-6);
+    max-width: 56ch;
+    opacity: .8;
+  }
+
+  /* Category filter — sticky just under nav */
+  .jrn-cats {
+    position: sticky;
+    top: 74px;
+    z-index: 30;
+    background: rgba(19,20,14,.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--cream-15);
+    padding: 14px var(--pad-x);
+  }
+  .jrn-cats-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: flex; gap: 6px; align-items: center;
+    flex-wrap: wrap;
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
+  }
+  .jrn-cat {
+    color: var(--cream);
+    background: transparent;
     border: 1px solid var(--cream-15);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .jrn-cat:hover { border-color: var(--cream-50); }
+  .jrn-cat[aria-pressed="true"] { background: var(--acid); color: var(--ink); border-color: var(--acid); }
+  .jrn-cats-count { margin-left: auto; opacity: .5; font-size: 10px; letter-spacing: .2em; }
+
+  /* Card grid — 3 columns, dark vertical cards */
+  .jrn-grid {
+    max-width: 1440px; margin: 0 auto;
+    padding: var(--s-9) var(--pad-x) var(--s-11);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-5);
+  }
+  /* First (featured) card spans 2 columns + 2 rows */
+  .jrn-card.is-feature {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .jrn-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
     border-radius: 6px;
     overflow: hidden;
-    transition: transform .25s ease;
+    background: var(--ink);
+    color: var(--cream);
+    text-decoration: none;
+    isolation: isolate;
+    transition: transform .35s var(--ease);
   }
-  .note-card:hover { transform: translateY(-2px); }
-  .cover {
-    height: 240px; background-size: cover; background-position: center;
-    filter: brightness(.7);
+  .jrn-card.is-feature { aspect-ratio: 8 / 5; }
+
+  .jrn-card-img {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+    z-index: 0;
+    filter: brightness(.6) saturate(.85);
   }
-  .note-card .body { padding: var(--s-6, 32px); }
-  .cat {
-    display: inline-block;
-    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--acid); margin-bottom: var(--s-3, 12px);
+  .jrn-card:hover .jrn-card-img { transform: scale(1.04); filter: brightness(.75) saturate(1); }
+
+  .jrn-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.45) 0%, rgba(19,20,14,.25) 45%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
   }
-  .note-card h2 {
+
+  .jrn-card-cat {
+    position: absolute;
+    top: 22px; left: 22px;
+    z-index: 2;
+    padding: 7px 13px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: var(--acid);
+  }
+
+  .jrn-card-meta {
+    position: absolute;
+    top: 22px; right: 22px;
+    z-index: 2;
+    font-family: var(--f-sans);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: .6;
+  }
+
+  .jrn-card-body {
+    position: absolute;
+    left: 26px; right: 26px; bottom: 26px;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  }
+  .jrn-card h3 {
     font-family: var(--f-display);
-    font-size: clamp(24px, 2.4vw, 36px);
-    line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
-    margin: 0 0 var(--s-4, 16px);
+    font-size: clamp(24px, 2.2vw, 36px);
+    line-height: .95;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0;
+    max-width: 18ch;
+    text-wrap: balance;
   }
-  .note-card p {
+  .jrn-card.is-feature h3 {
+    font-size: clamp(40px, 4vw, 72px);
+    max-width: 20ch;
+  }
+
+  /* Plus-icon affordance (Bob Brown style) */
+  .jrn-card-plus {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .jrn-card:hover .jrn-card-plus { background: var(--acid); color: var(--ink); }
+  .jrn-card-plus svg { width: 18px; height: 18px; }
+
+  /* Empty-state / coming-soon card variant */
+  .jrn-card.is-empty {
+    background: rgba(245,244,236,.04);
+    border: 1px dashed var(--cream-15);
+  }
+  .jrn-card.is-empty .jrn-card-img,
+  .jrn-card.is-empty .jrn-card-overlay { display: none; }
+  .jrn-card.is-empty .jrn-card-body { position: relative; left: 0; right: 0; bottom: 0; padding: 26px; height: 100%; align-items: flex-start; }
+  .jrn-card.is-empty h3 { opacity: .55; }
+  .jrn-card.is-empty .jrn-card-plus { border-color: var(--cream-15); color: var(--cream-50); }
+
+  /* Pull-quote interstitial */
+  .jrn-quote {
+    background: var(--ink);
+    padding: var(--s-11) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+    border-bottom: 1px solid var(--cream-15);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .jrn-quote::before {
+    content: '"';
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    font-family: var(--f-display);
+    font-size: 380px; color: var(--acid);
+    opacity: .08;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .jrn-quote blockquote {
+    max-width: 1100px; margin: 0 auto;
     font-family: var(--f-serif); font-weight: 300;
-    font-size: 16px; line-height: 1.5; opacity: .85;
-    margin: 0 0 var(--s-5, 24px);
+    font-size: clamp(28px, 3.6vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    position: relative;
   }
-  .meta {
-    font-family: var(--f-sans); font-size: 11px;
-    letter-spacing: .14em; text-transform: uppercase; opacity: .55;
+  .jrn-quote blockquote .acid { color: var(--acid); }
+  .jrn-quote cite {
+    display: block;
+    margin-top: var(--s-7);
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    opacity: .6;
+    font-style: normal;
+  }
+
+  /* Newsletter strip */
+  .jrn-newsletter {
+    background: var(--acid);
+    color: var(--ink);
+    padding: var(--s-10) var(--pad-x);
+  }
+  .jrn-newsletter-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: var(--s-8); align-items: end;
+  }
+  .jrn-newsletter h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: .9; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 16ch;
+    margin: 0;
+  }
+  .jrn-newsletter p {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.5;
+    margin-top: var(--s-5);
+    max-width: 46ch;
+    opacity: .85;
+  }
+  .jrn-form { display: flex; gap: 8px; }
+  .jrn-form input {
+    flex: 1;
+    padding: 18px 22px;
+    background: var(--cream);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-family: var(--f-serif); font-size: 18px;
+    outline: none;
+    color: var(--ink);
+  }
+  .jrn-form .btn-primary { padding: 18px 28px 17px; }
+
+  @media (max-width: 960px) {
+    .jrn-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-4);
+      padding: var(--s-7) var(--pad-x) var(--s-9);
+    }
+    .jrn-card.is-feature { grid-column: span 2; grid-row: auto; aspect-ratio: 4/5; }
+    .jrn-newsletter-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .jrn-grid { grid-template-columns: 1fr; }
+    .jrn-card.is-feature { grid-column: auto; }
   }
 </style>

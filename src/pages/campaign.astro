@@ -1,0 +1,586 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Campaign"
+  description="Active campaign deep-dive on Country and the work that funds it."
+  current="campaigns"
+  dark={true}
+>
+<section class="cmp-hero" data-screen-label="03 Campaign · Hero">
+  <div class="cmp-hero-bg" id="cmpHeroBg" data-parallax="0.08"></div>
+  <div class="cmp-hero-inner">
+    <span class="cmp-tag" id="cmpTag">Active campaign</span>
+    <h1 class="cmp-title" id="cmpTitle">Loading…</h1>
+    <p class="cmp-lede" id="cmpLede"></p>
+    <div class="cmp-ctas">
+      <a href="/donate" class="btn btn-acid">Resource the work →</a>
+      <a href="#whats-at-stake" class="btn btn-secondary on-ink">What's at stake</a>
+    </div>
+  </div>
+</section>
+
+<section class="cmp-cards" data-screen-label="03 Campaign · Cards">
+  <div class="cmp-cards-inner">
+    <div class="cmp-card">
+      <h2 id="cmpIssueTitle">The issue</h2>
+      <p id="cmpIssueBody"></p>
+      <a href="/impact" class="btn btn-secondary on-ink">View impact</a>
+    </div>
+    <div class="cmp-card">
+      <h2>Our approach</h2>
+      <p id="cmpApproachBody"></p>
+      <a href="/about" class="btn btn-secondary on-ink">How HalfCut works</a>
+    </div>
+    <div class="cmp-card">
+      <h2>Email decision-makers</h2>
+      <p id="cmpEmailBody"></p>
+      <a href="/take-action" class="btn btn-secondary on-ink">Send an email</a>
+    </div>
+  </div>
+</section>
+
+<section class="cmp-stats" data-screen-label="03 Campaign · Stats" id="whats-at-stake">
+  <div class="cmp-stats-inner" id="cmpStats"></div>
+</section>
+
+<section class="cmp-story" data-screen-label="03 Campaign · Story">
+  <div class="cmp-story-inner">
+    <span class="eyebrow">The threat &amp; the plan</span>
+    <h2 id="cmpStoryTitle"></h2>
+    <div id="cmpStoryBody"></div>
+  </div>
+</section>
+
+<section class="cmp-gallery" data-screen-label="03 Campaign · Gallery">
+  <div class="cmp-gallery-head"><h2>On Country.</h2></div>
+  <div class="cmp-gallery-strip" id="cmpGallery"></div>
+</section>
+
+<section class="cmp-actions" data-screen-label="03 Campaign · Actions">
+  <div class="cmp-actions-head">
+    <h2>How you can help.</h2>
+    <a href="/take-action" class="btn btn-secondary on-ink">All ways to take action →</a>
+  </div>
+  <div class="cmp-actions-grid">
+    <a class="cmp-action" href="/donate">
+      <div class="cmp-action-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80');"></div>
+      <span class="cat">Donate</span>
+      <div class="body">
+        <h3>Resource the buyback</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+    <a class="cmp-action" href="/membership">
+      <div class="cmp-action-img" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80');"></div>
+      <span class="cat">Member</span>
+      <div class="body">
+        <h3>Become a HalfCut member</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+    <a class="cmp-action" href="/take-action">
+      <div class="cmp-action-img" style="background-image: url('https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80');"></div>
+      <span class="cat">Take action</span>
+      <div class="body">
+        <h3>Email government, sign the petition</h3>
+        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="cmp-cta" data-screen-label="03 Campaign · CTA">
+  <h2 id="cmpCtaTitle">Resource<br>the work.</h2>
+  <p>One hundred per cent of profits flow through Jabalbina Yalanji Aboriginal Corporation. Registered charity, ACNC public record.</p>
+  <div class="actions">
+    <a href="/donate" class="btn btn-primary">Donate now →</a>
+    <a href="/contact" class="btn btn-secondary" style="border-color: var(--ink);">Partner with us</a>
+  </div>
+</section>
+
+
+<script>
+  HC.init('projects');
+
+  // ----- Campaign catalogue -----
+  const CAMPAIGNS = {
+    daintree: {
+      tag: 'Flagship · Active 2026',
+      title: 'Daintree River Station, the rainforest buyback.',
+      lede: '203 hectares of Daintree Lowland Rainforest, with 170+ hectares targeted for rewilding as cassowary habitat, returned to the care of the Eastern Kuku Yalanji Bama people.',
+      hero: 'https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=2400&q=80',
+      issue: "Daintree River Station is a 203-hectare freehold parcel inside the world's oldest tropical rainforest. Without buyback, it sits exposed to further development. Once it's gone, it doesn't come back.",
+      approach: "HalfCut funds the acquisition. Title and stewardship pass to the Eastern Kuku Yalanji Bama people through Jabalbina Yalanji Aboriginal Corporation. 170+ hectares are entered into a rewilding plan focused on cassowary habitat.",
+      email: "Tell the Queensland government and federal Environment Minister that the Daintree's lowland forest deserves permanent protection under First Nations stewardship.",
+      stats: [
+        { k: 'Total land',          v: '203 ha',  note: 'Daintree Lowland Rainforest freehold buyback.' },
+        { k: 'Rewilding target',     v: '170+ ha', note: 'Cassowary habitat restoration.' },
+        { k: 'Forest age',           v: '120 M yrs', note: 'Oldest tropical rainforest on Earth.' },
+        { k: 'Stewardship',          v: 'EKY Bama', note: 'Eastern Kuku Yalanji Bama people via JYAC.' }
+      ],
+      storyTitle: "A once-in-a-generation chance.",
+      storyBody: `
+        <p>Daintree River Station has been a working property at the edge of the world's oldest tropical rainforest for decades. With the current caretaker stepping back, the parcel is on the market. The buyer determines the next century of the land.</p>
+        <p>If a developer buys it, the lowland forest is at risk. If HalfCut and Jabalbina buy it together, the lowland forest enters Indigenous stewardship and a rewilding program. Same parcel, two completely different futures.</p>
+        <div class="cmp-pull">
+          <blockquote>
+            "If you don't do it now, you'll probably never get another chance."
+            <cite>Dean Anderson · current caretaker, Daintree River Station</cite>
+          </blockquote>
+        </div>
+        <p>The campaign funds the acquisition in full, transfers title to Jabalbina, and resources the first three years of the rewilding plan. It is not a perpetual ask. It is a one-time, time-sensitive moment.</p>
+      `,
+      gallery: [
+        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=900&q=80'
+      ],
+      ctaTitle: 'Buy back<br>the rainforest.'
+    },
+    yalada: {
+      tag: 'Annual program',
+      title: 'The Yalada Tour, values-aligned giving on Country.',
+      lede: 'Three days on Eastern Kuku Yalanji Country with a small cohort of values-aligned partners. Immersive cultural exchange, shared governance, deep briefing on the restoration work they help resource.',
+      hero: 'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=2400&q=80',
+      issue: "Conservation funding usually happens in boardrooms, far from Country and far from the people doing the work. The result: well-intentioned money attached to badly-aligned outcomes.",
+      approach: "Once a year, HalfCut brings a small cohort of values-aligned partners onto Kuku Yalanji Country. Hosted by Jabalbina rangers. Briefing, ceremony, and shared governance, in that order.",
+      email: "Yalada Tour spots are by invitation. Email partners@halfcut.org if your organisation is interested in joining a future cohort.",
+      stats: [
+        { k: 'Frequency',     v: 'Annual',    note: 'Three days, once per year.' },
+        { k: 'Cohort size',   v: '~12',       note: 'Values-aligned partner organisations.' },
+        { k: 'Location',      v: 'EKY Country', note: 'On Country, hosted by Jabalbina.' },
+        { k: 'Next cohort',   v: 'Q3 2026',   note: 'Applications by invitation.' }
+      ],
+      storyTitle: "Boardrooms can't see the ground.",
+      storyBody: `
+        <p>A funder who has stood in a regenerating restoration plot, listened to a Bama Elder tell the story of the land, and walked the same track the rangers walk every Tuesday, is not the same funder who reads a glossy report and signs a cheque from interstate.</p>
+        <p>The Yalada Tour is the on-ramp from transactional giving to relational partnership. It is also one of HalfCut's main long-term funding mechanisms, because three days on Country tend to change what a partner is willing to commit to.</p>
+      `,
+      gallery: [
+        'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=900&q=80'
+      ],
+      ctaTitle: 'Meet us<br>on Country.'
+    },
+    capacity: {
+      tag: 'Replicable model',
+      title: 'Capacity codified, documenting the Jabalbina model.',
+      lede: 'A long-term project to document the governance, funding flow, and accountability structures HalfCut has built with Jabalbina, so other Traditional Owner corporations can adopt and adapt them.',
+      hero: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=80',
+      issue: "The Jabalbina x HalfCut model works. It is one of the few First Nations-led conservation partnerships in Australia that has held together for six years and continues to scale. But the model lives in heads, emails, and informal conventions, not in a usable document.",
+      approach: "HalfCut and Jabalbina jointly write down the model, with cultural authority and consent built in. Other Traditional Owner corporations can read it, adapt it, and run it on their Country.",
+      email: "If you represent a Traditional Owner corporation interested in adapting the model, email partners@halfcut.org.",
+      stats: [
+        { k: 'Status',        v: 'In development', note: 'Co-authored with JYAC.' },
+        { k: 'Target',        v: '10 partnerships', note: 'By 2035, similarly structured TO partnerships across Australia.' },
+        { k: 'Authority',     v: 'JYAC-led',      note: 'Cultural and editorial authority held with Jabalbina.' },
+        { k: 'Audience',      v: 'TO corporations', note: 'Other Registered Native Title Body Corporates.' }
+      ],
+      storyTitle: "Repeatable, not replicated.",
+      storyBody: `
+        <p>This is not a franchise. There are no Daintrees outside the Daintree, and no Kuku Yalanji Bama outside the Eastern Kuku Yalanji Bama. What works on one Country has to be adapted on another.</p>
+        <p>What's transferable is the structure: how to govern a partnership where cultural authority sits with Traditional Owners and the charity holds the funding rails; how to write the funding flow so it cannot be diverted; how to publish the ledger so trust gets built faster than it gets eroded.</p>
+        <p>That structure is what we are writing down.</p>
+      `,
+      gallery: [
+        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=900&q=80'
+      ],
+      ctaTitle: 'Codify<br>the model.'
+    },
+    southern: {
+      tag: 'Scoping · 2026',
+      title: 'Southern Rainforests, a second partnership in development.',
+      lede: 'Scoping a second long-form partnership with a Traditional Owner corporation in the Gondwana rainforest region of northern New South Wales.',
+      hero: 'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=2400&q=80',
+      issue: "The Gondwana rainforests of northern NSW are a UNESCO World Heritage Area, the oldest continuous rainforests outside the Tropics. Fire, fragmentation, and underfunding for Traditional Owner-led management are stacking risks faster than the system can absorb them.",
+      approach: "HalfCut is in early-stage conversation with a Traditional Owner corporation in the region. Scoping work begins with cultural authority, governance design, and funding architecture, before any specific restoration plan.",
+      email: "Scoping is private at this stage. We will publish more when our partner is ready to be named publicly.",
+      stats: [
+        { k: 'Status',        v: 'Scoping',      note: 'Cultural authority and governance design.' },
+        { k: 'Region',        v: 'Northern NSW', note: 'Gondwana rainforest, UNESCO World Heritage.' },
+        { k: 'Partner',       v: 'TBA',          note: 'Traditional Owner corporation in early conversation.' },
+        { k: 'Soft launch',   v: '2027',         note: 'Subject to partner readiness and funding.' }
+      ],
+      storyTitle: "Slow, on purpose.",
+      storyBody: `
+        <p>The temptation in conservation is to land on a partner and announce. The temptation is wrong. The structure that takes six months to set up well saves three years of unwinding badly. Southern Rainforests is in the slow part.</p>
+        <p>If you would like to be informed when the partnership is ready to be named publicly, email partners@halfcut.org.</p>
+      `,
+      gallery: [
+        'https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=900&q=80'
+      ],
+      ctaTitle: 'Back<br>the next one.'
+    }
+  };
+
+  function urlParam(name) { return new URLSearchParams(window.location.search).get(name) || ''; }
+  const key = urlParam('c') || 'daintree';
+  const c = CAMPAIGNS[key] || CAMPAIGNS.daintree;
+
+  document.title = c.title.split('.')[0].trim() + ' · HalfCut';
+  document.getElementById('cmpHeroBg').style.backgroundImage = `url('${c.hero}')`;
+  document.getElementById('cmpTag').textContent = c.tag;
+  document.getElementById('cmpTitle').textContent = c.title;
+  document.getElementById('cmpLede').textContent = c.lede;
+  document.getElementById('cmpIssueBody').textContent = c.issue;
+  document.getElementById('cmpApproachBody').textContent = c.approach;
+  document.getElementById('cmpEmailBody').textContent = c.email;
+  document.getElementById('cmpStoryTitle').textContent = c.storyTitle;
+  document.getElementById('cmpStoryBody').innerHTML = c.storyBody;
+  document.getElementById('cmpCtaTitle').innerHTML = c.ctaTitle;
+  document.getElementById('cmpStats').innerHTML = c.stats.map(s => `
+    <div class="cmp-stat">
+      <div class="k">${s.k}</div>
+      <div class="v">${s.v}</div>
+      <div class="note">${s.note}</div>
+    </div>
+  `).join('');
+  document.getElementById('cmpGallery').innerHTML = c.gallery.map(g => `<div style="background-image: url('${g}');"></div>`).join('');
+</script>
+</BaseLayout>
+
+<style is:global>
+body { background: var(--ink); color: var(--cream); }
+
+  /* Hero */
+  .cmp-hero {
+    position: relative;
+    min-height: 95vh;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .cmp-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-size: cover; background-position: center;
+    filter: brightness(.6) saturate(.95);
+    will-change: transform;
+  }
+  .cmp-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.35) 0%, rgba(19,20,14,.15) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .cmp-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: calc(var(--hero-pad-top) + 24px) var(--pad-x) var(--s-10);
+    min-height: 95vh;
+    display: flex; flex-direction: column; justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+  .cmp-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px;
+    background: var(--acid);
+    color: var(--ink);
+    border-radius: 999px;
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800;
+    margin-bottom: var(--s-6);
+  }
+  .cmp-title {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6.5vw, 120px);
+    line-height: .95;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0 0 var(--s-6);
+    max-width: 18ch;
+  }
+  .cmp-lede {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin: 0 auto var(--s-7);
+    max-width: 50ch;
+    opacity: .9;
+    text-wrap: pretty;
+  }
+  .cmp-ctas {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+
+  /* Three-column action row */
+  .cmp-cards {
+    background: var(--ink);
+    padding: var(--s-9) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+  }
+  .cmp-cards-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5);
+  }
+  .cmp-card {
+    background: rgba(245,244,236,.04);
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    padding: var(--s-7);
+    display: flex; flex-direction: column;
+  }
+  .cmp-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 2.4vw, 38px);
+    line-height: .95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin: 0 0 var(--s-5);
+  }
+  .cmp-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 17px; line-height: 1.55;
+    opacity: .85; flex-grow: 1;
+    margin: 0 0 var(--s-6);
+  }
+  .cmp-card .btn { align-self: flex-start; }
+
+  /* Stats band */
+  .cmp-stats {
+    background: var(--ink);
+    padding: var(--s-9) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+  }
+  .cmp-stats-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--cream-15);
+    border-left: 1px solid var(--cream-15);
+  }
+  .cmp-stat {
+    padding: var(--s-7) var(--s-5);
+    border-right: 1px solid var(--cream-15);
+    border-bottom: 1px solid var(--cream-15);
+  }
+  .cmp-stat .k {
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    font-weight: 700; opacity: .55;
+    margin-bottom: var(--s-3);
+  }
+  .cmp-stat .v {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 4.5vw, 72px);
+    line-height: .9; letter-spacing: -0.025em;
+    color: var(--acid);
+    white-space: nowrap;
+  }
+  .cmp-stat .note {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 15px; line-height: 1.4;
+    opacity: .65;
+    margin-top: 12px;
+  }
+
+  /* Story */
+  .cmp-story {
+    background: var(--cream); color: var(--ink);
+    padding: var(--s-11) var(--pad-x);
+  }
+  .cmp-story-inner {
+    max-width: 760px; margin: 0 auto;
+  }
+  .cmp-story .eyebrow {
+    color: var(--ink); opacity: .55;
+    display: block; margin-bottom: var(--s-5);
+  }
+  .cmp-story h2 {
+    font-family: var(--f-display);
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .cmp-story p {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 19px; line-height: 1.7;
+    margin: 0 0 var(--s-5);
+    color: var(--ink);
+  }
+  .cmp-pull {
+    margin: var(--s-7) 0;
+    padding: var(--s-6);
+    border: 1px solid var(--ink-15);
+    border-radius: 4px;
+    background: var(--stone);
+  }
+  .cmp-pull blockquote {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 2.1vw, 28px);
+    line-height: 1.3;
+    margin: 0;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .cmp-pull cite {
+    display: block;
+    margin-top: var(--s-4);
+    font-family: var(--f-sans);
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    opacity: .55; font-style: normal; font-weight: 700;
+  }
+
+  /* Gallery strip */
+  .cmp-gallery {
+    background: var(--ink);
+    padding: var(--s-9) 0;
+    border-top: 1px solid var(--cream-15);
+  }
+  .cmp-gallery-head {
+    max-width: 1440px; margin: 0 auto var(--s-7);
+    padding: 0 var(--pad-x);
+  }
+  .cmp-gallery-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1; letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .cmp-gallery-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .cmp-gallery-strip > div {
+    aspect-ratio: 1/1;
+    background-size: cover; background-position: center;
+  }
+
+  /* Action card grid (ways to help) */
+  .cmp-actions {
+    background: var(--ink);
+    padding: var(--s-10) var(--pad-x);
+    border-top: 1px solid var(--cream-15);
+  }
+  .cmp-actions-head {
+    max-width: 1440px; margin: 0 auto var(--s-7);
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: var(--s-6); flex-wrap: wrap;
+  }
+  .cmp-actions-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 4vw, 64px);
+    line-height: .95; letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .cmp-actions-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5);
+  }
+  .cmp-action {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--ink);
+    text-decoration: none; color: var(--cream);
+    display: block;
+    isolation: isolate;
+  }
+  .cmp-action-img {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center;
+    filter: brightness(.55) saturate(.85);
+    transition: transform .9s var(--ease), filter .35s var(--ease);
+  }
+  .cmp-action:hover .cmp-action-img { transform: scale(1.04); filter: brightness(.7) saturate(1); }
+  .cmp-action::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.4) 0%, rgba(19,20,14,.2) 45%, rgba(19,20,14,.92) 100%);
+    z-index: 1;
+  }
+  .cmp-action .cat {
+    position: absolute; top: 22px; left: 22px;
+    z-index: 2;
+    padding: 7px 13px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--f-sans);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: var(--acid);
+  }
+  .cmp-action .body {
+    position: absolute; left: 26px; right: 26px; bottom: 26px;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 14px;
+  }
+  .cmp-action h3 {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 1.9vw, 30px);
+    line-height: .95; letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0; max-width: 18ch;
+    color: var(--cream);
+  }
+  .cmp-action .plus {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border: 1px solid var(--acid);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acid);
+    transition: background .25s, color .25s;
+  }
+  .cmp-action:hover .plus { background: var(--acid); color: var(--ink); }
+  .cmp-action .plus svg { width: 16px; height: 16px; }
+
+  /* Closing CTA */
+  .cmp-cta {
+    background: var(--acid);
+    color: var(--ink);
+    padding: var(--s-11) var(--pad-x);
+    text-align: center;
+  }
+  .cmp-cta h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 8vw, 160px);
+    line-height: .88; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin: 0 auto var(--s-6);
+    text-wrap: balance;
+  }
+  .cmp-cta p {
+    max-width: 50ch; margin: 0 auto var(--s-6);
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.4;
+  }
+  .cmp-cta .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cmp-cta .btn-primary { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .cmp-cta .btn-primary:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+
+  @media (max-width: 960px) {
+    .cmp-cards-inner { grid-template-columns: 1fr; }
+    .cmp-stats-inner { grid-template-columns: 1fr 1fr; }
+    .cmp-actions-grid { grid-template-columns: 1fr 1fr; }
+    .cmp-gallery-strip { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .cmp-actions-grid { grid-template-columns: 1fr; }
+  }
+</style>

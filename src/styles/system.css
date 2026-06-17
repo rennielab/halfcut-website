@@ -371,7 +371,7 @@ a { color: inherit; text-decoration: none; }
 .topo-bg {
   position: absolute;
   inset: 0;
-  background-image: url('topo-pattern-hq.png');
+  background-image: url('/assets-legacy/topo-pattern-hq.png');
   background-size: 1600px auto;
   background-repeat: repeat;
   pointer-events: none;
@@ -468,7 +468,7 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-donate-topo {
   position: absolute; inset: 0;
-  background-image: url('topo-pattern-hq.png');
+  background-image: url('/assets-legacy/topo-pattern-hq.png');
   background-size: 420px auto;
   background-repeat: repeat;
   opacity: .28;
@@ -530,7 +530,7 @@ a { color: inherit; text-decoration: none; }
 
 .slideout-topo {
   position: absolute; inset: 0;
-  background-image: url('topo-pattern-hq.png');
+  background-image: url('/assets-legacy/topo-pattern-hq.png');
   background-size: 1600px auto;
   background-position: center;
   background-repeat: repeat;
@@ -867,7 +867,7 @@ a { color: inherit; text-decoration: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('assets/topo-pattern.png');
+  background-image: url('/assets-legacy/topo-pattern.png');
   background-repeat: repeat;
   background-size: 900px auto;
   opacity: .07;
