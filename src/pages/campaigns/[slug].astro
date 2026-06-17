@@ -1,0 +1,148 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCampaigns, getCampaignBySlug, urlFor } from '~/lib/sanity';
+
+export async function getStaticPaths() {
+  let campaigns: any[] = [];
+  try { campaigns = await getCampaigns(); } catch {}
+  return campaigns.map((c: any) => ({ params: { slug: c.slug.current }, props: { initialData: c } }));
+}
+
+const { slug } = Astro.params;
+let campaign: any = null;
+try { campaign = await getCampaignBySlug(slug!); } catch {}
+if (!campaign) return Astro.redirect('/campaigns');
+
+const heroUrl = campaign.hero?.asset ? urlFor(campaign.hero).width(1800).quality(80).url() : null;
+---
+
+<BaseLayout
+  title={campaign.title}
+  description={campaign.summary}
+  ogImage={heroUrl ?? undefined}
+  dark={true}
+>
+  <section class="cmp-hero">
+    {heroUrl && <div class="cmp-hero-bg" style={`background-image: url('${heroUrl}');`} aria-hidden="true"></div>}
+    <div class="cmp-hero-inner">
+      {campaign.tag && <span class="cmp-tag">{campaign.tag}</span>}
+      <h1>{campaign.title}</h1>
+      <p class="lede">{campaign.summary}</p>
+      <div class="ctas">
+        <a href="/donate" class="btn btn-acid">Resource the work →</a>
+        <a href="#whats-at-stake" class="btn btn-secondary on-ink">What's at stake</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cmp-cards">
+    <div class="cmp-cards-inner">
+      <div class="cmp-card">
+        <h2>The issue</h2>
+        <p>{campaign.issue ?? 'Awaiting copy.'}</p>
+      </div>
+      <div class="cmp-card">
+        <h2>Our approach</h2>
+        <p>{campaign.approach ?? 'Awaiting copy.'}</p>
+      </div>
+      <div class="cmp-card">
+        <h2>How you can help</h2>
+        <p>Donate, become a member, or join a camp on Country. Every dollar resources Traditional Owner-led work.</p>
+        <a href="/take-action" class="btn btn-secondary on-ink">Take action</a>
+      </div>
+    </div>
+  </section>
+
+  {campaign.stats?.length > 0 && (
+    <section class="cmp-stats" id="whats-at-stake">
+      <div class="cmp-stats-inner">
+        {campaign.stats.map((s: any) => (
+          <div class="cmp-stat">
+            <span class="k">{s.label}</span>
+            <span class="v">{s.value}</span>
+            {s.note && <span class="note">{s.note}</span>}
+            {s.source && <span class="src">Source: {s.source}</span>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .cmp-hero {
+    position: relative; min-height: 90vh; overflow: hidden;
+    background: var(--ink); color: var(--cream);
+  }
+  .cmp-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-size: cover; background-position: center;
+    filter: brightness(.6) saturate(.95);
+  }
+  .cmp-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.15) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .cmp-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1100px; margin: 0 auto;
+    padding: calc(var(--hero-pad-top, 160px) + 24px) var(--pad-x, 32px) var(--s-10, 128px);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 90vh;
+  }
+  .cmp-tag {
+    display: inline-flex; padding: 9px 18px; background: var(--acid); color: var(--ink);
+    border-radius: 999px;
+    font-family: var(--f-sans); font-size: 11px; letter-spacing: .22em;
+    text-transform: uppercase; font-weight: 800;
+    margin-bottom: var(--s-6, 32px);
+  }
+  .cmp-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6.5vw, 120px);
+    line-height: .95; letter-spacing: -0.025em; text-transform: uppercase;
+    margin: 0 0 var(--s-6, 32px); max-width: 18ch; text-wrap: balance;
+  }
+  .cmp-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px); line-height: 1.4;
+    margin: 0 auto var(--s-7, 48px); max-width: 50ch; opacity: .9;
+  }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .cmp-cards { background: var(--ink); padding: var(--s-9, 96px) var(--pad-x, 32px); border-top: 1px solid var(--cream-15); }
+  .cmp-cards-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5, 24px);
+  }
+  .cmp-card {
+    background: rgba(245,244,236,.04);
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    padding: var(--s-7, 48px);
+    color: var(--cream);
+    display: flex; flex-direction: column;
+  }
+  .cmp-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 2.4vw, 38px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    color: var(--acid); margin: 0 0 var(--s-5, 24px);
+  }
+  .cmp-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 17px; line-height: 1.55; opacity: .85; flex-grow: 1;
+    margin: 0 0 var(--s-6, 32px);
+  }
+  .cmp-stats { background: var(--ink); padding: var(--s-9, 96px) var(--pad-x, 32px); border-top: 1px solid var(--cream-15); color: var(--cream); }
+  .cmp-stats-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    border-top: 1px solid var(--cream-15); border-left: 1px solid var(--cream-15);
+  }
+  .cmp-stat { padding: var(--s-7, 48px) var(--s-5, 24px); border-right: 1px solid var(--cream-15); border-bottom: 1px solid var(--cream-15); display: flex; flex-direction: column; gap: var(--s-3, 12px); }
+  .cmp-stat .k { font-family: var(--f-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; opacity: .55; }
+  .cmp-stat .v { font-family: var(--f-display); font-size: clamp(36px, 4.5vw, 72px); line-height: .9; color: var(--acid); }
+  .cmp-stat .note { font-family: var(--f-serif); font-weight: 300; font-size: 15px; line-height: 1.4; opacity: .65; }
+  .cmp-stat .src { font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; opacity: .5; }
+</style>

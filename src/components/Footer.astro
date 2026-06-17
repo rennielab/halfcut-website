@@ -1,0 +1,181 @@
+---
+/**
+ * Site footer. Acknowledgment of Country at the top — non-negotiable for a
+ * First Nations-led organisation. Sponsor / partner logos read from Sanity
+ * once schemas are populated.
+ */
+import { getPartners } from '~/lib/sanity';
+
+let partners: any[] = [];
+try {
+  partners = await getPartners();
+} catch {
+  partners = [];
+}
+---
+
+<footer class="site-footer">
+  <div class="footer-aoc">
+    <p>
+      HalfCut acknowledges the Eastern Kuku Yalanji Bama people as Traditional
+      Owners of the rainforest country we work alongside, and the Gadigal people
+      of the Eora nation on whose Country our studio sits. We pay respect to
+      Elders past and present. Sovereignty has never been ceded.
+    </p>
+  </div>
+
+  <div class="footer-grid">
+    <nav class="footer-col" aria-label="Explore">
+      <h4>Explore</h4>
+      <a href="/about">About</a>
+      <a href="/campaigns">Campaigns</a>
+      <a href="/impact">Impact</a>
+      <a href="/team">Team</a>
+      <a href="/partners">Partners</a>
+      <a href="/fieldnotes">Field Notes</a>
+    </nav>
+    <nav class="footer-col" aria-label="Act">
+      <h4>Act</h4>
+      <a href="/donate">Donate</a>
+      <a href="/take-action">Take Action</a>
+      <a href="/membership">Become a Member</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="footer-col">
+      <h4>Registered Charity</h4>
+      <p>HalfCut Limited</p>
+      <p>ABN 24 642 788 814</p>
+      <p>Registered with the ACNC</p>
+      <a href="https://www.acnc.gov.au/charity" target="_blank" rel="noopener">ACNC register ↗</a>
+    </div>
+  </div>
+
+  {partners.length > 0 && (
+    <div class="footer-partners">
+      <h4>In partnership with</h4>
+      <ul>
+        {partners.map((p: any) => (
+          <li>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.name}</a> : p.name}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <div class="footer-bottom">
+    <div>© 2026 HalfCut Limited</div>
+    <div class="carbon-badge" id="carbonBadge">
+      <span>Hosted on renewable energy</span>
+      <span aria-hidden="true">·</span>
+      <span id="pageWeight">measuring…</span>
+    </div>
+  </div>
+</footer>
+
+<style is:global>
+  .site-footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: var(--s-9) var(--pad-x, 32px) var(--s-6);
+  }
+  .footer-aoc {
+    max-width: 720px;
+    margin-bottom: var(--s-9);
+    padding-bottom: var(--s-7);
+    border-bottom: 1px solid var(--cream-15);
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.55;
+    opacity: .85;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-7);
+    margin-bottom: var(--s-9);
+  }
+  .footer-col { display: flex; flex-direction: column; gap: 8px; }
+  .footer-col h4 {
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--acid);
+    margin-bottom: 8px;
+  }
+  .footer-col a, .footer-col p {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: .8;
+  }
+  .footer-col a:hover { color: var(--acid); opacity: 1; }
+  .footer-partners {
+    border-top: 1px solid var(--cream-15);
+    padding: var(--s-7) 0;
+    margin-bottom: var(--s-7);
+  }
+  .footer-partners h4 {
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: var(--s-5);
+  }
+  .footer-partners ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-partners li, .footer-partners a {
+    font-family: var(--f-sans);
+    font-size: 13px;
+    letter-spacing: .04em;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: .7;
+  }
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    align-items: center;
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--cream-15);
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    opacity: .6;
+  }
+  .carbon-badge {
+    display: inline-flex; gap: 10px; align-items: center;
+  }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+
+<script>
+  // Tiny client-side script: measure transferred bytes of the loaded page
+  // via the Performance API, display in the carbon badge. Honest, real-time.
+  function reportWeight() {
+    const el = document.getElementById('pageWeight');
+    if (!el) return;
+    try {
+      const entries = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+      const nav = (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming) || null;
+      let bytes = nav?.transferSize ?? 0;
+      for (const r of entries) bytes += (r as any).transferSize ?? 0;
+      const kb = Math.round(bytes / 1024);
+      // Sustainable Web Design model: ~0.5g CO2 per MB on grid energy
+      const grams = (bytes / 1024 / 1024) * 0.5;
+      el.textContent = `${kb}KB · ${grams.toFixed(2)}g CO₂`;
+    } catch {
+      el.textContent = '';
+    }
+  }
+  window.addEventListener('load', () => setTimeout(reportWeight, 100));
+</script>

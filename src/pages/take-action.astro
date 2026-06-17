@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+
+const ACTIONS = [
+  { title: 'Resource\nthe work', cat: 'Donate', body: '100% of profits to Country, through Jabalbina Yalanji Aboriginal Corporation. Tax-deductible in Australia.', href: '/donate' },
+  { title: 'Become a\nHalfCut member', cat: 'Member', body: 'A monthly contribution that compounds. Pause or cancel any time, no retention scripts.', href: '/membership' },
+  { title: 'Join a\ncamp', cat: 'Camp', body: 'Three days on Country with the Eastern Kuku Yalanji rangers. Run twice a year, application-only.', href: '/contact' },
+  { title: 'Donate\nyour time', cat: 'Volunteer', body: 'Skilled volunteer roles for legal, finance, design, and field workdays in Sydney and on Country.', href: '/contact' },
+  { title: 'Email\ngovernment', cat: 'Petition', body: 'A pre-drafted letter to your federal MP on Native Title, IPA funding, and World Heritage protection.', href: '/contact' },
+];
+---
+
+<BaseLayout
+  title="Take Action"
+  description="Five ways to back Eastern Kuku Yalanji Bama-led conservation. Pick the one that fits your life."
+  current="take-action"
+  dark={true}
+>
+  <PageHero
+    eyebrow="Take Action"
+    title={'The work\nneeds you.'}
+    lede="HalfCut funds the work, but the work needs more than money. Five ways to back the Eastern Kuku Yalanji Bama people and the rainforest they steward."
+    dark={true}
+  />
+
+  <section class="ta-grid-wrap">
+    <ul class="ta-grid">
+      {ACTIONS.map((a) => (
+        <li>
+          <a class="ta-card" href={a.href}>
+            <span class="pill">{a.cat}</span>
+            <div class="body">
+              <h2>{a.title.split('\n').map((line, i, all) => (
+                <span>{line}{i < all.length - 1 && <br />}</span>
+              ))}</h2>
+              <p>{a.body}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .ta-grid-wrap { padding: var(--s-9, 96px) var(--pad-x, 32px) var(--s-10, 128px); max-width: 1440px; margin: 0 auto; }
+  .ta-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5, 24px);
+  }
+  .ta-card {
+    position: relative; display: flex; flex-direction: column;
+    aspect-ratio: 4 / 5;
+    background: rgba(245,244,236,.04);
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    padding: var(--s-6, 32px);
+    color: var(--cream);
+    text-decoration: none;
+    transition: transform .25s ease, border-color .25s;
+  }
+  .ta-card:hover { transform: translateY(-2px); border-color: var(--acid); }
+  .pill {
+    display: inline-flex; width: fit-content;
+    padding: 7px 13px;
+    border: 1px solid var(--cream-15);
+    border-radius: 999px;
+    background: rgba(19,20,14,.5);
+    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--acid);
+  }
+  .body { margin-top: auto; }
+  .ta-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 2.3vw, 34px);
+    line-height: .95; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4, 16px);
+  }
+  .ta-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 14px; line-height: 1.5;
+    margin: 0; opacity: .8;
+  }
+  @media (max-width: 960px) { .ta-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .ta-grid { grid-template-columns: 1fr; } }
+</style>

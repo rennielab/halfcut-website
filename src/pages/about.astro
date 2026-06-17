@@ -1,0 +1,30 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { sanityClient } from '~/lib/sanity';
+
+let page: any = null;
+try {
+  page = await sanityClient.fetch(`*[_type == "page" && slug.current == "about"][0]`);
+} catch {}
+---
+
+<BaseLayout
+  title={page?.title ?? 'About'}
+  description={page?.seoDescription ?? 'How HalfCut works. A First Nations-led conservation model, run from Sydney and Country.'}
+  current="about"
+>
+  <PageHero
+    eyebrow={page?.eyebrow ?? 'About'}
+    title={page?.heroTitle ?? 'How HalfCut works.'}
+    lede={page?.heroLede}
+  />
+  {!page && <Placeholder what="The About page narrative" fromWho="HalfCut leadership" />}
+  {page?.body && (
+    <article class="prose">
+      {/* Portable text rendering — wire in @portabletext/to-html once content lands */}
+      <Placeholder what="The full About body" fromWho="HalfCut leadership (will render once the Sanity body field is populated)" />
+    </article>
+  )}
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+/**
+ * Reusable hero block for editorial pages.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  dark?: boolean;
+  align?: 'left' | 'center';
+}
+const { eyebrow, title, lede, dark = false, align = 'left' } = Astro.props;
+---
+
+<section class={`page-hero${dark ? ' is-dark' : ''}${align === 'center' ? ' is-center' : ''}`}>
+  <div class="page-hero-inner">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{title.split('\n').map((line, i, all) => (
+      <span>{line}{i < all.length - 1 && <br />}</span>
+    ))}</h1>
+    {lede && <p class="lede">{lede}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding: var(--hero-pad-top, 160px) var(--pad-x, 32px) var(--pad-section-sm, 96px);
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink-15);
+  }
+  .page-hero.is-dark {
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom-color: var(--cream-15);
+  }
+  .page-hero.is-dark .eyebrow { color: var(--acid); }
+  .page-hero.is-center { text-align: center; }
+  .page-hero.is-center .page-hero-inner { margin: 0 auto; }
+  .page-hero-inner { max-width: 1200px; }
+  .page-hero .eyebrow {
+    color: var(--ink); opacity: .55;
+    display: block; margin-bottom: var(--s-5, 24px);
+  }
+  .page-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .page-hero.is-center h1 { margin: 0 auto; }
+  .page-hero .lede {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.45;
+    margin-top: var(--s-6, 32px);
+    max-width: 56ch;
+    opacity: .85;
+  }
+  .page-hero.is-center .lede { margin-left: auto; margin-right: auto; }
+</style>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { getPartners, urlFor } from '~/lib/sanity';
+
+// getPartners() already filters verified == true.
+let partners: any[] = [];
+try { partners = await getPartners(); } catch {}
+
+const byCategory = partners.reduce((acc: Record<string, any[]>, p: any) => {
+  (acc[p.category] ||= []).push(p);
+  return acc;
+}, {} as Record<string, any[]>);
+
+const CATEGORY_LABEL: Record<string, string> = {
+  'traditional-owner': 'Traditional Owner partners',
+  conservation: 'Conservation organisations',
+  corporate: 'Corporate sponsors',
+  funder: 'Government & funders',
+  community: 'Community & suppliers',
+};
+---
+
+<BaseLayout
+  title="Partners"
+  description="Verified partners of HalfCut. Every organisation listed has confirmed the relationship in writing."
+  current="partners"
+>
+  <PageHero
+    eyebrow="Partners · verified relationships only"
+    title={'The people\nwe work with.'}
+    lede="No aspirational logos. Every organisation on this page has confirmed the partnership in writing. If we don't have it on paper, it isn't here."
+  />
+
+  {partners.length === 0 ? (
+    <div class="empty-wrap">
+      <Placeholder
+        what="The list of verified partner organisations"
+        fromWho="HalfCut's partnerships team. Partners are only shown after `verified: true` is set in Sanity."
+      />
+    </div>
+  ) : (
+    <section class="partners-wrap">
+      {Object.entries(byCategory).map(([cat, list]) => (
+        <div class="partner-section">
+          <h2>{CATEGORY_LABEL[cat] ?? cat}</h2>
+          <ul class="partner-grid">
+            {(list as any[]).map((p: any) => {
+              const logoUrl = p.logo?.asset ? urlFor(p.logo).width(400).quality(85).url() : null;
+              const card = (
+                <article class="partner-card">
+                  {logoUrl && <img src={logoUrl} alt={p.logo.alt ?? p.name} loading="lazy" />}
+                  <h3>{p.name}</h3>
+                  {p.since && <span class="since">Partner since {p.since}</span>}
+                </article>
+              );
+              return <li>{p.url ? <a href={p.url} target="_blank" rel="noopener">{card}</a> : card}</li>;
+            })}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .empty-wrap { padding: var(--s-8, 64px) var(--pad-x, 32px); }
+  .partners-wrap { max-width: 1440px; margin: 0 auto; padding: var(--s-9, 96px) var(--pad-x, 32px); }
+  .partner-section { margin-bottom: var(--s-10, 128px); }
+  .partner-section h2 {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 3vw, 48px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-7, 48px);
+    border-bottom: 1px solid var(--ink-15);
+    padding-bottom: var(--s-5, 24px);
+  }
+  .partner-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--s-5, 24px);
+  }
+  .partner-card {
+    background: var(--stone);
+    border-radius: 4px;
+    padding: var(--s-6, 32px);
+    aspect-ratio: 1/1;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .partner-card img { max-height: 50%; object-fit: contain; margin: 0 auto; }
+  .partner-card h3 {
+    font-family: var(--f-sans);
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+    margin: 0;
+  }
+  .since {
+    font-family: var(--f-sans); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; opacity: .55; margin-top: 4px;
+  }
+  .partner-card a { text-decoration: none; color: inherit; }
+</style>

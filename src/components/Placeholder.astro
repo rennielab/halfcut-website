@@ -1,0 +1,49 @@
+---
+/**
+ * Renders an explicit "this section is awaiting real content" panel.
+ * Used everywhere a Sanity field would otherwise produce nothing —
+ * makes it visible to the team that content is missing rather than
+ * shipping an empty surface that reads as broken.
+ */
+interface Props {
+  what: string;        // e.g. "the board roster", "verified partner logos"
+  fromWho?: string;    // e.g. "HalfCut + Jabalbina", "the board members themselves"
+}
+const { what, fromWho } = Astro.props;
+---
+
+<div class="placeholder">
+  <span class="placeholder-eyebrow">Awaiting content</span>
+  <p>
+    <strong>{what}</strong> will render here once HalfCut publishes it in the
+    Sanity Studio.{fromWho ? ` Sourced from ${fromWho}.` : ''}
+  </p>
+</div>
+
+<style>
+  .placeholder {
+    background: var(--stone);
+    border: 1px dashed var(--ink-15);
+    border-radius: 6px;
+    padding: var(--s-6, 32px) var(--s-7, 48px);
+    margin: var(--s-6, 32px) 0;
+    color: var(--ink);
+    max-width: 720px;
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .placeholder strong { font-weight: 600; }
+  .placeholder-eyebrow {
+    display: block;
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--ink);
+    opacity: .55;
+    margin-bottom: 12px;
+  }
+</style>

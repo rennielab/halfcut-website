@@ -1,0 +1,92 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { getBoardMembers, urlFor } from '~/lib/sanity';
+
+let board: any[] = [];
+try { board = await getBoardMembers(); } catch {}
+
+// Hard gate: only render board members whose quote has been approved.
+const approved = board.filter((m) => m.quoteApproved === true);
+---
+
+<BaseLayout
+  title="Team"
+  description="The HalfCut board. Every member's bio and quote has been signed off by them. Photos are real."
+  current="team"
+  dark={true}
+>
+  <PageHero
+    eyebrow="The board"
+    title={'A small board.\nA serious obligation.'}
+    lede="HalfCut is governed by an unpaid voluntary board. Every director below has signed off on their bio, their quote, and their photo."
+    dark={true}
+  />
+
+  {approved.length === 0 ? (
+    <div class="approved-empty">
+      <Placeholder
+        what="The board roster"
+        fromWho="each director. Only members who have signed off on their bio, quote and portrait render here. Set `quoteApproved: true` in Sanity once sign-off is on file."
+      />
+    </div>
+  ) : (
+    <ul class="board-grid">
+      {approved.map((m: any) => {
+        const portrait = m.portrait?.asset ? urlFor(m.portrait).width(900).quality(80).url() : null;
+        return (
+          <li>
+            <article class="board-card">
+              {portrait && <img src={portrait} alt={m.portrait.alt ?? m.name} loading="lazy" />}
+              <span class="role">{m.role}</span>
+              <h2>{m.name}</h2>
+              {m.whyJoined && <blockquote>"{m.whyJoined}"</blockquote>}
+            </article>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  .approved-empty { padding: var(--s-8, 64px) var(--pad-x, 32px); }
+  .board-grid {
+    list-style: none; margin: 0; padding: var(--s-8, 64px) var(--pad-x, 32px);
+    max-width: 1440px; margin-inline: auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--s-5, 24px);
+  }
+  .board-card {
+    background: rgba(245,244,236,.04);
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    overflow: hidden;
+    padding-bottom: var(--s-6, 32px);
+  }
+  .board-card img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    filter: grayscale(.1) contrast(1.05);
+  }
+  .role {
+    display: block;
+    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--acid);
+    margin: var(--s-5, 24px) var(--s-5, 24px) 8px;
+  }
+  .board-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(22px, 2vw, 32px);
+    line-height: .95; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 var(--s-5, 24px);
+    color: var(--cream);
+  }
+  .board-card blockquote {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 15px; line-height: 1.55;
+    margin: var(--s-4, 16px) var(--s-5, 24px) 0;
+    opacity: .8; color: var(--cream);
+  }
+</style>

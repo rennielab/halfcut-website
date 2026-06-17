@@ -1,0 +1,413 @@
+// Shared shell: nav + footer + menu + updates panel + reveal observer. Vanilla JS, no framework.
+(function () {
+
+  // =========================================================================
+  // UPDATES (news / climate / careers), small CMS-shaped data seeded inline.
+  // HalfCut can replace this with a fetch later. Posts include a `fresh` flag
+  // that drives the flashing dot next to "Updates" in the header.
+  // =========================================================================
+  const UPDATES = {
+    news: [
+      { fresh: true,  date: '19 Apr 2026', title: 'BDO audit completed for FY25', body: 'Third consecutive unqualified audit. 92.4¢ of every dollar reached Country. Full notes published with the annual impact report on Monday.' },
+      { fresh: true,  date: '12 Apr 2026', title: 'Jabalbina ranger program expanded to 18 rangers', body: 'Four new positions funded through the March cohort. Two roles are year-round for the first time since 2019, a shift the Corporation has been asking for.' },
+      { fresh: false, date: '02 Apr 2026', title: 'Yalada Tour Q2 cohort confirmed', body: 'Twelve partners, three days on Kuku Yalanji Country, one very long dinner. Application reopens for Q3 in June.' },
+      { fresh: false, date: '21 Mar 2026', title: 'New manifesto published', body: '"The bridge, not the saviour." Twelve years in, we\'ve rewritten how we talk about the work. Read it on the Journal.' },
+      { fresh: false, date: '08 Mar 2026', title: 'Reached $4.2M raised since inception', body: 'Quietly crossed the line last week. Thank you to the 11,400 people who have shaved, donated, or written a big cheque since 2014.' },
+      { fresh: false, date: '24 Feb 2026', title: 'Aunty Marilyn Wallace joins the board', body: 'Kuku Yalanji Elder and long-time collaborator takes the Jabalbina seat, with veto power over program and partnership decisions.' },
+      { fresh: false, date: '11 Feb 2026', title: 'Shave in August 2026 is open', body: 'Register a team, a workplace, or just yourself. Toolkits ship in May. Pledge levels unchanged, this year\'s target is $1.1M.' },
+      { fresh: false, date: '02 Feb 2026', title: 'Signed on two new partners', body: 'A B-Corp outdoor brand and a Sydney architecture practice. Both completed the partnership framework before the contracts went near a lawyer.' },
+    ],
+    climate: [
+      { fresh: true,  date: '18 Apr 2026', title: 'State of the Forests 2026 released', body: 'Department of Climate Change and Energy confirms continued net loss in NSW and Queensland. Australia remains in the top five deforesting nations in the developed world.', source: 'ABC News' },
+      { fresh: false, date: '10 Apr 2026', title: 'IPCC: 1.5°C window effectively closed', body: 'Synthesis report finds current policy pathways align with ~2.7°C. The "remaining carbon budget" framing has been quietly retired.', source: 'Guardian' },
+      { fresh: false, date: '03 Apr 2026', title: 'Reef bleaching returns, earlier than modelled', body: 'Severe bleaching recorded across 68% of surveyed reefs on the GBR in a non-La Niña year, a first.', source: 'AIMS' },
+      { fresh: false, date: '25 Mar 2026', title: 'Native title determinations accelerate', body: 'Federal Court recognises an additional 14,000 km² under traditional ownership in Q1 alone. Biggest quarter since 2019.', source: 'NNTT' },
+      { fresh: false, date: '12 Mar 2026', title: 'Australia ratifies global plastics treaty', body: 'Late to the table but signed. Implementation begins Q4.', source: 'DCCEEW' },
+      { fresh: false, date: '28 Feb 2026', title: 'Private land conservation doubles', body: 'National covenant area passes 6M hectares, still only ~0.8% of the continent.', source: 'TNC' },
+    ],
+    careers: [
+      { fresh: true,  date: '15 Apr 2026', title: 'Program Coordinator · On Country', body: 'Full-time, based between Sydney and Mossman, Qld. Working directly with the Jabalbina rangers. Aboriginal and Torres Strait Islander candidates strongly encouraged.', type: 'Full-time' },
+      { fresh: false, date: '08 Apr 2026', title: 'Partnerships Manager', body: 'Sydney-based, hybrid. Owns the corporate partnership framework end-to-end. Must be comfortable saying no.', type: 'Full-time' },
+      { fresh: false, date: '28 Mar 2026', title: 'Campaign Producer · Shave in August', body: '8-month contract, Apr–Nov. Runs the August campaign. Must know their clipper attachments.', type: 'Contract' },
+      { fresh: false, date: '14 Mar 2026', title: 'Journal Editor (part-time)', body: '3 days/week. Edits field dispatches and long-form essays. Remote with regular time on Country.', type: 'Part-time' },
+      { fresh: false, date: '02 Mar 2026', title: 'Finance & Compliance Lead', body: 'Full-time, Sydney. BDO liaison. Publishes the audit notes. Keeps us honest.', type: 'Full-time' },
+    ],
+  };
+  const hasFresh = (tab) => UPDATES[tab].some(u => u.fresh);
+  const totalFresh = () => Object.values(UPDATES).flat().filter(u => u.fresh).length;
+
+  // =========================================================================
+  // HEADER (transparent, floating, Inversa-style, right-aligned controls)
+  // =========================================================================
+  function buildNav() {
+    const nav = document.createElement('header');
+    nav.className = 'nav';
+    const hasFresh = totalFresh() > 0;
+    const dotCls = hasFresh ? 'nav-dot pulse' : 'nav-dot';
+    nav.innerHTML = `
+      <a href="index.html" class="nav-logo" aria-label="HalfCut home">
+        <img src="assets/logo-wordmark-transparent.png" alt="HalfCut">
+      </a>
+      <div class="nav-right">
+        <a href="take-action.html" class="nav-item" aria-label="Take action">
+          Take Action
+        </a>
+        <a href="donate.html" class="nav-item nav-donate-pill" aria-label="Donate">
+          <span class="nav-donate-topo" aria-hidden="true"></span>
+          <span class="nav-donate-label">Donate</span>
+        </a>
+        <button class="nav-item nav-menu-btn" data-open="menu" aria-label="Open menu${hasFresh ? ' — new updates available' : ''}">
+          ${hasFresh ? `<span class="${dotCls}" aria-hidden="true"></span>` : ''}
+          <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+          Menu
+        </button>
+      </div>
+    `;
+    document.body.prepend(nav);
+
+    nav.querySelector('[data-open="menu"]').addEventListener('click', () => openPanel('menu'));
+  }
+
+  // =========================================================================
+  // SLIDE-OUT PANEL (shared shell; content swaps between menu and updates)
+  // =========================================================================
+  function buildPanel() {
+    const p = document.createElement('div');
+    p.className = 'slideout';
+    p.setAttribute('aria-hidden', 'true');
+    p.innerHTML = `
+      <div class="slideout-scrim" data-close></div>
+      <aside class="slideout-panel" aria-label="Site navigation" role="dialog" aria-modal="true">
+        <div class="slideout-topo" aria-hidden="true"></div>
+        <header class="slideout-head">
+          <span class="slideout-label" id="slideoutLabel">Menu</span>
+          <button class="slideout-close" data-close aria-label="Close">
+            Close <span aria-hidden="true">✕</span>
+          </button>
+        </header>
+        <div class="slideout-body" id="slideoutBody"></div>
+        <footer class="slideout-foot">
+          <div class="slideout-foot-l">© 2026 Halfcut Ltd</div>
+          <div class="slideout-foot-r">Gadigal &amp; Kuku Yalanji Country</div>
+        </footer>
+      </aside>
+    `;
+    document.body.appendChild(p);
+
+    p.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closePanel));
+    // Delegated: a link inside the menu can switch the panel to Updates
+    p.addEventListener('click', (e) => {
+      const sw = e.target.closest && e.target.closest('[data-open-from-menu]');
+      if (sw) { e.preventDefault(); openPanel(sw.getAttribute('data-open-from-menu')); }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePanel();
+      trapFocus(e);
+    });
+  }
+
+  let currentActive = '';
+  let lastFocusedEl = null;
+  function openPanel(which) {
+    const p = document.querySelector('.slideout');
+    const body = document.getElementById('slideoutBody');
+    const label = document.getElementById('slideoutLabel');
+    label.textContent = which === 'updates' ? 'Updates' : 'Menu';
+    body.innerHTML = which === 'updates' ? renderUpdates() : renderMenu(currentActive);
+    p.setAttribute('aria-hidden', 'false');
+    p.classList.add('open');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    if (which === 'updates') wireTabs();
+    // a11y: remember where focus came from, move focus into panel
+    lastFocusedEl = document.activeElement;
+    requestAnimationFrame(() => {
+      const firstLink = p.querySelector('.menu-link, .upd-tab, .slideout-close');
+      if (firstLink) firstLink.focus();
+    });
+  }
+  function closePanel() {
+    const p = document.querySelector('.slideout');
+    if (!p) return;
+    p.classList.remove('open');
+    p.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    // a11y: return focus to the trigger
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+      lastFocusedEl.focus();
+      lastFocusedEl = null;
+    }
+  }
+
+  // Focus trap inside open panel
+  function trapFocus(e) {
+    const p = document.querySelector('.slideout.open');
+    if (!p || e.key !== 'Tab') return;
+    const focusables = p.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      last.focus(); e.preventDefault();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      first.focus(); e.preventDefault();
+    }
+  }
+
+  // ---- Menu content ----
+  function renderMenu(active) {
+    const links = [
+      { label: 'Origins', href: 'about.html', key: 'about' },
+      { label: 'Impact',  href: 'impact.html', key: 'impact' },
+      { label: 'Campaigns', href: 'projects.html', key: 'projects' },
+      { label: 'Partners',href: 'partners.html', key: 'partners' },
+      { label: 'Team',    href: 'team.html', key: 'team' },
+      { label: 'Field Notes', href: 'journal.html', key: 'journal' },
+    ];
+    return `
+      <nav class="menu-list">
+        ${links.map((l, i) =>
+          `<a class="menu-link ${i===0?'is-accent':''} ${active===l.key?'is-current':''}" href="${l.href}">
+            <span class="menu-link-num">${String(i+1).padStart(2,'0')}</span>
+            <span class="menu-link-label">${l.label}</span>
+          </a>`
+        ).join('')}
+      </nav>
+      <div class="menu-secondary">
+        <button class="menu-secondary-link" data-open-from-menu="updates">
+          ${totalFresh() > 0 ? '<span class="menu-fresh-dot" aria-hidden="true"></span>' : ''}Updates${totalFresh() > 0 ? ' · new' : ''} <span aria-hidden="true">→</span>
+        </button>
+        <a href="https://halfcut.gumroad.com" target="_blank" rel="noopener" class="menu-secondary-link">Store <span aria-hidden="true">↗</span></a>
+        <div class="menu-social">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Newsletter</a>
+        </div>
+      </div>
+      <div class="menu-ctas">
+        <a class="menu-cta menu-cta-primary" href="take-action.html">Take Action <span aria-hidden="true">→</span></a>
+        <a class="menu-cta menu-cta-cream" href="donate.html">Donate <span aria-hidden="true">→</span></a>
+        <a class="menu-cta menu-cta-ghost" href="contact.html">Contact <span aria-hidden="true">→</span></a>
+      </div>
+    `;
+  }
+
+  // ---- Updates content ----
+  function renderUpdates() {
+    const tabs = [
+      { key: 'news',    label: 'News' },
+      { key: 'climate', label: 'Climate' },
+      { key: 'careers', label: 'Careers' },
+    ];
+    return `
+      <div class="upd-head">
+        <p class="upd-lede">Short dispatches from the operation. Longer pieces live in Field Notes.</p>
+      </div>
+      <div class="upd-tabs" role="tablist">
+        ${tabs.map((t, i) =>
+          `<button class="upd-tab ${i===0?'is-active':''}" data-tab="${t.key}" role="tab" aria-selected="${i===0?'true':'false'}">
+            ${t.label}
+            ${hasFresh(t.key) ? '<span class="upd-tab-dot" aria-hidden="true"></span>' : ''}
+          </button>`
+        ).join('')}
+      </div>
+      <div class="upd-list" id="updList">
+        ${renderUpdateList('news')}
+      </div>
+    `;
+  }
+  function renderUpdateList(tab) {
+    return UPDATES[tab].map(u => `
+      <article class="upd-item ${u.fresh?'is-fresh':''}">
+        <div class="upd-meta">
+          <span class="upd-date">${u.date}</span>
+          ${u.fresh ? '<span class="upd-fresh"><span class="upd-fresh-dot" aria-hidden="true"></span>New</span>' : ''}
+          ${u.source ? `<span class="upd-source">${u.source}</span>` : ''}
+          ${u.type ? `<span class="upd-source">${u.type}</span>` : ''}
+        </div>
+        <h4 class="upd-title">${u.title}</h4>
+        <p class="upd-body">${u.body}</p>
+      </article>
+    `).join('');
+  }
+  function wireTabs() {
+    document.querySelectorAll('.upd-tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.upd-tab').forEach(x => {
+          x.classList.remove('is-active');
+          x.setAttribute('aria-selected','false');
+        });
+        t.classList.add('is-active');
+        t.setAttribute('aria-selected','true');
+        document.getElementById('updList').innerHTML = renderUpdateList(t.dataset.tab);
+      });
+    });
+  }
+
+  // =========================================================================
+  // FOOTER
+  // =========================================================================
+  function buildFooter() {
+    const f = document.createElement('footer');
+    f.className = 'footer';
+    f.innerHTML = `
+      <div class="footer-grid">
+        <div>
+          <img class="footer-wordmark" src="assets/logo-wordmark-transparent.png" alt="HalfCut">
+          <p style="max-width: 380px; font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; opacity: .75;">
+            The bridge between people who want to help heal Country and the Traditional Owners who have the knowledge, the authority, and the deep connection to Country to actually do it.
+          </p>
+        </div>
+        <div>
+          <h5>Explore</h5>
+          <div class="footer-links">
+            <a href="about.html">Origins</a>
+            <a href="impact.html">Impact</a>
+            <a href="projects.html">Campaigns</a>
+            <a href="partners.html">Partners</a>
+            <a href="team.html">Team &amp; Board</a>
+            <a href="journal.html">Field Notes</a>
+          </div>
+        </div>
+        <div>
+          <h5>Act</h5>
+          <div class="footer-links">
+            <a href="take-action.html">Take Action</a>
+            <a href="donate.html">Donate</a>
+            <a href="membership.html">Become a member</a>
+            <a href="#">Shave in August</a>
+            <a href="contact.html">Partner with us</a>
+          </div>
+        </div>
+        <div>
+          <h5>Follow</h5>
+          <div class="footer-links">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">YouTube</a>
+            <a href="#">Newsletter</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-partners" aria-label="Our sponsors and partners">
+        <div class="footer-partners-inner">
+          <div class="footer-partners-head">
+            <span class="eyebrow">Our sponsors</span>
+            <span class="footer-partners-count">Resourcing the work · FY26</span>
+          </div>
+          <div class="footer-partners-row">
+            <span class="partner-mark"><img src="assets/sponsors/ben-jerrys.png" alt="Ben &amp; Jerry's" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/dr-v.svg" alt="Dr.V" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/seven-mile.png" alt="Seven Mile Brewing Co." loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/laidre.png" alt="Laidre" loading="lazy"></span>
+            <span class="partner-mark"><img src="assets/sponsors/forest-tree-service.png" alt="Forest Tree Service" loading="lazy"></span>
+          </div>
+          <div class="footer-to-partner" aria-label="Traditional Owner partner">
+            <span class="label">Our Traditional Owner partner</span>
+            <img src="assets/sponsors/jabalbina.png" alt="Jabalbina Yalanji Aboriginal Corporation" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 HalfCut Organisation. ABN 24 642 788 814. Registered charity.</div>
+        <div>We acknowledge the Traditional Owners of the lands on which we work, and pay respects to Elders past and present.</div>
+      </div>
+    `;
+    document.body.appendChild(f);
+  }
+
+  // =========================================================================
+  // REVEAL OBSERVER
+  // =========================================================================
+  function revealObserver() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+    document.querySelectorAll('.reveal, .reveal-children').forEach(el => io.observe(el));
+  }
+
+  // =========================================================================
+  // ADAPTIVE NAV — sample the section under the nav and switch nav colour
+  // to cream over dark sections (hero, pillars, ink/coral/acid bands).
+  // Uses background-color check on the section behind the nav center.
+  // =========================================================================
+  function adaptiveNav() {
+    const nav = document.querySelector('.nav');
+    if (!nav) return;
+    // Sections whose background is dark/saturated; nav goes cream.
+    const DARK_BG_SELECTORS = [
+      '.hero', '.pillar', '.geomap', '.cta-band', '.campaign',
+      '.on-ink', '.on-country', '.dollar', '.cinematic', '.ambient',
+      '.ambient-quote', '.dark', '.ink-section'
+    ].join(',');
+
+    function update() {
+      // Probe a point ~30px below the nav, at the horizontal centre.
+      const x = window.innerWidth / 2;
+      const y = 28;
+      const els = document.elementsFromPoint(x, y);
+      let dark = false;
+      for (const el of els) {
+        if (el === nav || nav.contains(el)) continue;
+        if (el.matches && el.matches(DARK_BG_SELECTORS)) { dark = true; break; }
+        if (el.closest && el.closest(DARK_BG_SELECTORS)) { dark = true; break; }
+      }
+      nav.classList.toggle('is-dark', dark);
+    }
+
+    let raf = 0;
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); });
+    }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
+  // =========================================================================
+  // PARALLAX — generalized scroll parallax for [data-parallax] elements.
+  // Honours prefers-reduced-motion. data-parallax = speed factor (e.g. 0.12).
+  // Element translates on the Y axis as it passes through the viewport.
+  // =========================================================================
+  function parallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const els = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (!els.length) return;
+    const items = els.map(el => ({ el, speed: parseFloat(el.dataset.parallax) || 0.12 }));
+    let raf = 0;
+    function update() {
+      raf = 0;
+      const vh = window.innerHeight;
+      for (const { el, speed } of items) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) continue; // skip far-offscreen
+        // centre-relative progress: 0 when element centre is at viewport centre
+        const centre = r.top + r.height / 2;
+        const offset = (centre - vh / 2) * speed;
+        el.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0)`;
+      }
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
+  window.HC = {
+    init(active) {
+      currentActive = active || '';
+      buildNav();
+      buildPanel();
+      buildFooter();
+      revealObserver();
+      adaptiveNav();
+      parallax();
+    }
+  };
+})();

@@ -1,0 +1,63 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { sanityClient } from '~/lib/sanity';
+
+let page: any = null;
+try { page = await sanityClient.fetch(`*[_type == "page" && slug.current == "donate"][0]`); } catch {}
+---
+
+<BaseLayout
+  title="Donate"
+  description="Resource Eastern Kuku Yalanji Bama-led conservation. Tax-deductible in Australia. 100% of profits return to Country via Jabalbina."
+  current="donate"
+>
+  <PageHero
+    eyebrow={page?.eyebrow ?? 'Give · ABN 24 642 788 814'}
+    title={page?.heroTitle ?? 'Resource\nthe work.'}
+    lede={page?.heroLede ?? 'Every dollar that lands here is tax-deductible in Australia and flows to Traditional Owner-led work on Country.'}
+  />
+
+  <section class="donate-band">
+    <div class="donate-inner">
+      <div class="donate-card">
+        <h2>One-time gift</h2>
+        <p>Processed via Raisely. Australian tax receipt issued automatically.</p>
+        <div class="raisely-mount" id="raisely-onetime">
+          <Placeholder
+            what="The Raisely one-time donation embed"
+            fromWho="HalfCut once their production Raisely campaign ID is supplied"
+          />
+        </div>
+      </div>
+      <div class="donate-card">
+        <h2>Become a member</h2>
+        <p>Monthly support that compounds. Cancel any time, no retention scripts.</p>
+        <a href="/membership" class="btn btn-acid">See membership tiers →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .donate-band { padding: var(--s-9, 96px) var(--pad-x, 32px); background: var(--stone); }
+  .donate-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6, 32px);
+  }
+  .donate-card {
+    background: var(--cream);
+    border: 1px solid var(--ink-15);
+    border-radius: 4px;
+    padding: var(--s-7, 48px);
+  }
+  .donate-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-5, 24px);
+  }
+  .donate-card p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; opacity: .8; }
+  @media (max-width: 720px) { .donate-inner { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { getFieldNotes, urlFor } from '~/lib/sanity';
+
+let notes: any[] = [];
+try { notes = await getFieldNotes(); } catch {}
+
+const CAT_LABEL: Record<string, string> = {
+  dispatch: 'Dispatch',
+  interview: 'Interview',
+  'long-form': 'Long-form',
+  ledger: 'Ledger',
+};
+
+const fmtDate = (d: string) =>
+  d ? new Date(d).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+---
+
+<BaseLayout
+  title="Field Notes"
+  description="Long-form dispatches, interviews, and ledger updates from HalfCut and its partners on Country."
+  current="fieldnotes"
+  dark={true}
+>
+  <PageHero
+    eyebrow="Field Notes"
+    title={'From the field\nand the ledger.'}
+    lede="Dispatches, interviews, and accounting in plain language. Published when there's something real to say."
+    dark={true}
+  />
+
+  {notes.length === 0 ? (
+    <div class="empty-wrap"><Placeholder what="Published Field Notes" fromWho="HalfCut + named contributors" /></div>
+  ) : (
+    <ul class="notes-grid">
+      {notes.map((n: any) => {
+        const cover = n.cover?.asset ? urlFor(n.cover).width(1200).quality(80).url() : null;
+        return (
+          <li>
+            <a class="note-card" href={`/fieldnotes/${n.slug.current}`}>
+              {cover && <div class="cover" style={`background-image: url('${cover}');`} aria-hidden="true"></div>}
+              <div class="body">
+                <span class="cat">{CAT_LABEL[n.category] ?? n.category}</span>
+                <h2>{n.title}</h2>
+                <p>{n.excerpt}</p>
+                <span class="meta">{fmtDate(n.publishedAt)}{n.author?.name ? ` · ${n.author.name}` : ''}</span>
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  .empty-wrap { padding: var(--s-8, 64px) var(--pad-x, 32px); }
+  .notes-grid {
+    list-style: none; margin: 0;
+    padding: var(--s-9, 96px) var(--pad-x, 32px);
+    max-width: 1440px; margin-inline: auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: var(--s-6, 32px);
+  }
+  .note-card {
+    display: block; text-decoration: none; color: var(--cream);
+    background: rgba(245,244,236,.04);
+    border: 1px solid var(--cream-15);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform .25s ease;
+  }
+  .note-card:hover { transform: translateY(-2px); }
+  .cover {
+    height: 240px; background-size: cover; background-position: center;
+    filter: brightness(.7);
+  }
+  .note-card .body { padding: var(--s-6, 32px); }
+  .cat {
+    display: inline-block;
+    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--acid); margin-bottom: var(--s-3, 12px);
+  }
+  .note-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4, 16px);
+  }
+  .note-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 16px; line-height: 1.5; opacity: .85;
+    margin: 0 0 var(--s-5, 24px);
+  }
+  .meta {
+    font-family: var(--f-sans); font-size: 11px;
+    letter-spacing: .14em; text-transform: uppercase; opacity: .55;
+  }
+</style>

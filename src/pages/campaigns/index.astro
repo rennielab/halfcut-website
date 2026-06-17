@@ -1,0 +1,79 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import { getCampaigns } from '~/lib/sanity';
+
+let campaigns: any[] = [];
+try { campaigns = await getCampaigns(); } catch {}
+---
+
+<BaseLayout
+  title="Campaigns"
+  description="Active, in-development and scoping campaigns HalfCut funds on Country and across Australia. Every campaign is led by the traditional owners or partner organisations who do the work."
+  current="campaigns"
+>
+  <PageHero
+    eyebrow="Campaigns · Traditional Owner-led"
+    title={'Work happening\nright now.'}
+    lede="Every active campaign is co-designed and led on Country. HalfCut resources, amplifies, and reports back. We don't run programs."
+  />
+
+  {campaigns.length === 0 && (
+    <Placeholder
+      what="The full list of active and scoping campaigns"
+      fromWho="HalfCut + each partner organisation"
+    />
+  )}
+
+  {campaigns.length > 0 && (
+    <ul class="campaign-grid">
+      {campaigns.map((c: any) => (
+        <li>
+          <a class="campaign-card" href={`/campaigns/${c.slug.current}`}>
+            <span class={`pill pill-${c.status}`}>{c.status}</span>
+            <h2>{c.title}</h2>
+            <p>{c.summary}</p>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  .campaign-grid {
+    list-style: none; margin: 0; padding: var(--s-8, 64px) var(--pad-x, 32px);
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: var(--s-5, 24px);
+    max-width: 1440px; margin-inline: auto;
+  }
+  .campaign-card {
+    display: block; text-decoration: none; color: var(--ink);
+    background: var(--stone); padding: var(--s-6, 32px) var(--s-6, 32px) var(--s-7, 48px);
+    border-radius: 4px;
+    position: relative;
+    transition: transform .25s ease;
+  }
+  .campaign-card:hover { transform: translateY(-2px); }
+  .campaign-card h2 {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 12px 0 var(--s-4, 16px);
+  }
+  .campaign-card p {
+    font-family: var(--f-serif); font-weight: 300; font-size: 16px;
+    line-height: 1.5; margin: 0; opacity: .8;
+  }
+  .pill {
+    display: inline-block;
+    font-family: var(--f-sans); font-size: 10px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--ink); color: var(--cream);
+  }
+  .pill-active { background: var(--acid); color: var(--ink); }
+  .arrow { position: absolute; right: var(--s-6, 32px); bottom: var(--s-6, 32px); }
+</style>

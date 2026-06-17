@@ -1,0 +1,92 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Placeholder from '~/components/Placeholder.astro';
+---
+
+<BaseLayout
+  title="Become a member"
+  description="HalfCut membership. Monthly support that compounds. Pause or cancel any time."
+  current="membership"
+>
+  <PageHero
+    eyebrow="Membership · tax-deductible"
+    title={'Sign up.\nStay funded.'}
+    lede="A monthly contribution that adds up over years, not weeks. Three tiers, all real."
+  />
+
+  <section class="tiers">
+    <div class="tier-grid">
+      <div class="tier">
+        <span class="tier-eyebrow">Seedling</span>
+        <div class="tier-price"><span>$10</span><small>/month</small></div>
+        <p>The entry tier. Funds field equipment + ranger PPE.</p>
+        <a href="#raisely" class="btn btn-acid">Join at $10 →</a>
+      </div>
+      <div class="tier tier-highlight">
+        <span class="tier-eyebrow">Sapling</span>
+        <div class="tier-price"><span>$30</span><small>/month</small></div>
+        <p>Funds two weeks of on-Country ranger work per year.</p>
+        <a href="#raisely" class="btn btn-primary">Join at $30 →</a>
+      </div>
+      <div class="tier">
+        <span class="tier-eyebrow">Old growth</span>
+        <div class="tier-price"><span>$100</span><small>/month</small></div>
+        <p>Funds a hectare under active restoration every year.</p>
+        <a href="#raisely" class="btn btn-acid">Join at $100 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="embed-band" id="raisely">
+    <div class="embed-inner">
+      <h2>Sign up</h2>
+      <p>Membership is processed through Raisely. PCI-compliant. Cancel from your portal at any time.</p>
+      <Placeholder
+        what="The Raisely subscription embed"
+        fromWho="HalfCut once the production Raisely subscription campaign ID is supplied"
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tiers { padding: var(--s-9, 96px) var(--pad-x, 32px); }
+  .tier-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5, 24px);
+  }
+  .tier {
+    background: var(--stone);
+    border: 1px solid var(--ink-15);
+    border-radius: 6px;
+    padding: var(--s-7, 48px);
+    display: flex; flex-direction: column; gap: var(--s-5, 24px);
+  }
+  .tier-highlight { background: var(--ink); color: var(--cream); }
+  .tier-highlight .tier-eyebrow { color: var(--acid); }
+  .tier-eyebrow {
+    font-family: var(--f-sans); font-size: 11px; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase; opacity: .55;
+  }
+  .tier-price {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1; letter-spacing: -0.025em;
+  }
+  .tier-price small {
+    font-family: var(--f-sans); font-size: 14px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; opacity: .7;
+    margin-left: 6px;
+  }
+  .tier p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.5; flex-grow: 1; margin: 0; }
+  .embed-band { padding: var(--s-9, 96px) var(--pad-x, 32px); background: var(--stone); }
+  .embed-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+  .embed-inner h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-4, 16px);
+  }
+  @media (max-width: 720px) { .tier-grid { grid-template-columns: 1fr; } }
+</style>

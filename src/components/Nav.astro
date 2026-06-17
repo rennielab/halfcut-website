@@ -1,0 +1,84 @@
+---
+/**
+ * Header nav — floating, transparent. Adaptive (light/dark) via adaptiveNav() in script.
+ * No fabricated "Updates" panel — that data layer moves to Sanity (or stays absent).
+ */
+const { current } = Astro.props as { current?: string };
+---
+
+<header class="nav" data-current={current}>
+  <a href="/" class="nav-logo" aria-label="HalfCut home">
+    <span class="nav-logo-mark">HALFCUT</span>
+  </a>
+  <div class="nav-right">
+    <a href="/take-action" class="nav-item" aria-label="Take action">Take Action</a>
+    <a href="/donate" class="nav-item nav-donate-pill" aria-label="Donate">
+      <span class="nav-donate-topo" aria-hidden="true"></span>
+      <span class="nav-donate-label">Donate</span>
+    </a>
+    <button class="nav-item nav-menu-btn" data-open-menu aria-label="Open menu">
+      <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+      Menu
+    </button>
+  </div>
+</header>
+
+<style is:global>
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px var(--pad-x, 32px);
+    pointer-events: none;
+  }
+  .nav-logo, .nav-right { pointer-events: auto; }
+  .nav-logo {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--f-display);
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .nav.is-dark .nav-logo { color: var(--cream); }
+  .nav-right { display: flex; gap: 10px; align-items: center; }
+  .nav-item {
+    font-family: var(--f-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(245,244,236,.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--ink-15);
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+  .nav.is-dark .nav-item {
+    color: var(--cream);
+    background: rgba(19,20,14,.4);
+    border-color: var(--cream-15);
+  }
+  .nav-donate-pill {
+    position: relative; overflow: hidden;
+    background: var(--acid); color: var(--ink) !important;
+    border-color: transparent;
+  }
+  .nav-donate-topo {
+    position: absolute; inset: 0;
+    background-image: url('/assets-legacy/topo-pattern.png');
+    background-size: 200px;
+    opacity: .15; mix-blend-mode: multiply;
+  }
+  .nav-donate-label { position: relative; z-index: 1; }
+  .nav-menu-btn { border: 1px solid var(--ink-15); }
+  .menu-icon {
+    display: inline-flex; flex-direction: column; justify-content: center;
+    gap: 4px; width: 14px;
+  }
+  .menu-icon i { display: block; height: 1.5px; background: currentColor; border-radius: 1px; }
+</style>

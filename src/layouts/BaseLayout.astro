@@ -1,0 +1,88 @@
+---
+/**
+ * Base layout. Every page extends this — gets:
+ *  - proper <head> with SEO/social meta
+ *  - design system stylesheet
+ *  - shared Nav, Menu, Footer
+ *  - carbon badge wiring
+ */
+import '~/styles/fonts.css';
+import '~/styles/system.css';
+
+import Nav from '~/components/Nav.astro';
+import Menu from '~/components/Menu.astro';
+import Footer from '~/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: string; // route slug, e.g. 'about' — used by Nav for active state
+  ogImage?: string;
+  dark?: boolean;   // toggles dark nav-on-photo state
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  current,
+  ogImage = '/og/halfcut-default.jpg',
+  dark = false,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === 'HalfCut' ? title : `${title} · HalfCut`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta property="og:site_name" content="HalfCut" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#13140E" />
+</head>
+<body class={dark ? 'is-dark-page' : ''}>
+  <Nav current={current} />
+  <Menu />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style is:global>
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); }
+  body { font-family: var(--f-serif); }
+  *, *::before, *::after { box-sizing: border-box; }
+  img, video { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  main { display: block; }
+  .is-dark-page { background: var(--ink); color: var(--cream); }
+  :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+</style>
