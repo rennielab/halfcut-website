@@ -93,7 +93,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
 
 <script>
-  HC.init('donate');
   document.querySelectorAll('.options button').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('.options button').forEach(x => x.removeAttribute('aria-pressed'));
     b.setAttribute('aria-pressed','true');
