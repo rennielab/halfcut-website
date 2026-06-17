@@ -1,55 +1,75 @@
-# HalfCut
+# HalfCut Website
 
-Static website for HalfCut — a bridge between Traditional Owners and the broader public, channelling conservation capital directly to Country.
+The public site for HalfCut Limited (ABN 24 642 788 814), a First Nations-led conservation charity working in partnership with the Eastern Kuku Yalanji Bama people via Jabalbina Yalanji Aboriginal Corporation.
 
-## Structure
+## Stack
 
-Plain static HTML, CSS and JS. No build step. Deploy as-is.
+| Layer | Choice | Why |
+|---|---|---|
+| Frontend | **Astro 5** | Static-HTML output, zero JS by default, lightest carbon profile |
+| CMS | **Sanity** | Schema-driven content modelling, required-field validation, image pipeline |
+| Hosting | **Vercel** | Existing account, edge-cached static |
+| Fonts | **Self-hosted (@fontsource)** | No Google Fonts CDN, no third-party DNS at runtime |
+| Analytics | **Vercel Analytics (cookieless)** | Built-in, no third-party tracker |
+| Carbon proof | **Performance API → footer disclosure** | Honest per-visit bytes + CO₂ estimate |
 
-```
-/
-├── index.html          Homepage
-├── about.html          Origins
-├── impact.html         Impact report
-├── projects.html       Projects on Country
-├── partners.html       Partners
-├── team.html           Team & Board
-├── journal.html        Journal
-├── donate.html         Donate
-├── contact.html        Contact
-├── assets/
-│   ├── system.css      Shared design system (type, colour, components)
-│   ├── shell.js        Shared nav, footer, slide-out menu, updates panel
-│   ├── *.png / *.avif  Logos, portraits, texture
-│   └── ...
-└── vercel.json         Hosting config (clean URLs, cache headers)
+## Local development
+
+```bash
+bun install
+bun run dev            # Astro public site on http://localhost:4322
+bun run studio         # Sanity Studio on http://localhost:3333 (after first init)
 ```
 
-## Local preview
+You'll need a `.env` file. Copy `.env.example`:
 
-Any static server works. For example:
-
-```
-npx serve .
-```
-
-Or:
-
-```
-python3 -m http.server 8080
+```bash
+cp .env.example .env
+# fill in SANITY_PROJECT_ID after creating the project below
 ```
 
-Then open `http://localhost:8080`.
+## First-time Sanity setup
 
-## Deploy (Vercel)
+```bash
+cd studio
+bun install
+bunx sanity init --bare              # creates a new Sanity project, prompts for name
+# copy the projectId it prints into the root .env (SANITY_PROJECT_ID=...)
+bunx sanity deploy                    # publishes the studio to halfcut.sanity.studio
+```
 
-1. Push this repo to GitHub.
-2. In Vercel, **New Project → Import** the GitHub repo.
-3. Framework preset: **Other** (static). Root directory: `/`. Build command: none. Output: `.`.
-4. Deploy.
+Studio URL after deploy: `https://halfcut.sanity.studio`
 
-`vercel.json` enables clean URLs (`/about` instead of `/about.html`) and long-cache headers on `/assets/*`.
+## Content integrity guardrails
 
-## Assets & credits
+Built into the schemas so content drift can't ship silently:
 
-Photography on the live site is placeholder (Unsplash) pending approved photographs of Kuku Yalanji Country, rangers, and board members.
+- **Board members** only render on the public site when `quoteApproved == true`. Set this manually after each director signs off on their bio, quote, and portrait.
+- **Partners** only render when `verified == true`. Default off so unverified logos never accidentally appear.
+- **Impact metrics** require `source`, `sourceUrl`, and `asOf` (date verified). Claims without public sources cannot be saved.
+- **Field Note authors** must be a reference to a real `author` or `boardMember` document — string attribution is not allowed.
+- **Acknowledgment of Country** is required on `siteSettings` with min length, blocking publish until populated and Jabalbina-reviewed.
+
+Anywhere a Sanity field would otherwise produce nothing on the public site, a `Placeholder` component renders an explicit "awaiting content" panel so missing content is visible rather than silently absent.
+
+## Deploy
+
+On Vercel:
+
+1. Connect this GitHub repo (`rennielab/halfcut-website`).
+2. Framework auto-detected as Astro.
+3. Set environment variables:
+   - `SANITY_PROJECT_ID` (from Sanity)
+   - `SANITY_DATASET` (default `production`)
+4. Set up a Sanity webhook (Studio → API → Webhooks) pointing at your Vercel Deploy Hook so content edits trigger a rebuild.
+
+## Brand discipline
+
+- No em-dashes in user-facing copy
+- No italics anywhere
+- Acid green is exactly `#EBFC73` (never `#C6FF3D`)
+- Photography must be real (no Unsplash on production — schemas require alt text on every image)
+
+## Carbon target
+
+Under 500KB per page on first load. Current build is well within that; the footer badge displays the live measurement on every page.

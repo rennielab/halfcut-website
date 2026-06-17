@@ -1,67 +1,8 @@
-/* Self-hosted, subsetted woff2 fonts. Drop the .woff2 files into /public/fonts/.
-   Generated via fontsource or google-webfonts-helper, subset to Latin + Latin Extended.
-   font-display: swap → no FOIT, minimal CLS. */
+/* Self-hosted fonts via @fontsource. Bundled with the build, served from
+   the same origin as the rest of the site — no Google Fonts CDN, no third-
+   party DNS. Variable fonts cover all weight axes for Archivo + Hanken
+   Grotesk in a single woff2 each. */
 
-@font-face {
-  font-family: 'Archivo Black';
-  src: url('/fonts/archivo-black-400.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('/fonts/archivo-400.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('/fonts/archivo-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('/fonts/archivo-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('/fonts/archivo-800.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/hanken-grotesk-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/hanken-grotesk-400.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/hanken-grotesk-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
+@import '@fontsource/archivo-black/400.css';
+@import '@fontsource-variable/archivo/wght.css';
+@import '@fontsource-variable/hanken-grotesk/wght.css';
