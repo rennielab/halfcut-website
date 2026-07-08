@@ -86,22 +86,22 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     <div class="fw-col yes">
       <h3>We say yes to</h3>
       <h4>Values-aligned, long-horizon partners.</h4>
-      <ul class="fw-list">
-        <li><span class="mark"></span> Businesses whose core model is compatible with the world we are trying to restore.</li>
-        <li><span class="mark"></span> Organisations prepared to fund operational capacity, not just campaign visibility.</li>
-        <li><span class="mark"></span> Philanthropists willing to defer to Traditional Owner governance on program decisions.</li>
-        <li><span class="mark"></span> Partners who treat this as a twelve-year relationship, not a twelve-month activation.</li>
-      </ul>
+      <div class="fw-list">
+        <div class="fw-line">Businesses whose core model is compatible with the world we are trying to restore.</div>
+        <div class="fw-line">Organisations prepared to fund operational capacity, not just campaign visibility.</div>
+        <div class="fw-line">Philanthropists willing to defer to Traditional Owner governance on program decisions.</div>
+        <div class="fw-line">Partners who treat this as a twelve-year relationship, not a twelve-month activation.</div>
+      </div>
     </div>
     <div class="fw-col">
       <h3>We say no to</h3>
       <h4>Extraction, greenwash, or saviour framing.</h4>
-      <ul class="fw-list">
-        <li><span class="mark">✕</span> Fossil fuels, native forest logging, industrial agribusiness at scale.</li>
-        <li><span class="mark">✕</span> Funding that is conditional on creative control, brand placement, or narrative direction.</li>
-        <li><span class="mark">✕</span> Partnerships that ask Traditional Owner partners to perform culture or language for marketing.</li>
-        <li><span class="mark">✕</span> One-off offset arrangements that treat restoration as a carbon accounting line item.</li>
-      </ul>
+      <div class="fw-list">
+        <div class="fw-line">Fossil fuels, native forest logging, industrial agribusiness at scale.</div>
+        <div class="fw-line">Funding that is conditional on creative control, brand placement, or narrative direction.</div>
+        <div class="fw-line">Partnerships that ask Traditional Owner partners to perform culture or language for marketing.</div>
+        <div class="fw-line">One-off offset arrangements that treat restoration as a carbon accounting line item.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -312,17 +312,14 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     list-style: none; padding: 0;
     border-top: 1px solid var(--ink-15);
   }
-  .fw-list li {
+  .fw-list .fw-line {
     padding: 20px 0;
     border-bottom: 1px solid var(--ink-15);
     font-family: var(--f-serif); font-weight: 400;
     font-size: 19px; line-height: 1.4;
     display: flex; gap: 16px; align-items: flex-start;
   }
-  .fw-list .mark {
-    font-family: var(--f-sans); font-weight: 700; font-size: 14px;
-    flex-shrink: 0; padding-top: 4px;
-  }
+  
 
   /* Partners */
   .partners {

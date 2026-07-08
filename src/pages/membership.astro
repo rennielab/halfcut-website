@@ -30,12 +30,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       <span class="name">Seedling</span>
       <div class="price">$10<span class="per">/month</span></div>
       <p class="blurb">Foundation membership. Funds one ranger-hour per month.</p>
-      <ul>
-        <li>Quarterly impact dispatch by email</li>
-        <li>Acknowledgement in the annual report</li>
-        <li>Member-only Field Notes posts</li>
-        <li>Cancel any time, no questions</li>
-      </ul>
+      <div class="benefits">
+        <div class="benefit">Quarterly impact dispatch by email</div>
+        <div class="benefit">Acknowledgement in the annual report</div>
+        <div class="benefit">Member-only Field Notes posts</div>
+        <div class="benefit">Cancel any time, no questions</div>
+      </div>
       <a href="#raisely-embed" class="btn btn-acid">Join at $10 →</a>
     </div>
 
@@ -43,13 +43,13 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       <span class="name">Sapling · Most popular</span>
       <div class="price">$30<span class="per">/month</span></div>
       <p class="blurb">Equivalent to roughly one seedling planted, on Country, every week of the year.</p>
-      <ul>
-        <li>Everything in Seedling</li>
-        <li>Annual Yalada Tour applications opened first</li>
-        <li>Direct line to the field team for queries</li>
-        <li>Member dispatch with named photo credits</li>
-        <li>Quarterly Q&amp;A with the co-founders</li>
-      </ul>
+      <div class="benefits">
+        <div class="benefit">Everything in Seedling</div>
+        <div class="benefit">Annual Yalada Tour applications opened first</div>
+        <div class="benefit">Direct line to the field team for queries</div>
+        <div class="benefit">Member dispatch with named photo credits</div>
+        <div class="benefit">Quarterly Q&amp;A with the co-founders</div>
+      </div>
       <a href="#raisely-embed" class="btn btn-primary">Join at $30 →</a>
     </div>
 
@@ -57,13 +57,13 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       <span class="name">Old growth</span>
       <div class="price">$100<span class="per">/month</span></div>
       <p class="blurb">Substantive monthly support. Funds roughly half a hectare of rewilding per year.</p>
-      <ul>
-        <li>Everything in Sapling</li>
-        <li>Annual on-Country invitation (subject to JYAC approval)</li>
-        <li>Personalised stewardship update each quarter</li>
-        <li>Recognition at the annual partner dinner</li>
-        <li>Tax receipt issued automatically each financial year</li>
-      </ul>
+      <div class="benefits">
+        <div class="benefit">Everything in Sapling</div>
+        <div class="benefit">Annual on-Country invitation (subject to JYAC approval)</div>
+        <div class="benefit">Personalised stewardship update each quarter</div>
+        <div class="benefit">Recognition at the annual partner dinner</div>
+        <div class="benefit">Tax receipt issued automatically each financial year</div>
+      </div>
       <a href="#raisely-embed" class="btn btn-acid">Join at $100 →</a>
     </div>
 
@@ -243,19 +243,19 @@ body { background: var(--ink); color: var(--cream); }
     opacity: .85;
     margin-bottom: var(--s-6);
   }
-  .mb-tier ul {
+  .mb-tier .benefits {
     list-style: none; padding: 0; margin: 0 0 var(--s-6);
     border-top: 1px solid var(--cream-15);
   }
-  .mb-tier.is-featured ul { border-top-color: var(--ink-15); }
-  .mb-tier li {
+  .mb-tier.is-featured .benefits { border-top-color: var(--ink-15); }
+  .mb-tier .benefit {
     padding: 14px 0;
     border-bottom: 1px solid var(--cream-15);
     font-family: var(--f-serif);
     font-size: 16px; line-height: 1.45;
     display: flex; align-items: flex-start; gap: 12px;
   }
-  .mb-tier.is-featured li { border-bottom-color: var(--ink-15); }
+  .mb-tier.is-featured .benefit { border-bottom-color: var(--ink-15); }
   .mb-tier li::before {
     content: '+';
     color: var(--acid);
