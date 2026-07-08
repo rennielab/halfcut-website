@@ -29,3 +29,5 @@ yarn-debug.log*
 # legacy
 uploads/
 partials/
+
+public/photos-original/
