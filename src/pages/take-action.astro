@@ -1,346 +1,204 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    slug: 'go-halfcut',
+    tag: 'August · Fundraise',
+    title: 'Go HalfCut',
+    body: 'Every August, thousands of Australians shave, cut or wear half something to raise funds for nature. No rules. Meet nature halfway, your way.',
+    href: '/go-halfcut',
+    image: '/photos/photo_078.webp',
+  },
+  {
+    slug: 'donate',
+    tag: 'Give · Anytime',
+    title: 'Donate to Nature for Life',
+    body: 'Tax-deductible one-off, monthly or bequest gifts. 100% of profits to Country, through Jabalbina Yalanji Aboriginal Corporation.',
+    href: '/donate',
+    image: '/photos/photo_034.webp',
+  },
+  {
+    slug: 'heal-country',
+    tag: 'National Initiative',
+    title: 'Heal Country. Heal Culture.',
+    body: "HalfCut's national initiative connecting First Nations communities with funding, partnerships and public support to lead the restoration of Country.",
+    href: '/heal-country',
+    image: '/photos/hero-jabalbina-women.webp',
+  },
+  {
+    slug: 'canopy',
+    tag: 'Business Membership',
+    title: 'The HalfCut Canopy',
+    body: 'A living network of businesses restoring nature together. Bronze to Platinum tiers, monthly or annual, supporting the four pillars of impact.',
+    href: '/canopy',
+    image: '/photos/photo_055.webp',
+  },
+  {
+    slug: 'yalada-tours',
+    tag: 'On Country',
+    title: 'Yalada Tours',
+    body: 'Walk Country. Heal Country. Protect Country. Immersive on-Country experiences in the Daintree, guided by First Nations knowledge holders.',
+    href: '/yalada-tours',
+    image: '/photos/photo_022.webp',
+  },
+  {
+    slug: 'legacy',
+    tag: 'Leave a Legacy',
+    title: 'Leave a Gift in Your Will',
+    body: 'A bequest is a powerful way to keep protecting forests and supporting First Nations-led restoration beyond your lifetime.',
+    href: '/donate#legacy',
+    image: '/photos/photo_003.webp',
+  },
+  {
+    slug: 'partner',
+    tag: 'Organisations',
+    title: 'Partner With Us',
+    body: 'Values-aligned businesses, philanthropists and government partners. Assessed against the same framework Traditional Owner partners assess us against.',
+    href: '/contact',
+    image: '/photos/photo_099.webp',
+  },
+  {
+    slug: 'reports',
+    tag: 'Transparency',
+    title: 'Read the Annual Reports',
+    body: 'Every year we publish a full account of programs, finances and on-Country outcomes. Nothing behind a login.',
+    href: '/annual-reports',
+    image: '/photos/photo_071.webp',
+  },
+];
 ---
 
 <BaseLayout
   title="Take Action"
-  description="Five ways to back Eastern Kuku Yalanji Bama-led conservation."
+  description="Every way to back HalfCut's mission to Protect and Restore Forever. Fundraise, donate, join the Canopy, visit Country, leave a legacy, or become a partner."
   current="take-action"
   dark={true}
 >
-<section class="ta-hero" data-screen-label="09 Take Action · Hero">
-  <div class="ta-hero-topo" aria-hidden="true"></div>
-  <div class="ta-hero-inner">
-    <h1>The work<br>needs you.</h1>
-    <p>
-      HalfCut funds the work, but the work needs more than money. Below are five ways to back the Eastern Kuku Yalanji Bama people and the rainforest they steward. Pick the one that fits your life. Pick more than one if you have it in you.
-    </p>
-  </div>
-</section>
-
-<div class="ta-grid" data-screen-label="09 Take Action · Grid">
-
-  <a class="ta-card" href="/donate">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_026.webp');"></div>
-    <span class="pill">Donate</span>
-    <div class="body">
-      <h2>Resource<br>the work</h2>
-      <p>One hundred per cent of profits to Country, through Jabalbina Yalanji Aboriginal Corporation. Tax-deductible in Australia.</p>
-      <div class="row">
-        <span class="tag">DGR · ACNC</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
+  <section class="ta-hero">
+    <div class="ta-hero-inner">
+      <h1>The work<br />needs you.</h1>
+      <p class="lede">
+        Eight ways to back rainforest restoration and First Nations-led
+        conservation. Pick the one that fits your life. Pick more than one
+        if you have it in you.
+      </p>
     </div>
-  </a>
+  </section>
 
-  <a class="ta-card" href="/membership">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_090.webp');"></div>
-    <span class="pill">Member</span>
-    <div class="body">
-      <h2>Become a<br>HalfCut member</h2>
-      <p>Monthly giving that resources the rainforest restoration program every month, not just in August.</p>
-      <div class="row">
-        <span class="tag">Monthly · from $10</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <a class="ta-card" href="#get-active-form">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_058.webp');"></div>
-    <span class="pill">On Country</span>
-    <div class="body">
-      <h2>Join a<br>camp</h2>
-      <p>Spend a week on Eastern Kuku Yalanji Country, alongside the ranger team. Limited spots, Bama-led, properly briefed.</p>
-      <div class="row">
-        <span class="tag">By application</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <a class="ta-card" href="#get-active-form">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_007.webp');"></div>
-    <span class="pill">Volunteer</span>
-    <div class="body">
-      <h2>Donate<br>your time</h2>
-      <p>Designers, writers, lawyers, accountants, and event organisers, we keep a working bench of skilled volunteers for the times we need them.</p>
-      <div class="row">
-        <span class="tag">Pro-bono · flexible</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <button class="ta-card" data-action="petition" aria-label="Sign the petition">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_048.webp');"></div>
-    <span class="pill">Petition</span>
-    <div class="body">
-      <h2>Sign the<br>petition</h2>
-      <p>Permanent protection of the Daintree Lowland Rainforest. Return of unceded forest to Traditional Owner management.</p>
-      <div class="row">
-        <span class="tag">3,847 signatures · target 10k</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
-    </div>
-  </button>
-
-  <button class="ta-card" data-action="email-gov" aria-label="Email government">
-    <div class="ta-card-img" style="background-image: url('/photos/photo_026.webp');"></div>
-    <span class="pill">Email Gov</span>
-    <div class="body">
-      <h2>Email<br>government</h2>
-      <p>Pre-drafted, editable, and sent to your Federal Member and the Environment Minister. Two minutes, real political weight.</p>
-      <div class="row">
-        <span class="tag">2 min · pre-drafted</span>
-        <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
-      </div>
-    </div>
-  </button>
-
-</div>
-
-<section class="ta-form-band" id="get-active-form" data-screen-label="09 Take Action · Form">
-  <div class="ta-form-inner">
-    <div class="lhs">
-      <h2>Not sure where<br>to start?</h2>
-      <p>If this is your first time joining HalfCut, fill in the form. We'll come back to you within three working days with the right next step based on what you're up for.</p>
-    </div>
-    <form class="ta-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=&quot;font-family: var(--f-display); font-size: 28px; text-transform: uppercase; letter-spacing: -0.01em; padding: 32px 0;&quot;>Got it. We&rsquo;ll be in touch.</div>';">
-      <div class="grid2">
-        <div class="field">
-          <label class="label">First name</label>
-          <input type="text" required>
-        </div>
-        <div class="field">
-          <label class="label">Last name</label>
-          <input type="text" required>
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Email</label>
-        <input type="email" required>
-      </div>
-      <div class="field">
-        <label class="label">What I'm up for</label>
-        <select>
-          <option>Donating monthly (member)</option>
-          <option>One-time donation</option>
-          <option>Joining a camp on Country</option>
-          <option>Donating skills / time</option>
-          <option>Signing the petition</option>
-          <option>Emailing government</option>
-          <option>Something else</option>
-        </select>
-      </div>
-      <button class="btn btn-primary">Get started →</button>
-    </form>
-  </div>
-</section>
-
-
-<script>
-  // Stub interactions for petition + email gov until real flows are wired
-  document.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = document.getElementById('get-active-form');
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>
+  <section class="ta-grid-wrap">
+    <ul class="ta-grid">
+      {projects.map((p) => (
+        <li>
+          <a class="ta-card" href={p.href}>
+            <div class="ta-card-img" style={`background-image: url('${p.image}');`} aria-hidden="true"></div>
+            <span class="pill">{p.tag}</span>
+            <div class="body">
+              <h2>{p.title}</h2>
+              <p>{p.body}</p>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
 
-<style is:global>
-body { background: var(--ink); color: var(--cream); }
-
+<style>
   .ta-hero {
-    padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom-sm);
+    padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
     background: var(--ink);
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid var(--cream-15);
+    color: var(--cream);
   }
-  .ta-hero-topo {
-    position: absolute; inset: 0;
-    background-image: url('/assets-legacy/topo-pattern.png');
-    background-size: 1400px auto; background-repeat: repeat;
-    opacity: .06; mix-blend-mode: screen;
-    pointer-events: none;
-  }
-  .ta-hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
-  .ta-hero .eyebrow { color: var(--acid); margin-bottom: var(--s-5); display: block; }
+  .ta-hero-inner { max-width: 1440px; margin: 0 auto; }
   .ta-hero h1 {
     font-family: var(--f-display);
     font-size: clamp(64px, 9vw, 180px);
     line-height: .88; letter-spacing: -0.025em;
     text-transform: uppercase;
-    max-width: 14ch;
     margin: 0;
+    max-width: 14ch;
   }
-  .ta-hero p {
+  .ta-hero .lede {
     font-family: var(--f-serif); font-weight: 300;
-    font-size: clamp(20px, 1.8vw, 26px);
+    font-size: clamp(20px, 1.7vw, 26px);
     line-height: 1.4;
     margin-top: var(--s-6);
     max-width: 56ch;
-    opacity: .8;
+    opacity: .85;
   }
 
+  .ta-grid-wrap {
+    background: var(--ink);
+    padding: var(--s-8) var(--pad-x) var(--s-11);
+  }
   .ta-grid {
     max-width: 1440px; margin: 0 auto;
-    padding: var(--s-9) var(--pad-x) var(--s-10);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-5);
+    list-style: none; padding: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5);
   }
+  .ta-grid > li { list-style: none; }
   .ta-card {
-    position: relative;
+    position: relative; display: flex; flex-direction: column;
     aspect-ratio: 4 / 5;
+    background: rgba(245,244,236,.04);
     border-radius: 6px;
-    overflow: hidden;
-    background: var(--ink);
+    padding: var(--s-6);
     color: var(--cream);
     text-decoration: none;
+    overflow: hidden;
     isolation: isolate;
-    border: 0; padding: 0; width: 100%;
-    text-align: left;
-    font-family: inherit;
-    cursor: pointer;
-    transition: transform .35s var(--ease);
+    transition: transform .35s var(--ease, ease);
   }
+  .ta-card:hover { transform: translateY(-4px); }
   .ta-card-img {
     position: absolute; inset: 0; z-index: 0;
     background-size: cover; background-position: center;
-    filter: brightness(.55) saturate(.85);
-    transition: transform .9s var(--ease), filter .35s var(--ease);
+    filter: brightness(.5) saturate(.9);
+    transition: transform .9s var(--ease, ease), filter .35s var(--ease, ease);
   }
-  .ta-card:hover .ta-card-img { transform: scale(1.04); filter: brightness(.7) saturate(1); }
+  .ta-card:hover .ta-card-img { transform: scale(1.04); filter: brightness(.6) saturate(1); }
   .ta-card::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.2) 40%, rgba(19,20,14,.92) 100%);
-    z-index: 1;
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(19,20,14,.15) 0%, rgba(19,20,14,.15) 40%, rgba(19,20,14,.92) 100%);
   }
-  .ta-card .pill {
-    position: absolute; top: 22px; left: 22px;
-    z-index: 2;
+  .pill {
+    position: relative; z-index: 2;
+    display: inline-flex; width: fit-content;
     padding: 7px 13px;
-    border: 1px solid var(--cream-15);
     border-radius: 999px;
-    background: rgba(19,20,14,.5);
-    backdrop-filter: blur(10px);
+    background: rgba(19,20,14,.55);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     font-family: var(--f-sans);
-    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
     color: var(--acid);
   }
-  .ta-card .body {
-    position: absolute; left: 24px; right: 24px; bottom: 24px;
-    z-index: 2;
-    display: flex; flex-direction: column;
-    gap: 14px;
-  }
+  .body { position: relative; z-index: 2; margin-top: auto; }
   .ta-card h2 {
     font-family: var(--f-display);
-    font-size: clamp(24px, 2.3vw, 34px);
-    line-height: .95; letter-spacing: -0.015em;
-    text-transform: uppercase;
-    margin: 0;
-    color: var(--cream);
-    max-width: 16ch;
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: .95; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-3);
   }
   .ta-card p {
     font-family: var(--f-serif); font-weight: 300;
-    font-size: 14px; line-height: 1.45;
-    margin: 0;
-    color: var(--cream-85);
-    max-width: 32ch;
+    font-size: 14px; line-height: 1.5;
+    margin: 0 0 var(--s-4);
+    opacity: .85;
   }
-  .ta-card .row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 8px;
-  }
-  .ta-card .row .tag {
-    font-family: var(--f-sans);
-    font-size: 10px; letter-spacing: .18em;
-    text-transform: uppercase;
-    opacity: .6; font-weight: 700;
-  }
-  .ta-card .plus {
-    width: 40px; height: 40px;
-    border: 1px solid var(--acid);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
+  .arrow {
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 20px;
     color: var(--acid);
-    transition: background .25s, color .25s;
+    display: inline-block;
+    transition: transform .25s ease;
   }
-  .ta-card:hover .plus { background: var(--acid); color: var(--ink); }
-  .ta-card .plus svg { width: 16px; height: 16px; }
-  .ta-card:focus-visible { outline: 2px solid var(--acid); outline-offset: 4px; }
+  .ta-card:hover .arrow { transform: translateX(4px); }
 
-  /* Quick get-active form (Bob Brown style) */
-  .ta-form-band {
-    background: var(--cream);
-    color: var(--ink);
-    padding: var(--s-10) var(--pad-x);
-  }
-  .ta-form-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: var(--s-9); align-items: center;
-  }
-  .ta-form-inner .lhs h2 {
-    font-family: var(--f-display);
-    font-size: clamp(40px, 5vw, 80px);
-    line-height: .92; letter-spacing: -0.02em;
-    text-transform: uppercase;
-    margin: 0 0 var(--s-5);
-    color: var(--ink);
-    max-width: 16ch;
-  }
-  .ta-form-inner .lhs p {
-    font-family: var(--f-serif); font-weight: 300;
-    font-size: 19px; line-height: 1.55;
-    opacity: .8;
-    max-width: 46ch;
-    margin: 0;
-  }
-  .ta-form {
-    background: var(--cream);
-    border: 1px solid var(--ink-15);
-    border-radius: 4px;
-    padding: var(--s-7);
-  }
-  .ta-form .label {
-    font-family: var(--f-sans);
-    font-size: 11px; letter-spacing: .18em;
-    text-transform: uppercase;
-    font-weight: 700;
-    opacity: .55; margin-bottom: 8px;
-    display: block;
-  }
-  .ta-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
-  .ta-form .field { margin-bottom: var(--s-5); }
-  .ta-form .field:last-of-type { margin-bottom: var(--s-6); }
-  .ta-form input, .ta-form select, .ta-form textarea {
-    width: 100%;
-    padding: 12px 0;
-    border: 0;
-    border-bottom: 1px solid var(--ink-15);
-    background: transparent;
-    font-family: var(--f-serif); font-size: 18px;
-    color: var(--ink);
-    outline: none;
-    transition: border-color .2s;
-  }
-  .ta-form input:focus, .ta-form select:focus { border-color: var(--ink); }
-  .ta-form .btn { width: 100%; justify-content: center; padding: 14px 22px; }
-
-  @media (max-width: 960px) {
-    .ta-grid { grid-template-columns: 1fr 1fr; }
-    .ta-form-inner { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 560px) {
-    .ta-grid { grid-template-columns: 1fr; }
-    .ta-form .grid2 { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 1200px) { .ta-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 900px)  { .ta-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .ta-grid { grid-template-columns: 1fr; } .ta-card { aspect-ratio: 4/3; } }
 </style>
