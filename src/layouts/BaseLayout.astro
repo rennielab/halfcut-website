@@ -165,6 +165,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   img, video { display: block; max-width: 100%; height: auto; }
   a { color: inherit; }
   main { display: block; }
-  .is-dark-page { background: var(--ink); color: var(--cream); }
+  /* dark={true} only sets the FALLBACK page background to ink so the browser
+     'overscroll' area matches. It does NOT invert the default text colour —
+     every section owns its own colour, so light-bg sections keep ink text
+     and dark-bg sections set cream themselves. Prevents cream-on-cream bleed. */
+  .is-dark-page { background: var(--ink); }
   :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
 </style>
