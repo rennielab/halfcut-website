@@ -1,177 +1,389 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const whereItGoes = [
+  'Protect forests and important landscapes forever',
+  'Restore degraded forests and native habitat',
+  'Support First Nations-led healing of Country',
+  'Create ranger and First Nations employment',
+  'Protect biodiversity and threatened species',
+  'Support land acquisition and return to Country',
+  'Fund scientific research and ecological monitoring',
+  'Help create affordable housing and infrastructure on Country',
+];
+
+const bequestKinds = [
+  'A percentage of your estate',
+  'A specific amount',
+  'Property, shares or other assets',
+  'The remainder of your estate after loved ones have been provided for',
+];
 ---
 
 <BaseLayout
   title="Donate"
-  description="Resource Eastern Kuku Yalanji Bama-led conservation. Tax-deductible in Australia."
+  description="Give today. Leave a legacy for tomorrow. Nature for Life gives you the opportunity to protect forests still standing and restore forests already lost."
   current="donate"
-  
 >
-<section class="donate-hero" data-screen-label="06 Donate · Hero">
-  <div class="donate-hero-inner">
-    <h1>Resource<br>the work.</h1>
-  </div>
-</section>
-
-<div class="donate-body">
-  <aside class="donate-context" data-screen-label="06 Donate · Context">
-    <h3>Where your<br>money goes.</h3>
-    <p>
-      Every dollar moves through governance developed with Jabalbina. 92¢ reaches Country. 5¢ funds the programs that get more money to Country. 3¢ keeps the lights on.
-    </p>
-    <p>
-      Donations over $2 are tax-deductible in Australia. We are a registered Public Benevolent Institution with DGR status.
-    </p>
-    <div class="ctx-stats">
-      <div><div class="n">92¢</div><div class="l">To Country</div></div>
-      <div><div class="n">$4.2M</div><div class="l">Raised since 2014</div></div>
-      <div><div class="n">1,200 ha</div><div class="l">Under restoration</div></div>
-      <div><div class="n">BDO</div><div class="l">Independently audited</div></div>
+  <section class="dn-hero">
+    <div class="dn-hero-inner">
+      <h1>Give to nature.<br /><span class="accent">For life.</span></h1>
+      <p class="lede">
+        Nature has supported us throughout our lives. Nature for Life gives you
+        the opportunity to give something meaningful back by protecting forests
+        that are still standing and restoring forests that have already been lost.
+      </p>
+      <div class="dn-hero-ctas">
+        <a href="#donate-now" class="btn btn-acid btn-xl">Donate now</a>
+        <a href="#legacy" class="btn btn-xl btn-secondary">Leave a legacy</a>
+      </div>
     </div>
-  </aside>
+  </section>
 
-  <div class="donate-panel" data-screen-label="06 Donate · Form">
-    <h3>Make a contribution.</h3>
-    <div class="sub">Secured and processed via GreenPay (EzyRaise).</div>
-
-    <div class="greenpay-embed">
-      <iframe
-        id="ez-chill-region-donation-widget"
-        src="https://halfcut.ezyraise.site/widget/payment"
-        style="border: none; overflow: hidden; width: 100%; height: 1050px;"
-        allowfullscreen
-        allow="payment"
-        title="HalfCut donation form">
-      </iframe>
+  <section class="dn-widget" id="donate-now">
+    <div class="dn-widget-inner">
+      <h2>Donate now.</h2>
+      <p class="dn-widget-sub">Secured and processed via GreenPay (EzyRaise).</p>
+      <div class="greenpay-embed">
+        <iframe
+          id="ez-chill-region-donation-widget"
+          src="https://halfcut.ezyraise.site/widget/payment"
+          style="border: none; overflow: hidden; width: 100%; height: 1050px;"
+          allowfullscreen
+          allow="payment"
+          title="HalfCut donation form">
+        </iframe>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<script is:inline>
-  (function () {
-    const iframe = document.getElementById("ez-chill-region-donation-widget");
-    if (!iframe) return;
-    let isScrollEventFirstTime = true;
-    window.addEventListener("message", function (event) {
-      const data = event.data || {};
-      if (data.message === "getDonationWidgetIframeHeight") {
-        const height = data.height;
-        if (height && !isNaN(height) && iframe.style) {
-          iframe.style.height = (height + 10) + "px";
+  <script is:inline>
+    (function () {
+      const iframe = document.getElementById("ez-chill-region-donation-widget");
+      if (!iframe) return;
+      let isScrollEventFirstTime = true;
+      window.addEventListener("message", function (event) {
+        const data = event.data || {};
+        if (data.message === "getDonationWidgetIframeHeight") {
+          const height = data.height;
+          if (height && !isNaN(height) && iframe.style) {
+            iframe.style.height = (height + 10) + "px";
+          }
+        } else if (data.message === "scrollDonationWidgetIframeToTop") {
+          if (!isScrollEventFirstTime) {
+            iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          isScrollEventFirstTime = false;
         }
-      } else if (data.message === "scrollDonationWidgetIframeToTop") {
-        if (!isScrollEventFirstTime) {
-          iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      iframe.addEventListener("load", function () {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ message: "getDonationWidgetIframeHeight" }, "*");
         }
-        isScrollEventFirstTime = false;
-      }
-    });
-    iframe.addEventListener("load", function () {
-      if (iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ message: "getDonationWidgetIframeHeight" }, "*");
-      }
-    });
-  })();
-</script>
+      });
+    })();
+  </script>
 
-<section class="trust" data-screen-label="06 Donate · Trust">
-  <div class="trust-inner">
-    <div>
-      <div class="label">Tax status</div>
-      <h4>DGR · ABN 24 642 788 814</h4>
-      <p>Public Benevolent Institution. Gifts over $2 tax-deductible in Australia.</p>
+  <section class="dn-bank">
+    <div class="dn-bank-inner">
+      <div class="dn-bank-copy">
+        <h2>Donate by bank transfer.</h2>
+        <p>
+          Make a tax-deductible donation directly to the HalfCut Ltd Fund
+          through Bank Australia. Your donation will help HalfCut protect
+          forests that are still standing, restore forests that have been lost,
+          and support First Nations-led projects through Heal Country. Heal
+          Culture.
+        </p>
+        <p class="dn-bank-note">
+          After making your donation, please contact HalfCut with your name,
+          donation amount and payment reference so we can issue your
+          tax-deductible receipt.
+        </p>
+        <div class="dn-bank-emails">
+          <a href="mailto:info@halfcut.org">info@halfcut.org</a>
+          <span aria-hidden="true">·</span>
+          <a href="mailto:accounts@halfcut.org">accounts@halfcut.org</a>
+        </div>
+      </div>
+      <div class="dn-bank-details">
+        <h3>Bank transfer details</h3>
+        <dl>
+          <dt>Account name</dt><dd>HalfCut Ltd Fund</dd>
+          <dt>Bank</dt><dd>Bank Australia</dd>
+          <dt>BSB</dt><dd>313 140</dd>
+          <dt>Account number</dt><dd>1228 8121</dd>
+          <dt>Reference</dt><dd>Your name or organisation</dd>
+        </dl>
+      </div>
     </div>
-    <div>
-      <div class="label">Audit</div>
-      <h4>BDO Australia</h4>
-      <p>Every figure on the Impact page independently audited annually.</p>
-    </div>
-    <div>
-      <div class="label">Security</div>
-      <h4>GreenPay + Stripe</h4>
-      <p>PCI DSS Level 1. We never see your card details.</p>
-    </div>
-    <div>
-      <div class="label">Other ways</div>
-      <h4>Payroll, bequest, crypto</h4>
-      <p>Speak to us about larger or structured gifts, contact Jimmy directly.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
+  <section class="dn-where">
+    <div class="dn-where-inner">
+      <h2>Where your donation goes.</h2>
+      <div class="dn-where-list">
+        {whereItGoes.map((item) => <div class="dn-where-row">{item}</div>)}
+      </div>
+      <div class="dn-where-close">
+        <p class="dn-where-headline"><span class="accent">Protect. Restore.</span> Forever.</p>
+        <p>Every donation supports the two halves of HalfCut. Protect forests that are still standing. Restore forests that have already been lost.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="dn-legacy" id="legacy">
+    <div class="dn-legacy-inner">
+      <h2>Leave a gift in your Will.</h2>
+      <p class="dn-legacy-lede">
+        Protect and restore nature beyond your lifetime.
+      </p>
+      <p>
+        A gift in your Will, also known as a bequest, is a powerful way to
+        continue supporting the places, people and wildlife you care about.
+      </p>
+      <p>
+        Your bequest can help HalfCut protect forests forever, restore
+        degraded Country, protect biodiversity and support First Nations
+        communities to lead the healing of Country and Culture.
+      </p>
+      <p>You may choose to leave:</p>
+      <div class="dn-legacy-list">
+        {bequestKinds.map((k) => <div class="dn-legacy-row">{k}</div>)}
+      </div>
+      <p class="dn-legacy-note">
+        Even a small percentage can create lasting impact. We recommend
+        discussing your wishes with your solicitor or qualified legal adviser
+        to ensure your Will accurately reflects your intentions.
+      </p>
+      <a href="#legacy-form" class="btn btn-primary btn-xl">Request bequest information</a>
+    </div>
+  </section>
+
+  <section class="dn-lifetime">
+    <div class="dn-lifetime-inner">
+      <h2>See your legacy in your lifetime.</h2>
+      <p class="dn-lifetime-lede">
+        Give in life. Experience the impact. Leave a legacy.
+      </p>
+      <p>
+        You do not have to wait to see the difference your legacy can make.
+        We invite prospective bequest supporters to consider making a donation
+        during their lifetime and joining a HalfCut Yalada Tour to experience
+        the impact firsthand.
+      </p>
+      <p>
+        Walk on Country. Meet the people leading the work. Visit rainforest
+        restoration and protection projects. Plant a tree and see how your
+        support can help heal Country, strengthen Culture and protect nature
+        forever.
+      </p>
+      <a href="/yalada-tours" class="btn btn-acid btn-xl">Explore Yalada Tours</a>
+    </div>
+  </section>
+
+  <section class="dn-legacy-form" id="legacy-form">
+    <div class="dn-legacy-form-inner">
+      <div class="lhs">
+        <h2>Talk to us about your legacy.</h2>
+        <p>
+          A bequest is personal. We would be honoured to speak with you
+          privately about the kind of impact you would like to create.
+        </p>
+        <p class="dn-legacy-note">
+          There is no obligation to disclose the value of your intended gift.
+          Letting us know about your intentions allows us to thank you, keep
+          you connected with our work and invite you to experience your
+          impact during your lifetime.
+        </p>
+      </div>
+      <form class="dn-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+        <h3>Expression of Interest</h3>
+        <div class="grid2">
+          <div class="field"><span class="label">Name</span><input type="text" name="name" required /></div>
+          <div class="field"><span class="label">Email</span><input type="email" name="email" required /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><span class="label">Phone</span><input type="tel" name="phone" /></div>
+          <div class="field">
+            <span class="label">Preferred contact</span>
+            <select name="contact-pref">
+              <option>Email</option><option>Phone</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">I am interested in</span>
+          <div class="checkbox-grid">
+            {['Making a donation during my lifetime','Leaving a gift in my Will','Joining a Yalada Tour','Supporting forest protection','Supporting rainforest restoration','Supporting Heal Country. Heal Culture.','Supporting biodiversity and threatened species','Discussing a major gift','Receiving more information'].map((c) => (
+              <label class="chk"><input type="checkbox" name="interest[]" value={c} />{c}</label>
+            ))}
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">Message</span>
+          <textarea name="message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-acid btn-xl">Start a conversation</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="dn-close">
+    <div class="dn-close-inner">
+      <h2>Protect. Restore. <span class="accent">Forever.</span></h2>
+      <p>
+        Your life can leave more than memories. It can leave forests standing,
+        degraded landscapes restored, wildlife protected, Country returned and
+        First Nations communities supported to care for land and Culture for
+        generations to come.
+      </p>
+      <p class="dn-close-line">Give to nature. For life.</p>
+      <div class="dn-close-ctas">
+        <a href="#donate-now" class="btn btn-acid btn-xl">Donate now</a>
+        <a href="#legacy-form" class="btn btn-xl on-ink btn-secondary">Leave a legacy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="dn-trust">
+    <div class="dn-trust-inner">
+      <div><div class="label">Tax status</div><h4>DGR · ABN 24 642 788 814</h4><p>Public Benevolent Institution. Gifts over $2 tax-deductible in Australia.</p></div>
+      <div><div class="label">Audit</div><h4>BDO Australia</h4><p>Every figure on the Impact page independently audited annually.</p></div>
+      <div><div class="label">Security</div><h4>GreenPay + Stripe</h4><p>PCI DSS Level 1. We never see your card details.</p></div>
+      <div><div class="label">Other ways</div><h4>Payroll, bequest, crypto</h4><p>Speak to us about larger or structured gifts. Contact Jimmy directly.</p></div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style is:global>
-.donate-hero {
-    padding: var(--hero-pad-top-sm) var(--pad-x) var(--hero-pad-bottom-sm);
-    background: var(--ink); color: var(--cream);
-    border-bottom: 1px solid var(--cream-15);
-  }
-  .donate-hero-inner { max-width: 1440px; margin: 0 auto; }
-  .donate-hero .eyebrow { color: var(--acid); margin-bottom: 20px; display: block; }
-  .donate-hero h1 { font-family: var(--f-display); font-size: clamp(64px, 9vw, 180px); line-height: .9; letter-spacing: -0.025em; text-transform: uppercase; max-width: 14ch; }
+  .accent { color: var(--acid); }
 
-  .donate-body {
-    max-width: 1440px; margin: 0 auto;
-    padding: var(--s-8) var(--pad-x) var(--s-10);
-    display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--s-8); align-items: start;
+  .dn-hero {
+    background: var(--cream); color: var(--ink);
+    padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
   }
-  .donate-context { position: sticky; top: 40px; }
-  .donate-context h3 { font-family: var(--f-display); font-size: 32px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 16px; }
-  .donate-context p { font-family: var(--f-serif); font-weight: 300; font-size: 19px; line-height: 1.5; opacity: .8; margin-bottom: var(--s-5); max-width: 38ch; }
-  .ctx-stats {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-    background: var(--ink-15); border: 1px solid var(--ink-15);
-    margin-top: var(--s-5);
+  .dn-hero-inner { max-width: 1200px; margin: 0 auto; }
+  .dn-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 8vw, 160px);
+    line-height: .9; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-6);
   }
-  .ctx-stats > div { background: var(--cream); padding: 20px; }
-  .ctx-stats .n { font-family: var(--f-display); font-size: 36px; letter-spacing: -0.01em; line-height: 1; margin-bottom: 6px; }
-  .ctx-stats .l { font-family: var(--f-sans); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .55; }
+  .dn-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(20px, 1.6vw, 26px); line-height: 1.45;
+    max-width: 56ch; margin: 0 0 var(--s-7);
+  }
+  .dn-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* GreenPay iframe embed. The iframe self-reports its content height via
-     postMessage; the inline script above resizes accordingly. Min-height
-     keeps a stable box before the first message arrives. */
-  .greenpay-embed {
-    background: var(--cream);
-    border-radius: 4px;
-    overflow: hidden;
+  .dn-widget { background: var(--stone); padding: var(--s-10) var(--pad-x); }
+  .dn-widget-inner { max-width: 1000px; margin: 0 auto; }
+  .dn-widget h2 { font-family: var(--f-display); font-size: clamp(36px, 4.5vw, 64px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 8px; }
+  .dn-widget-sub { font-family: var(--f-serif); font-weight: 300; font-size: 16px; opacity: .6; margin: 0 0 var(--s-6); }
+  .greenpay-embed { background: var(--cream); border-radius: 4px; overflow: hidden; }
+  .greenpay-embed iframe { display: block; width: 100%; min-height: 1050px; border: 0; }
+
+  .dn-bank { background: var(--cream); padding: var(--s-10) var(--pad-x); }
+  .dn-bank-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-8);
+    align-items: start;
   }
-  .greenpay-embed iframe {
-    display: block;
-    width: 100%;
-    min-height: 1050px;
-    border: 0;
+  .dn-bank-copy h2 { font-family: var(--f-display); font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-5); }
+  .dn-bank-copy p { font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; margin: 0 0 var(--s-4); max-width: 56ch; }
+  .dn-bank-note { opacity: .75; }
+  .dn-bank-emails { font-family: var(--f-sans); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; display: flex; gap: 12px; align-items: center; margin-top: var(--s-4); }
+  .dn-bank-emails a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--coral); }
+  .dn-bank-details {
+    background: var(--stone);
+    padding: var(--s-6); border-radius: 4px;
+  }
+  .dn-bank-details h3 { font-family: var(--f-display); font-size: 22px; text-transform: uppercase; letter-spacing: -0.01em; margin: 0 0 var(--s-4); }
+  .dn-bank-details dl { display: grid; grid-template-columns: 140px 1fr; gap: 8px 16px; margin: 0; }
+  .dn-bank-details dt { font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; align-self: center; }
+  .dn-bank-details dd { margin: 0; font-family: var(--f-serif); font-weight: 400; font-size: 17px; }
+  @media (max-width: 900px) { .dn-bank-inner { grid-template-columns: 1fr; } }
+
+  .dn-where { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); }
+  .dn-where-inner { max-width: 1000px; margin: 0 auto; }
+  .dn-where h2 { font-family: var(--f-display); font-size: clamp(40px, 5vw, 80px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-7); }
+  .dn-where-list { display: flex; flex-direction: column; gap: 0; }
+  .dn-where-row {
+    padding: var(--s-4) 0;
+    border-top: 1px solid var(--cream-15);
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(17px, 1.4vw, 22px); line-height: 1.4;
+  }
+  .dn-where-row:last-child { border-bottom: 1px solid var(--cream-15); }
+  .dn-where-close { margin-top: var(--s-8); }
+  .dn-where-headline { font-family: var(--f-display); font-size: clamp(28px, 3.5vw, 48px); line-height: 1; letter-spacing: -0.015em; text-transform: uppercase; margin: 0 0 var(--s-4); }
+  .dn-where-close p:last-child { font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; opacity: .85; max-width: 56ch; margin: 0; }
+
+  .dn-legacy { background: var(--stone); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .dn-legacy-inner { max-width: 800px; margin: 0 auto; }
+  .dn-legacy h2 { font-family: var(--f-display); font-size: clamp(40px, 5vw, 84px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-4); }
+  .dn-legacy-lede, .dn-lifetime-lede { font-family: var(--f-serif); font-weight: 400; font-size: clamp(20px, 1.8vw, 28px); line-height: 1.35; margin: 0 0 var(--s-6); }
+  .dn-legacy p { font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; margin: 0 0 var(--s-4); }
+  .dn-legacy-list { display: flex; flex-direction: column; margin: var(--s-4) 0; }
+  .dn-legacy-row {
+    padding: 12px 0;
+    border-top: 1px solid var(--ink-15);
+    font-family: var(--f-serif); font-weight: 400; font-size: 17px;
+  }
+  .dn-legacy-row:last-child { border-bottom: 1px solid var(--ink-15); }
+  .dn-legacy-note { opacity: .75; font-size: 16px !important; margin-top: var(--s-4) !important; }
+
+  .dn-lifetime { background: var(--cream); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .dn-lifetime-inner { max-width: 800px; margin: 0 auto; }
+  .dn-lifetime h2 { font-family: var(--f-display); font-size: clamp(40px, 5vw, 84px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-4); }
+  .dn-lifetime p { font-family: var(--f-serif); font-weight: 300; font-size: 18px; line-height: 1.55; margin: 0 0 var(--s-4); }
+
+  .dn-legacy-form { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); }
+  .dn-legacy-form-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--s-8);
+  }
+  .dn-legacy-form-inner .lhs h2 { font-family: var(--f-display); font-size: clamp(32px, 4vw, 56px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-5); }
+  .dn-legacy-form-inner .lhs p { font-family: var(--f-serif); font-weight: 300; font-size: 17px; line-height: 1.55; opacity: .85; margin: 0 0 var(--s-4); }
+  .dn-form { display: flex; flex-direction: column; gap: var(--s-5); }
+  .dn-form h3 { font-family: var(--f-display); font-size: 28px; letter-spacing: -0.015em; text-transform: uppercase; margin: 0 0 var(--s-3); }
+  .dn-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .dn-form .field { display: flex; flex-direction: column; gap: 8px; }
+  .dn-form .label { font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .55; }
+  .dn-form input, .dn-form select, .dn-form textarea {
+    width: 100%; padding: 12px 0;
+    border: 0; border-bottom: 1px solid var(--cream-15);
+    background: transparent;
+    font-family: var(--f-serif); font-size: 17px; color: var(--cream);
+    outline: none;
+  }
+  .dn-form input:focus, .dn-form select:focus, .dn-form textarea:focus { border-color: var(--cream); }
+  .dn-form option { color: var(--ink); }
+  .dn-form .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; margin-top: 8px; }
+  .dn-form .chk { display: flex; align-items: center; gap: 8px; font-family: var(--f-serif); font-size: 15px; padding: 6px 0; }
+  .dn-form .chk input { width: auto; padding: 0; }
+  @media (max-width: 900px) {
+    .dn-legacy-form-inner { grid-template-columns: 1fr; }
+    .dn-form .grid2, .dn-form .checkbox-grid { grid-template-columns: 1fr; }
   }
 
-  /* Donate panel */
-  .donate-panel {
-    background: var(--cream);
-    padding: var(--s-7);
-    border: 1px solid var(--ink-15);
-    border-radius: 4px;
-  }
-  .donate-panel h3 { font-family: var(--f-display); font-size: 28px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 4px; }
-  .donate-panel .sub { font-family: var(--f-serif);  opacity: .6; margin-bottom: var(--s-5); font-size: 15px; }
+  .dn-close { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); text-align: center; border-top: 1px solid var(--cream-15); }
+  .dn-close-inner { max-width: 800px; margin: 0 auto; }
+  .dn-close h2 { font-family: var(--f-display); font-size: clamp(44px, 6vw, 96px); line-height: .95; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 var(--s-6); }
+  .dn-close p { font-family: var(--f-serif); font-weight: 300; font-size: 19px; line-height: 1.55; margin: 0 auto var(--s-5); max-width: 56ch; opacity: .9; }
+  .dn-close-line { color: var(--acid); font-weight: 400 !important; opacity: 1 !important; font-family: var(--f-display) !important; font-size: clamp(20px, 2vw, 30px) !important; text-transform: uppercase; letter-spacing: -0.015em; margin-top: var(--s-6) !important; }
+  .dn-close-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: var(--s-6); }
 
-  /* Trust strip */
-  .trust {
-    background: var(--cream); border-top: 1px solid var(--ink-15);
-    padding: var(--s-7) var(--pad-x);
-  }
-  .trust-inner {
+  .dn-trust { background: var(--cream); color: var(--ink); padding: var(--s-8) var(--pad-x); }
+  .dn-trust-inner {
     max-width: 1440px; margin: 0 auto;
     display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5);
   }
-  .trust-inner > div { padding: 0; }
-  .trust-inner .label { font-family: var(--f-sans); font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .5; margin-bottom: 8px; }
-  .trust-inner h4 { font-family: var(--f-display); font-size: 20px; letter-spacing: -0.005em; margin-bottom: 6px; text-transform: uppercase; }
-  .trust-inner p { font-family: var(--f-serif); font-size: 15px; font-weight: 300; line-height: 1.4; opacity: .7; }
-
-  @media (max-width: 960px) {
-    .donate-body { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
-    .donate-context { position: static; }
-    .trust-inner { grid-template-columns: 1fr 1fr; }
-  }
+  .dn-trust-inner > div { padding: 0; }
+  .dn-trust-inner .label { font-family: var(--f-sans); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .5; margin-bottom: 8px; }
+  .dn-trust-inner h4 { font-family: var(--f-display); font-size: 20px; letter-spacing: -0.005em; margin-bottom: 6px; text-transform: uppercase; }
+  .dn-trust-inner p { font-family: var(--f-serif); font-size: 15px; font-weight: 300; line-height: 1.4; opacity: .7; }
+  @media (max-width: 720px) { .dn-trust-inner { grid-template-columns: 1fr 1fr; } }
 </style>

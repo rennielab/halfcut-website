@@ -1,0 +1,223 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const ways = [
+  { title: 'Cut or shave half your hair', body: 'The classic. The one that started it all.' },
+  { title: 'Shave half your beard or moustache', body: 'A walking conversation for a month.' },
+  { title: 'Paint half your face', body: 'No razor required. Just show up in colour.' },
+  { title: 'Wear half an outfit', body: 'Or get creative. One shoe. One sleeve. Whatever.' },
+  { title: 'Run half a marathon', body: 'Kilometres for hectares.' },
+  { title: "Donate half a day's wage", body: 'The quiet kind of half. Still counts.' },
+];
+---
+
+<BaseLayout
+  title="Go HalfCut"
+  description="Meet nature halfway. Every August, thousands of Australians come together to Go HalfCut — a fun, bold and meaningful way to raise funds for nature by doing half of something to support the other half of our forests that has already been lost."
+  current="go-halfcut"
+  dark={true}
+>
+  <section class="gh-hero">
+    <div class="gh-hero-bg" aria-hidden="true"></div>
+    <div class="gh-hero-veil" aria-hidden="true"></div>
+    <div class="gh-hero-inner">
+      <h1>Go<br /><span class="accent">HalfCut.</span></h1>
+      <p class="tag">Meet nature halfway.</p>
+      <p class="lede">
+        Every August, thousands of Australians come together to do one simple
+        thing. It's a fun, bold and meaningful way to raise funds for nature
+        by doing half of something to support the other half of our forests
+        that has already been lost.
+      </p>
+      <div class="gh-hero-ctas">
+        <a href="https://halfcut.ezyraise.site" target="_blank" rel="noopener" class="btn btn-acid btn-xl">Register for Go HalfCut</a>
+        <a href="#ways" class="btn btn-xl on-ink btn-secondary">Start your own half challenge</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gh-nudge">
+    <div class="gh-nudge-inner">
+      <p>
+        The best part? <strong>There are no rules.</strong> Go HalfCut your way.
+      </p>
+    </div>
+  </section>
+
+  <section class="gh-ways" id="ways">
+    <div class="gh-ways-inner">
+      <h2>Six ways to Go HalfCut.</h2>
+      <div class="gh-ways-grid">
+        {ways.map((w) => (
+          <div class="gh-way">
+            <h3>{w.title}</h3>
+            <p>{w.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="gh-ways-line">
+        Or simply choose your own "half" and inspire others to join you.
+      </p>
+    </div>
+  </section>
+
+  <section class="gh-anytime">
+    <div class="gh-anytime-inner">
+      <h2>Any time of year. <span class="accent">Any half you like.</span></h2>
+      <p>
+        While our national movement takes place every August, you don't have
+        to wait. You can Go HalfCut at any time of the year and help protect
+        and restore nature whenever you're ready.
+      </p>
+      <p>
+        Every fundraiser helps support HalfCut's mission to Protect &amp;
+        Restore Forever through rainforest restoration, forest protection and
+        Heal Country. Heal Culture.
+      </p>
+    </div>
+  </section>
+
+  <section class="gh-close">
+    <div class="gh-close-inner">
+      <h2>However you choose to do it.</h2>
+      <p class="gh-close-line">Meet nature halfway.</p>
+      <div class="gh-close-ctas">
+        <a href="https://halfcut.ezyraise.site" target="_blank" rel="noopener" class="btn btn-acid btn-xl">Register for Go HalfCut</a>
+        <a href="/donate" class="btn btn-xl on-ink btn-secondary">Donate instead</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .accent { color: var(--acid); }
+
+  .gh-hero {
+    position: relative; min-height: 88vh; overflow: hidden;
+    background: var(--ink); color: var(--cream);
+    display: flex; align-items: flex-end;
+  }
+  .gh-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/photo_078.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.55) saturate(.95);
+  }
+  .gh-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.35) 0%, rgba(19,20,14,.35) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .gh-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1440px; margin: 0 auto; width: 100%;
+    padding: calc(var(--hero-pad-top) + 24px) var(--pad-x) var(--s-10);
+  }
+  .gh-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(80px, 12vw, 220px);
+    line-height: .88; letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-5);
+  }
+  .gh-hero .tag {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 2.4vw, 36px);
+    letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+    color: var(--acid);
+  }
+  .gh-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(19px, 1.6vw, 24px);
+    line-height: 1.45; max-width: 56ch;
+    margin: 0 0 var(--s-7); opacity: .92;
+  }
+  .gh-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .gh-nudge {
+    background: var(--acid); color: var(--ink);
+    padding: var(--s-7) var(--pad-x);
+    text-align: center;
+  }
+  .gh-nudge-inner p {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 3vw, 44px);
+    line-height: 1; letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .gh-nudge strong { text-transform: uppercase; }
+
+  .gh-ways {
+    background: var(--cream); color: var(--ink);
+    padding: var(--s-11) var(--pad-x);
+  }
+  .gh-ways-inner { max-width: 1200px; margin: 0 auto; }
+  .gh-ways h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 84px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-8);
+  }
+  .gh-ways-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5);
+  }
+  .gh-way {
+    background: var(--stone);
+    padding: var(--s-6); border-radius: 4px;
+  }
+  .gh-way h3 {
+    font-family: var(--f-display);
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4);
+  }
+  .gh-way p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 16px; line-height: 1.55;
+    opacity: .8; margin: 0;
+  }
+  .gh-ways-line {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(20px, 1.8vw, 26px); line-height: 1.4;
+    margin: var(--s-8) 0 0; max-width: 56ch;
+  }
+  @media (max-width: 900px) { .gh-ways-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .gh-ways-grid { grid-template-columns: 1fr; } }
+
+  .gh-anytime {
+    background: var(--ink); color: var(--cream);
+    padding: var(--s-10) var(--pad-x);
+  }
+  .gh-anytime-inner { max-width: 900px; margin: 0 auto; }
+  .gh-anytime h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+  }
+  .gh-anytime p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.4vw, 22px); line-height: 1.55;
+    opacity: .85; margin: 0 0 var(--s-5); max-width: 56ch;
+  }
+
+  .gh-close {
+    background: var(--cream); color: var(--ink);
+    padding: var(--s-10) var(--pad-x); text-align: center;
+  }
+  .gh-close-inner { max-width: 720px; margin: 0 auto; }
+  .gh-close h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5.5vw, 84px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-4);
+  }
+  .gh-close-line {
+    font-family: var(--f-display);
+    font-size: clamp(28px, 3vw, 48px);
+    line-height: 1; letter-spacing: -0.015em;
+    color: var(--acid);
+    margin: 0 0 var(--s-6);
+  }
+  .gh-close-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+</style>

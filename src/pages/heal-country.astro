@@ -1,0 +1,415 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const pillars = [
+  { icon: 'Heal Country',            title: 'Heal Country',
+    body: "Supporting First Nations-led restoration of forests, rivers, wetlands, coastlines and culturally significant landscapes through ecological restoration, conservation and long-term stewardship." },
+  { icon: 'Return to Country',       title: 'Return to Country',
+    body: "Helping Traditional Owners reconnect with, access and care for Country through land acquisition, cultural access, on-Country programs and opportunities that strengthen connection across generations." },
+  { icon: 'Housing & Community',     title: 'Housing & Community',
+    body: "Supporting projects that create affordable housing, ranger accommodation and community infrastructure that enables people to live, work and care for Country." },
+  { icon: 'First Nations Employment',title: 'First Nations Employment',
+    body: "Creating meaningful employment pathways through Indigenous Ranger programs, restoration teams, cultural tourism, environmental management, conservation enterprises and other Country-based careers." },
+  { icon: 'Biodiversity & Restoration', title: 'Biodiversity & Restoration',
+    body: "Protecting and restoring native ecosystems by planting trees, restoring habitat, improving waterways, supporting threatened species and increasing the resilience of landscapes to climate change." },
+  { icon: 'Science, Research & Innovation', title: 'Science, Research & Innovation',
+    body: "Partnering with universities, researchers, Traditional Knowledge holders and emerging technologies to improve restoration outcomes through ecological monitoring, biodiversity research, cultural knowledge, AI, drones, remote sensing and regenerative innovation." },
+  { icon: 'Partnerships & Investment', title: 'Partnerships & Investment',
+    body: "Connecting Aboriginal corporations and First Nations organisations with businesses, philanthropy, governments and community fundraising to unlock long-term investment into Country." },
+  { icon: 'Climate & Nature',         title: 'Climate & Nature',
+    body: "Supporting projects that contribute to biodiversity recovery, carbon sequestration, water security, regenerative landscapes and nature-positive outcomes for future generations." },
+  { icon: 'Heal Culture',             title: 'Heal Culture',
+    body: "Strengthening language, cultural knowledge, ceremony, intergenerational learning and self-determined leadership so that caring for Country continues for generations to come." },
+];
+---
+
+<BaseLayout
+  title="Heal Country. Heal Culture."
+  description="A national initiative connecting First Nations communities with funding, partnerships and public support to lead the restoration of Country."
+  current="heal-country"
+  dark={true}
+>
+  <section class="hc-hero">
+    <div class="hc-hero-bg" aria-hidden="true"></div>
+    <div class="hc-hero-veil" aria-hidden="true"></div>
+    <div class="hc-hero-inner">
+      <h1>Heal Country.<br /><span class="accent">Heal Culture.</span></h1>
+      <p class="lede">
+        Restoring Country. Strengthening Culture. Creating opportunity.
+      </p>
+      <a href="#pillars" class="btn btn-acid btn-xl">Explore the initiative</a>
+    </div>
+  </section>
+
+  <section class="hc-intro">
+    <div class="hc-intro-inner">
+      <p>
+        For more than 65,000 years, First Nations peoples have cared for
+        Country through knowledge, culture and connection. Today, many
+        Traditional Owner groups are leading the restoration of forests,
+        rivers, wetlands and culturally significant landscapes, but often
+        face barriers in accessing the funding, partnerships and public
+        support needed to bring these visions to life.
+      </p>
+      <p>
+        Heal Country. Heal Culture. is HalfCut's national initiative to help
+        change that.
+      </p>
+      <p>
+        We exist to connect Aboriginal corporations, Traditional Owner groups
+        and First Nations communities with funding, partnerships, corporate
+        support and community fundraising that enables Country-led restoration
+        and long-term conservation.
+      </p>
+      <p class="hc-intro-mission">
+        Our role is simple: to help bring people, purpose and funding together
+        so First Nations communities can continue leading the care of Country.
+      </p>
+      <a href="#eoi" class="btn btn-primary btn-xl">Support Heal Country. Heal Culture.</a>
+    </div>
+  </section>
+
+  <section class="hc-first">
+    <div class="hc-first-inner">
+      <div class="hc-first-copy">
+        <h2>Our first partner.<br /><span class="accent">Eastern Kuku Yalanji Country.</span></h2>
+        <p>
+          We are proud to have launched Heal Country. Heal Culture. alongside
+          the Jabalbina Yalanji Aboriginal Corporation, the first partner
+          organisation in this national initiative.
+        </p>
+        <p>
+          Together, we are restoring sections of the Wet Tropics World
+          Heritage Area through rainforest restoration, biodiversity recovery,
+          cultural leadership and meaningful employment for Traditional Owners.
+        </p>
+        <p>
+          This partnership demonstrates what is possible when communities,
+          businesses, philanthropists and First Nations organisations work
+          together to deliver lasting environmental and cultural outcomes.
+        </p>
+        <p>
+          As the program grows, our vision is to support many more Aboriginal
+          corporations and Traditional Owner groups across Australia.
+        </p>
+      </div>
+      <div class="hc-first-photo" style="background-image: url('/photos/photo_012.webp');" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="hc-pillars" id="pillars">
+    <div class="hc-pillars-inner">
+      <h2>Our pillars of impact.</h2>
+      <div class="hc-pillar-grid">
+        {pillars.map((p) => (
+          <article class="hc-pillar">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="hc-vision">
+    <div class="hc-vision-inner">
+      <h2>A vision beyond restoration.</h2>
+      <p>
+        Heal Country. Heal Culture. is about more than restoring landscapes.
+        It is about supporting self-determined First Nations communities to
+        build thriving futures where healthy Country, strong Culture,
+        meaningful employment, affordable housing, scientific innovation and
+        biodiversity conservation all work together to create lasting
+        environmental, social and economic outcomes across Australia.
+      </p>
+    </div>
+  </section>
+
+  <section class="hc-eoi" id="eoi">
+    <div class="hc-eoi-inner">
+      <div class="hc-eoi-lhs">
+        <h2>Are you a First Nations organisation?</h2>
+        <p>We are seeking expressions of interest from:</p>
+        <div class="hc-eoi-list">
+          <div>Aboriginal Corporations</div>
+          <div>Traditional Owner Groups</div>
+          <div>Prescribed Body Corporates (PBCs)</div>
+          <div>Indigenous Rangers</div>
+          <div>First Nations community organisations</div>
+          <div>First Nations enterprises delivering environmental or cultural outcomes</div>
+        </div>
+        <p>
+          If you have a vision to restore Country, protect important
+          landscapes, create jobs or strengthen Culture, we'd love to hear
+          from you.
+        </p>
+        <p class="hc-eoi-note">
+          While we cannot guarantee funding, we are actively building
+          partnerships that connect communities with grants, corporate
+          investment, philanthropy, fundraising campaigns and long-term
+          conservation opportunities.
+        </p>
+      </div>
+
+      <form class="hc-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+        <h3>Expression of Interest</h3>
+
+        <div class="grid2">
+          <div class="field"><span class="label">Organisation name</span><input type="text" name="org" required /></div>
+          <div class="field"><span class="label">Primary contact</span><input type="text" name="contact" required /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><span class="label">Nation / Traditional Owner group</span><input type="text" name="nation" /></div>
+          <div class="field"><span class="label">Email</span><input type="email" name="email" required /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><span class="label">Phone</span><input type="tel" name="phone" /></div>
+          <div class="field"><span class="label">Location</span><input type="text" name="location" /></div>
+        </div>
+        <div class="field">
+          <span class="label">Tell us about your project</span>
+          <textarea name="project" rows="4" placeholder="Brief description"></textarea>
+        </div>
+
+        <div class="field">
+          <span class="label">What support are you seeking?</span>
+          <div class="checkbox-grid">
+            {['Grant opportunities','Corporate partnerships','Fundraising support','Land restoration','Land protection','Ranger employment','Biodiversity projects','Carbon & Nature Finance','Cultural programs','Other'].map((c) => (
+              <label class="chk"><input type="checkbox" name="support[]" value={c} />{c}</label>
+            ))}
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field"><span class="label">Approximate funding required</span><input type="text" name="funding" /></div>
+          <div class="field">
+            <span class="label">Current stage</span>
+            <select name="stage">
+              <option value="planning">Planning</option>
+              <option value="ready">Ready to commence</option>
+              <option value="expansion">Existing project seeking expansion</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-acid btn-xl">Submit Expression of Interest</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="hc-close">
+    <div class="hc-close-inner">
+      <h2>Together, we can heal Country.<br /><span class="accent">Heal Culture.</span></h2>
+      <p>
+        HalfCut believes the future of conservation is one where First Nations
+        communities are supported to lead the protection and restoration of
+        Country. By connecting communities with people who care, we can
+        unlock investment, strengthen Culture, restore ecosystems and create
+        lasting impact across Australia.
+      </p>
+      <p class="hc-close-line">
+        Country has always cared for us. Now it's our turn to help care for
+        Country. Together.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .accent { color: var(--acid); }
+
+  .hc-hero {
+    position: relative; min-height: 88vh; overflow: hidden;
+    background: var(--ink); color: var(--cream);
+    display: flex; align-items: flex-end;
+  }
+  .hc-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/hero-jabalbina-women.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.55) saturate(.95);
+  }
+  .hc-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.35) 0%, rgba(19,20,14,.35) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .hc-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1440px; margin: 0 auto; width: 100%;
+    padding: calc(var(--hero-pad-top) + 24px) var(--pad-x) var(--s-10);
+  }
+  .hc-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(52px, 8vw, 140px);
+    line-height: .92; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+    max-width: 16ch;
+  }
+  .hc-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(20px, 1.6vw, 26px);
+    line-height: 1.4; max-width: 48ch;
+    margin: 0 0 var(--s-7); opacity: .92;
+  }
+
+  .hc-intro { background: var(--cream); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .hc-intro-inner { max-width: 760px; margin: 0 auto; }
+  .hc-intro p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 20px; line-height: 1.55;
+    margin: 0 0 var(--s-5);
+  }
+  .hc-intro-mission { font-weight: 400 !important; font-size: 22px !important; }
+
+  .hc-first {
+    background: var(--stone); color: var(--ink);
+    padding: var(--s-10) var(--pad-x);
+  }
+  .hc-first-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s-8);
+    align-items: center;
+  }
+  .hc-first-copy h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6); max-width: 16ch;
+  }
+  .hc-first-copy p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 18px; line-height: 1.55;
+    margin: 0 0 var(--s-5); max-width: 48ch;
+  }
+  .hc-first-photo {
+    aspect-ratio: 4 / 5;
+    background-size: cover; background-position: center;
+    border-radius: 4px;
+  }
+  @media (max-width: 900px) { .hc-first-inner { grid-template-columns: 1fr; } }
+
+  .hc-pillars { background: var(--ink); color: var(--cream); padding: var(--s-11) var(--pad-x); }
+  .hc-pillars-inner { max-width: 1440px; margin: 0 auto; }
+  .hc-pillars h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 6vw, 96px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-8);
+  }
+  .hc-pillar-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5);
+  }
+  .hc-pillar {
+    background: rgba(245,244,236,.04);
+    padding: var(--s-6);
+    border-radius: 4px;
+  }
+  .hc-pillar h3 {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
+    color: var(--acid);
+    margin: 0 0 var(--s-4);
+  }
+  .hc-pillar p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 15px; line-height: 1.55; opacity: .85;
+    margin: 0;
+  }
+  @media (max-width: 900px) { .hc-pillar-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .hc-pillar-grid { grid-template-columns: 1fr; } }
+
+  .hc-vision { background: var(--acid); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .hc-vision-inner { max-width: 900px; margin: 0 auto; }
+  .hc-vision h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+  }
+  .hc-vision p {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(19px, 1.5vw, 24px);
+    line-height: 1.55; margin: 0;
+  }
+
+  .hc-eoi { background: var(--cream); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .hc-eoi-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--s-8);
+  }
+  .hc-eoi-lhs h2 {
+    font-family: var(--f-display);
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-5); max-width: 18ch;
+  }
+  .hc-eoi-lhs p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 17px; line-height: 1.55;
+    margin: 0 0 var(--s-4);
+  }
+  .hc-eoi-list {
+    display: flex; flex-direction: column; gap: 2px;
+    margin: var(--s-4) 0;
+  }
+  .hc-eoi-list > div {
+    padding: 12px 0;
+    border-top: 1px solid var(--ink-15);
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 17px;
+  }
+  .hc-eoi-list > div:last-child { border-bottom: 1px solid var(--ink-15); }
+  .hc-eoi-note { font-size: 15px !important; opacity: .7; }
+
+  .hc-form { display: flex; flex-direction: column; gap: var(--s-5); }
+  .hc-form h3 {
+    font-family: var(--f-display);
+    font-size: 28px; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4);
+  }
+  .hc-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .hc-form .field { display: flex; flex-direction: column; gap: 8px; }
+  .hc-form .label {
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px;
+    letter-spacing: .18em; text-transform: uppercase; opacity: .55;
+  }
+  .hc-form input, .hc-form textarea, .hc-form select {
+    width: 100%; padding: 12px 0;
+    border: 0; border-bottom: 1px solid var(--ink-15);
+    background: transparent;
+    font-family: var(--f-serif); font-size: 17px; color: var(--ink);
+    outline: none;
+  }
+  .hc-form input:focus, .hc-form textarea:focus, .hc-form select:focus { border-color: var(--ink); }
+  .checkbox-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;
+    margin-top: 8px;
+  }
+  .chk {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--f-serif); font-size: 15px;
+    padding: 6px 0;
+  }
+  .chk input { width: auto; padding: 0; border: 0; }
+  @media (max-width: 900px) {
+    .hc-eoi-inner { grid-template-columns: 1fr; }
+    .hc-form .grid2, .checkbox-grid { grid-template-columns: 1fr; }
+  }
+
+  .hc-close { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); text-align: center; }
+  .hc-close-inner { max-width: 800px; margin: 0 auto; }
+  .hc-close h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5.5vw, 84px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+  }
+  .hc-close p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 19px; line-height: 1.55;
+    margin: 0 auto var(--s-5); max-width: 56ch; opacity: .9;
+  }
+  .hc-close-line { color: var(--acid); font-weight: 400 !important; opacity: 1 !important; }
+</style>

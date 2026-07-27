@@ -1,0 +1,307 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Yalada Tours"
+  description="Walk Country. Heal Country. Protect Country. Join HalfCut for a powerful on-Country experience in the Daintree Rainforest, guided by First Nations knowledge, culture and connection."
+  current="yalada"
+  dark={true}
+>
+  <section class="yt-hero">
+    <div class="yt-hero-bg" aria-hidden="true"></div>
+    <div class="yt-hero-veil" aria-hidden="true"></div>
+    <div class="yt-hero-inner">
+      <h1>Walk Country.<br />Heal Country.<br />Protect Country.</h1>
+      <p class="lede">
+        Join HalfCut for a powerful on-Country experience in the Daintree
+        Rainforest, guided by First Nations knowledge, culture and connection.
+      </p>
+      <div class="yt-hero-ctas">
+        <a href="#register" class="btn btn-acid btn-xl">Register your interest</a>
+        <a href="https://www.youtube.com/watch?v=bnZH_yATpqo" target="_blank" rel="noopener" class="btn btn-xl on-ink btn-secondary">Watch the film</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="yt-video">
+    <div class="yt-video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/bnZH_yATpqo"
+        title="HalfCut Yalada Tours"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <section class="yt-intro">
+    <div class="yt-intro-inner">
+      <p class="yt-intro-tag">More than a tour.</p>
+      <h2>A chance to listen, learn, connect and contribute.</h2>
+      <p>
+        Yalada Tours invite supporters, partners and changemakers to experience
+        the impact of rainforest restoration firsthand. From ancient rainforest
+        and river systems to cultural storytelling, tree planting, healing
+        Country and protecting forests forever.
+      </p>
+    </div>
+  </section>
+
+  <section class="yt-experience">
+    <div class="yt-experience-inner">
+      <h2>What you'll experience.</h2>
+      <div class="yt-cards">
+        <div class="yt-card">
+          <h3>Walk the oldest rainforest on Earth</h3>
+          <p>Through Wet Tropics World Heritage rainforest that has stood for 180 million years.</p>
+        </div>
+        <div class="yt-card">
+          <h3>Learn from Traditional Owners</h3>
+          <p>Guided by First Nations knowledge holders on Eastern Kuku Yalanji Country.</p>
+        </div>
+        <div class="yt-card">
+          <h3>Visit live restoration sites</h3>
+          <p>See the buyback, seed collection and revegetation work HalfCut resources.</p>
+        </div>
+        <div class="yt-card">
+          <h3>Take part in tree planting</h3>
+          <p>Put a native seedling into Country and understand the wider recovery plan.</p>
+        </div>
+        <div class="yt-card">
+          <h3>Rainforest, river and reef</h3>
+          <p>Understand the connections that link the forests to the Great Barrier Reef.</p>
+        </div>
+        <div class="yt-card">
+          <h3>How HalfCut protects forests forever</h3>
+          <p>See the governance model, funding flow and long-term partnership with Jabalbina.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="yt-why">
+    <div class="yt-why-inner">
+      <h2>Why join.</h2>
+      <p>
+        Your visit helps support First Nations-led conservation, ranger
+        employment, cultural knowledge, rainforest restoration and long-term
+        protection of Country.
+      </p>
+      <p class="yt-why-line">
+        Come as a guest. Leave as part of the movement.
+      </p>
+    </div>
+  </section>
+
+  <section class="yt-register" id="register">
+    <div class="yt-register-inner">
+      <div class="yt-register-lhs">
+        <h2>Register your interest.</h2>
+        <p>
+          Interested in joining a future Yalada Tour? Fill in the form and
+          we'll be in touch when dates open.
+        </p>
+      </div>
+      <form class="yt-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+        <div class="grid2">
+          <div class="field">
+            <span class="label">Name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <span class="label">Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <span class="label">Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <span class="label">Organisation</span>
+            <input type="text" name="organisation" />
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <span class="label">Preferred dates</span>
+            <input type="text" name="dates" placeholder="e.g. mid-2026, dry season" />
+          </div>
+          <div class="field">
+            <span class="label">Number of guests</span>
+            <input type="number" name="guests" min="1" />
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">Tell us why you'd like to join</span>
+          <textarea name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-acid btn-xl">Register your interest</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .yt-hero {
+    position: relative;
+    min-height: 88vh;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex; align-items: flex-end;
+  }
+  .yt-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/photo_045.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.55) saturate(.95);
+    will-change: transform;
+  }
+  .yt-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.35) 0%, rgba(19,20,14,.35) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .yt-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1440px; margin: 0 auto;
+    padding: calc(var(--hero-pad-top) + 24px) var(--pad-x) var(--s-10);
+    width: 100%;
+  }
+  .yt-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 7vw, 120px);
+    line-height: .92; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+    max-width: 18ch; text-wrap: balance;
+  }
+  .yt-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(19px, 1.6vw, 24px);
+    line-height: 1.45;
+    max-width: 56ch;
+    opacity: .9;
+    margin: 0 0 var(--s-7);
+  }
+  .yt-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .yt-video { background: var(--ink); padding: 0 var(--pad-x) var(--s-10); }
+  .yt-video-frame {
+    max-width: 1100px; margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    background: var(--ink-85);
+    border-radius: 4px; overflow: hidden;
+  }
+  .yt-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .yt-intro { background: var(--cream); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .yt-intro-inner { max-width: 900px; margin: 0 auto; }
+  .yt-intro-tag {
+    font-family: var(--f-sans); font-size: 13px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    opacity: .55; margin: 0 0 var(--s-4);
+  }
+  .yt-intro h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6); max-width: 20ch;
+  }
+  .yt-intro p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.4vw, 22px); line-height: 1.55;
+    max-width: 56ch;
+  }
+
+  .yt-experience {
+    background: var(--stone);
+    color: var(--ink);
+    padding: var(--s-10) var(--pad-x);
+  }
+  .yt-experience-inner { max-width: 1440px; margin: 0 auto; }
+  .yt-experience h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-8);
+  }
+  .yt-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-5);
+  }
+  .yt-card {
+    background: var(--cream);
+    padding: var(--s-6);
+    border-radius: 4px;
+    min-height: 200px;
+  }
+  .yt-card h3 {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4);
+  }
+  .yt-card p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 16px; line-height: 1.5;
+    opacity: .8; margin: 0;
+  }
+  @media (max-width: 900px) { .yt-cards { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .yt-cards { grid-template-columns: 1fr; } }
+
+  .yt-why { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); text-align: center; }
+  .yt-why-inner { max-width: 720px; margin: 0 auto; }
+  .yt-why h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 84px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+  }
+  .yt-why p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.5vw, 22px); line-height: 1.5;
+    opacity: .9; margin: 0 auto var(--s-5); max-width: 56ch;
+  }
+  .yt-why-line { color: var(--acid); font-weight: 400 !important; opacity: 1 !important; }
+
+  .yt-register { background: var(--cream); color: var(--ink); padding: var(--s-10) var(--pad-x); }
+  .yt-register-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--s-8);
+  }
+  .yt-register-lhs h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-5);
+  }
+  .yt-register-lhs p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 18px; line-height: 1.55;
+    opacity: .8; max-width: 40ch;
+  }
+  .yt-form { display: flex; flex-direction: column; gap: var(--s-5); }
+  .yt-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .yt-form .field { display: flex; flex-direction: column; gap: 8px; }
+  .yt-form .label {
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px;
+    letter-spacing: .18em; text-transform: uppercase; opacity: .55;
+  }
+  .yt-form input, .yt-form textarea {
+    width: 100%; padding: 12px 0;
+    border: 0; border-bottom: 1px solid var(--ink-15);
+    background: transparent;
+    font-family: var(--f-serif); font-size: 18px; color: var(--ink);
+    outline: none;
+  }
+  .yt-form input:focus, .yt-form textarea:focus { border-color: var(--ink); }
+  @media (max-width: 720px) {
+    .yt-register-inner { grid-template-columns: 1fr; }
+    .yt-form .grid2 { grid-template-columns: 1fr; }
+  }
+</style>

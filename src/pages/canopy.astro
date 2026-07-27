@@ -1,0 +1,295 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const tiers = [
+  {
+    slug: 'bronze',
+    name: 'Bronze Canopy Member',
+    price: '$100',
+    per: 'per month',
+    pitch: 'Perfect for small businesses beginning their nature-positive journey.',
+    inherits: null,
+    perks: [
+      'Official HalfCut Canopy Member digital badge',
+      'Business listed on the HalfCut Canopy webpage',
+      'Quarterly impact newsletter',
+      'Annual restoration impact update',
+      'Use of the HalfCut Canopy Member logo in marketing',
+    ],
+    cta: 'Join at $100/mo',
+  },
+  {
+    slug: 'silver',
+    name: 'Silver Canopy Member',
+    price: '$500',
+    per: 'per month',
+    pitch: 'For businesses committed to making a meaningful ongoing contribution.',
+    inherits: 'Everything in Bronze, plus',
+    perks: [
+      'Featured business profile on the HalfCut website',
+      'Social media acknowledgement',
+      'Invitation to online impact briefings',
+      'Priority access to HalfCut campaigns and activations',
+      'Annual impact summary suitable for ESG and sustainability reporting',
+    ],
+    cta: 'Join at $500/mo',
+  },
+  {
+    slug: 'gold',
+    name: 'Gold Canopy Member',
+    price: '$2,000',
+    per: 'per month',
+    pitch: 'Designed for organisations wanting to actively demonstrate environmental leadership.',
+    inherits: 'Everything in Silver, plus',
+    perks: [
+      'Dedicated impact story or blog each year',
+      'Joint media and campaign opportunities where appropriate',
+      'Invitation to an annual on-Country Yalada experience (participant costs may apply)',
+      'Exclusive restoration updates including photos, drone imagery and project milestones',
+      'Collaboration opportunities around employee engagement, fundraising and volunteering',
+      'Recognition across HalfCut newsletters and selected campaign communications',
+    ],
+    cta: 'Join at $2,000/mo',
+    featured: true,
+  },
+  {
+    slug: 'platinum',
+    name: 'Platinum Canopy Partner',
+    price: '$10,000+',
+    per: 'per year or major commitment',
+    pitch: 'For organisations committed to creating lasting environmental and cultural impact.',
+    inherits: 'Everything in Gold, plus',
+    perks: [
+      'Strategic partnership with HalfCut',
+      'Tailored restoration partnership aligned with business values',
+      'Hosted on-Country Yalada experience with Traditional Owners',
+      'Bespoke impact reports including restoration outcomes, biodiversity and community benefits',
+      'Executive briefings and annual partnership review',
+      'Premium recognition across HalfCut communications',
+      'Co-created storytelling showcasing measurable impact',
+      'Opportunities to support innovation projects including biodiversity, regenerative business initiatives, water stewardship and emerging environmental solutions',
+    ],
+    cta: 'Talk to us',
+  },
+];
+
+const pillars = [
+  { title: 'Restore Nature',     body: 'Protecting and restoring rainforest, wildlife habitat and biodiversity.' },
+  { title: 'Heal Country',       body: "Supporting Traditional Owner-led restoration, cultural knowledge and caring for Country." },
+  { title: 'Empower Communities',body: 'Creating employment, education and long-term regenerative livelihoods.' },
+  { title: 'Drive System Change',body: 'Supporting innovative partnerships that accelerate nature restoration, regenerative business and environmental leadership.' },
+];
+---
+
+<BaseLayout
+  title="The HalfCut Canopy"
+  description="A living network of businesses restoring nature together. Bronze, Silver, Gold and Platinum membership tiers supporting rainforest restoration and First Nations-led conservation."
+  current="canopy"
+>
+  <section class="cy-hero">
+    <div class="cy-hero-inner">
+      <h1>The<br />HalfCut<br /><span class="accent">Canopy.</span></h1>
+      <p class="lede">
+        A living network of businesses restoring nature together.
+      </p>
+      <p class="sub">
+        Every member helps restore rainforest, strengthen biodiversity, create
+        First Nations employment and protect Country for future generations.
+        Whether you're a local café, family business, national brand or global
+        organisation, there's a place for you in the Canopy.
+      </p>
+      <a href="#tiers" class="btn btn-primary btn-xl">Sign up and start your impact</a>
+    </div>
+  </section>
+
+  <section class="cy-tiers" id="tiers">
+    <div class="cy-tiers-inner">
+      {tiers.map((t) => (
+        <article class={`cy-tier${t.featured ? ' is-featured' : ''}`}>
+          <header>
+            <span class="name">{t.name}</span>
+            <div class="price"><span>{t.price}</span><small>{t.per}</small></div>
+            <p class="pitch">{t.pitch}</p>
+          </header>
+          <div class="cy-tier-body">
+            {t.inherits && <p class="inherits">{t.inherits}</p>}
+            <div class="perks">
+              {t.perks.map((p) => <div class="perk">{p}</div>)}
+            </div>
+          </div>
+          <a href="#join" class={`btn btn-xl ${t.featured ? 'btn-acid' : 'btn-primary'}`}>{t.cta}</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="cy-pillars">
+    <div class="cy-pillars-inner">
+      <h2>Every Canopy Member helps support one or more of HalfCut's <span class="accent">Four Pillars</span>.</h2>
+      <p class="cy-pillars-sub">Members can choose where their contribution creates impact.</p>
+      <div class="cy-pillars-grid">
+        {pillars.map((p) => (
+          <div class="cy-pillar">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-join" id="join">
+    <div class="cy-join-inner">
+      <h2>Join the HalfCut Canopy.</h2>
+      <p>
+        Every business has the opportunity to become part of a growing
+        movement restoring Australia's rainforests and supporting First
+        Nations-led conservation. Choose your level, select the pillar that
+        aligns with your values, and start creating lasting impact.
+      </p>
+      <p class="cy-join-line">
+        Become a HalfCut Canopy Member today.
+      </p>
+      <div class="cy-join-ctas">
+        <a href="/contact" class="btn btn-acid btn-xl">Talk to us</a>
+        <a href="/donate" class="btn btn-xl on-ink btn-secondary">Donate directly</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .accent { color: var(--acid); }
+
+  .cy-hero {
+    background: var(--cream); color: var(--ink);
+    padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
+  }
+  .cy-hero-inner { max-width: 1440px; margin: 0 auto; }
+  .cy-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 10vw, 200px);
+    line-height: .88; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .cy-hero .lede {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: clamp(22px, 2vw, 30px); line-height: 1.35;
+    margin: var(--s-6) 0 var(--s-5);
+    max-width: 40ch;
+  }
+  .cy-hero .sub {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 18px; line-height: 1.55;
+    opacity: .8; max-width: 56ch;
+    margin: 0 0 var(--s-7);
+  }
+
+  .cy-tiers { background: var(--stone); padding: var(--s-10) var(--pad-x); }
+  .cy-tiers-inner {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5);
+    align-items: stretch;
+  }
+  .cy-tier {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: var(--s-6);
+    display: flex; flex-direction: column;
+    gap: var(--s-5);
+  }
+  .cy-tier.is-featured { background: var(--ink); color: var(--cream); }
+  .cy-tier header .name {
+    font-family: var(--f-sans); font-weight: 700; font-size: 12px;
+    letter-spacing: .18em; text-transform: uppercase; opacity: .6;
+  }
+  .cy-tier .price {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1; letter-spacing: -0.02em;
+    margin: 8px 0 12px;
+  }
+  .cy-tier .price small {
+    font-family: var(--f-sans); font-weight: 700; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase; opacity: .6;
+    margin-left: 8px;
+  }
+  .cy-tier .pitch {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 16px; line-height: 1.5;
+    opacity: .85; margin: 0;
+  }
+  .cy-tier-body { flex: 1; }
+  .cy-tier .inherits {
+    font-family: var(--f-sans); font-weight: 700; font-size: 11px;
+    letter-spacing: .16em; text-transform: uppercase; opacity: .55;
+    margin: 0 0 12px;
+  }
+  .cy-tier .perks { display: flex; flex-direction: column; gap: 2px; }
+  .cy-tier .perk {
+    padding: 10px 0;
+    border-top: 1px solid var(--ink-15);
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 15px; line-height: 1.45;
+  }
+  .cy-tier.is-featured .perk { border-top-color: var(--cream-15); }
+  .cy-tier .perk:last-child { border-bottom: 1px solid var(--ink-15); }
+  .cy-tier.is-featured .perk:last-child { border-bottom-color: var(--cream-15); }
+
+  @media (max-width: 1024px) { .cy-tiers-inner { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .cy-tiers-inner { grid-template-columns: 1fr; } }
+
+  .cy-pillars { background: var(--ink); color: var(--cream); padding: var(--s-10) var(--pad-x); }
+  .cy-pillars-inner { max-width: 1200px; margin: 0 auto; }
+  .cy-pillars h2 {
+    font-family: var(--f-display);
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.05; letter-spacing: -0.015em; text-transform: uppercase;
+    margin: 0 0 var(--s-4); max-width: 30ch;
+  }
+  .cy-pillars-sub {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 18px; opacity: .8;
+    margin: 0 0 var(--s-8);
+  }
+  .cy-pillars-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5);
+  }
+  .cy-pillar {
+    background: rgba(245,244,236,.04);
+    padding: var(--s-6); border-radius: 4px;
+  }
+  .cy-pillar h3 {
+    font-family: var(--f-display); font-size: 22px;
+    line-height: 1; letter-spacing: -0.01em; text-transform: uppercase;
+    color: var(--acid); margin: 0 0 12px;
+  }
+  .cy-pillar p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 15px; line-height: 1.5; opacity: .85; margin: 0;
+  }
+  @media (max-width: 900px) { .cy-pillars-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .cy-pillars-grid { grid-template-columns: 1fr; } }
+
+  .cy-join { background: var(--acid); color: var(--ink); padding: var(--s-10) var(--pad-x); text-align: center; }
+  .cy-join-inner { max-width: 800px; margin: 0 auto; }
+  .cy-join h2 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 0 0 var(--s-6);
+  }
+  .cy-join p {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 18px; line-height: 1.55;
+    margin: 0 auto var(--s-5); max-width: 56ch;
+  }
+  .cy-join-line {
+    font-family: var(--f-display) !important; font-weight: 400 !important;
+    font-size: clamp(20px, 2vw, 26px) !important; text-transform: uppercase;
+    letter-spacing: -0.015em;
+    margin-top: var(--s-6) !important;
+  }
+  .cy-join-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: var(--s-6); }
+</style>

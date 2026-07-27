@@ -1,0 +1,114 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const reports = [
+  { year: '2024–25', file: '/reports/halfcut-annual-report-2024-25.pdf', size: '40 MB', note: 'The full impact report — programs, finances, on-Country stories, audited accounts.' },
+  { year: '2025',    file: '/reports/halfcut-annual-report-2025.pdf',    size: '0.4 MB', note: 'FY25 summary report.' },
+  { year: '2024',    file: '/reports/halfcut-annual-report-2024.pdf',    size: '0.5 MB', note: 'FY24 summary report.' },
+  { year: '2023',    file: '/reports/halfcut-annual-report-2023.pdf',    size: '1.7 MB', note: 'FY23 summary report.' },
+  { year: '2022',    file: '/reports/halfcut-annual-report-2022.pdf',    size: '0.6 MB', note: 'FY22 summary report.' },
+  { year: '2021',    file: '/reports/halfcut-annual-report-2021.pdf',    size: '5.2 MB', note: 'FY21 summary report.' },
+];
+---
+
+<BaseLayout
+  title="Annual Reports"
+  description="Every year HalfCut publishes an annual report covering our programs, finances and impact on Country. All reports are available below."
+  current="annual-reports"
+>
+  <section class="ar-hero">
+    <div class="ar-hero-inner">
+      <h1>Annual<br />Reports.</h1>
+      <p class="lede">
+        Every year we publish a full account of the work: programs, finances,
+        on-Country outcomes and audited accounts. Nothing behind a login.
+      </p>
+    </div>
+  </section>
+
+  <section class="ar-list">
+    <ol>
+      {reports.map((r) => (
+        <li>
+          <a href={r.file} target="_blank" rel="noopener" class="ar-row">
+            <span class="year">{r.year}</span>
+            <span class="note">{r.note}</span>
+            <span class="meta">PDF {r.size} <span aria-hidden="true">↓</span></span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .ar-hero {
+    padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
+    background: var(--cream);
+  }
+  .ar-hero-inner { max-width: 1440px; margin: 0 auto; }
+  .ar-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 180px);
+    line-height: .9; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .ar-hero .lede {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    margin-top: var(--s-6);
+    max-width: 56ch;
+    opacity: .85;
+  }
+
+  .ar-list {
+    max-width: 1200px; margin: 0 auto;
+    padding: var(--s-8) var(--pad-x) var(--s-10);
+  }
+  .ar-list ol { list-style: none; margin: 0; padding: 0; }
+  .ar-list li + li { border-top: 1px solid var(--ink-15); }
+  .ar-list li:first-child { border-top: 1px solid var(--ink-15); }
+  .ar-list li:last-child { border-bottom: 1px solid var(--ink-15); }
+
+  .ar-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 160px;
+    gap: var(--s-6);
+    align-items: baseline;
+    padding: var(--s-6) 0;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background .2s ease;
+  }
+  .ar-row:hover { background: var(--stone); }
+
+  .ar-row .year {
+    font-family: var(--f-display);
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .ar-row .note {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: 18px; line-height: 1.5;
+    opacity: .8;
+    max-width: 56ch;
+  }
+  .ar-row .meta {
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    opacity: .6;
+    text-align: right;
+    justify-self: end;
+  }
+  .ar-row:hover .meta { opacity: 1; }
+
+  @media (max-width: 720px) {
+    .ar-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .ar-row .meta { text-align: left; justify-self: start; }
+  }
+</style>
