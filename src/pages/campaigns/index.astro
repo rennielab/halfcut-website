@@ -193,14 +193,15 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   .proj-hero h1 { font-family: var(--f-display); font-size: clamp(64px, 9vw, 180px); line-height: .9; letter-spacing: -0.025em; text-transform: uppercase; max-width: 12ch; }
   .proj-hero .lede { max-width: 40ch; opacity: .75; }
 
-  /* Filter bar */
+  /* Filter bar — sticky BELOW the fixed nav (nav is ~76px tall so top:76px
+     keeps the filter tucked underneath instead of scrolling over the pills). */
   .filter-bar {
-    position: sticky; top: 0; z-index: 40;
+    position: sticky; top: 76px; z-index: 40;
     background: var(--cream);
-    border-bottom: 1px solid var(--ink-15);
     padding: 16px var(--pad-x);
     display: flex; gap: 24px; align-items: center;
     font-family: var(--f-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(19,20,14,.05);
   }
   .filter-bar .label { opacity: .5; }
   .filter-bar button {

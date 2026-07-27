@@ -1,8 +1,7 @@
 ---
 /**
  * Site footer. Acknowledgment of Country at the top — non-negotiable for a
- * First Nations-led organisation. Sponsor / partner logos read from Sanity
- * once schemas are populated.
+ * First Nations-led organisation. Sponsor logos render on every page.
  */
 import { getPartners } from '~/lib/sanity';
 
@@ -12,6 +11,19 @@ try {
 } catch {
   partners = [];
 }
+
+// Confirmed sponsors, sourced from Ben's Halfcut logos folder and processed
+// to mono cream silhouettes on transparent WebP. Order alphabetical.
+const sponsors = [
+  { slug: 'all-stripped',   name: 'All Stripped Demolition' },
+  { slug: 'ben-and-jerrys', name: "Ben & Jerry's" },
+  { slug: 'flow',           name: 'Flow' },
+  { slug: 'greenpay',       name: 'GreenPay' },
+  { slug: 'luminary',       name: 'Luminary' },
+  { slug: 'macpac',         name: 'Macpac' },
+  { slug: 'orchy',          name: 'Orchy' },
+  { slug: 'rennie',         name: 'Rennie' },
+];
 ---
 
 <footer class="site-footer">
@@ -52,16 +64,21 @@ try {
     </div>
   </div>
 
-  {partners.length > 0 && (
-    <div class="footer-partners">
-      <h4>In partnership with</h4>
-      <ul>
-        {partners.map((p: any) => (
-          <li>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.name}</a> : p.name}</li>
-        ))}
-      </ul>
-    </div>
-  )}
+  <div class="footer-sponsors">
+    <h4>In partnership with</h4>
+    <ul>
+      {sponsors.map((s) => (
+        <li>
+          <img
+            src={`/sponsors/${s.slug}.webp`}
+            alt={s.name}
+            loading="lazy"
+            width="200" height="60"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
 
   <div class="footer-bottom">
     <div>© 2026 HalfCut Limited</div>
@@ -133,12 +150,13 @@ try {
     opacity: .8;
   }
   .footer-col a:hover { color: var(--acid); opacity: 1; }
-  .footer-partners {
-    border-top: 1px solid var(--cream-15);
+  /* Sponsor strip — mono cream logos, one row, wraps on narrow.
+     Logos are already trimmed + cream-tinted at 320px height. */
+  .footer-sponsors {
     padding: var(--s-7) 0;
-    margin-bottom: var(--s-7);
+    margin-bottom: var(--s-6);
   }
-  .footer-partners h4 {
+  .footer-sponsors h4 {
     font-family: var(--f-sans);
     font-size: 11px;
     letter-spacing: .18em;
@@ -146,18 +164,24 @@ try {
     color: var(--acid);
     margin-bottom: var(--s-5);
   }
-  .footer-partners ul {
+  .footer-sponsors ul {
     list-style: none; padding: 0; margin: 0;
-    display: flex; flex-wrap: wrap; gap: 24px;
+    display: flex; flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(32px, 5vw, 64px);
+    row-gap: var(--s-5);
   }
-  .footer-partners li, .footer-partners a {
-    font-family: var(--f-sans);
-    font-size: 13px;
-    letter-spacing: .04em;
-    color: var(--cream);
-    text-decoration: none;
-    opacity: .7;
+  .footer-sponsors li { display: block; }
+  .footer-sponsors img {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    opacity: .75;
+    transition: opacity .2s ease;
   }
+  .footer-sponsors img:hover { opacity: 1; }
   .footer-bottom {
     display: flex; justify-content: space-between;
     align-items: center;
