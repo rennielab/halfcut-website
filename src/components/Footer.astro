@@ -164,24 +164,32 @@ const sponsors = [
     color: var(--acid);
     margin-bottom: var(--s-5);
   }
+  /* Uniform grid — every logo is baked into a 600x180 canvas at source, so
+     giving each cell the same width + aspect ensures identical visual weight
+     regardless of the intrinsic shape (wordmark vs badge vs stacked mark). */
   .footer-sponsors ul {
     list-style: none; padding: 0; margin: 0;
-    display: flex; flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-5);
     align-items: center;
-    gap: clamp(32px, 5vw, 64px);
-    row-gap: var(--s-5);
   }
-  .footer-sponsors li { display: block; }
+  .footer-sponsors li {
+    display: flex; align-items: center; justify-content: center;
+  }
   .footer-sponsors img {
     display: block;
-    height: 36px;
-    width: auto;
+    width: 100%;
     max-width: 200px;
+    height: auto;
+    aspect-ratio: 600 / 180;
     object-fit: contain;
-    opacity: .75;
+    opacity: .8;
     transition: opacity .2s ease;
   }
   .footer-sponsors img:hover { opacity: 1; }
+  @media (max-width: 960px) { .footer-sponsors ul { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .footer-sponsors ul { grid-template-columns: repeat(2, 1fr); } }
   .footer-bottom {
     display: flex; justify-content: space-between;
     align-items: center;
