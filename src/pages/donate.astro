@@ -34,37 +34,47 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
   <div class="donate-panel" data-screen-label="06 Donate · Form">
     <h3>Make a contribution.</h3>
-    <div class="sub">Secured and processed via Raisley.</div>
+    <div class="sub">Secured and processed via GreenPay (EzyRaise).</div>
 
-    <div class="options" role="tablist">
-      <button aria-pressed="true" data-tab="once">One-time</button>
-      <button data-tab="monthly">Monthly</button>
-      <button data-tab="august">August campaign</button>
-    </div>
-
-    <div class="amount-grid">
-      <button data-amt="50">$50</button>
-      <button aria-pressed="true" data-amt="120">$120</button>
-      <button data-amt="250">$250</button>
-      <button data-amt="1000">$1,000</button>
-    </div>
-    <input class="custom" id="customAmt" placeholder="Or enter a custom amount" value="$120">
-
-    <div class="impact-preview" id="impactPreview">
-      <strong>$120 · ~1 hectare / 1 day</strong>
-      Funds one full day of ranger time on Kuku Yalanji Country and the materials for ~1 hectare of seedling preparation.
-    </div>
-
-    <div class="raisley-embed" style="margin-top: var(--s-6);">
-      <h4>Raisley form loads here</h4>
-      <p style="font-family: var(--f-serif); font-weight: 300; font-size: 16px; opacity: .7; max-width: 48ch;">
-        Pre-filled with the selected amount and frequency. Iframe target:
-        <code style="font-family: ui-monospace; background: var(--cream); padding: 2px 6px; border-radius: 2px;">go.halfcut.org/donate?amount=120&frequency=once</code>
-      </p>
-      <div style="flex-grow:1; background: repeating-linear-gradient(45deg, transparent, transparent 14px, var(--ink-08) 14px, var(--ink-08) 28px); border-radius: 4px; margin-top: 16px;"></div>
+    <div class="greenpay-embed">
+      <iframe
+        id="ez-chill-region-donation-widget"
+        src="https://halfcut.ezyraise.site/widget/payment"
+        style="border: none; overflow: hidden; width: 100%; height: 1050px;"
+        allowfullscreen
+        allow="payment"
+        title="HalfCut donation form">
+      </iframe>
     </div>
   </div>
 </div>
+
+<script is:inline>
+  (function () {
+    const iframe = document.getElementById("ez-chill-region-donation-widget");
+    if (!iframe) return;
+    let isScrollEventFirstTime = true;
+    window.addEventListener("message", function (event) {
+      const data = event.data || {};
+      if (data.message === "getDonationWidgetIframeHeight") {
+        const height = data.height;
+        if (height && !isNaN(height) && iframe.style) {
+          iframe.style.height = (height + 10) + "px";
+        }
+      } else if (data.message === "scrollDonationWidgetIframeToTop") {
+        if (!isScrollEventFirstTime) {
+          iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        isScrollEventFirstTime = false;
+      }
+    });
+    iframe.addEventListener("load", function () {
+      if (iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ message: "getDonationWidgetIframeHeight" }, "*");
+      }
+    });
+  })();
+</script>
 
 <section class="trust" data-screen-label="06 Donate · Trust">
   <div class="trust-inner">
@@ -80,7 +90,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     </div>
     <div>
       <div class="label">Security</div>
-      <h4>Raisley + Stripe</h4>
+      <h4>GreenPay + Stripe</h4>
       <p>PCI DSS Level 1. We never see your card details.</p>
     </div>
     <div>
@@ -92,27 +102,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 </section>
 
 
-<script>
-  document.querySelectorAll('.options button').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.options button').forEach(x => x.removeAttribute('aria-pressed'));
-    b.setAttribute('aria-pressed','true');
-  }));
-  document.querySelectorAll('.amount-grid button').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.amount-grid button').forEach(x => x.removeAttribute('aria-pressed'));
-    b.setAttribute('aria-pressed','true');
-    document.getElementById('customAmt').value = '$' + b.dataset.amt;
-    const v = parseInt(b.dataset.amt, 10);
-    const p = document.getElementById('impactPreview');
-    const map = {
-      50: ['$50 · half a day on Country', 'Funds half a day of ranger time or materials for seed collection.'],
-      120: ['$120 · ~1 hectare / 1 day', 'Funds one full day of ranger time and the materials for ~1 hectare of seedling preparation.'],
-      250: ['$250 · ~2 hectares / multi-day', 'Resources a multi-day ranger patrol and ~2 hectares of seedling prep.'],
-      1000: ['$1,000 · ~8 hectares / a week', 'Funds a full week of ranger work and prepares ~8 hectares for restoration.']
-    };
-    const [strong, body] = map[v] || ['$' + v + ' · custom', 'We\'ll allocate via the Jabalbina governance cycle.'];
-    p.innerHTML = `<strong>${strong}</strong>${body}`;
-  }));
-</script>
 </BaseLayout>
 
 <style is:global>
@@ -142,62 +131,20 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   .ctx-stats .n { font-family: var(--f-display); font-size: 36px; letter-spacing: -0.01em; line-height: 1; margin-bottom: 6px; }
   .ctx-stats .l { font-family: var(--f-sans); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .55; }
 
-  /* Donation options */
-  .options {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border: 1px solid var(--ink); border-radius: 4px; overflow: hidden;
-    margin-bottom: var(--s-5);
-  }
-  .options button {
-    padding: 14px;
-    font-family: var(--f-sans); font-weight: 700; font-size: 12px;
-    letter-spacing: .14em; text-transform: uppercase;
+  /* GreenPay iframe embed. The iframe self-reports its content height via
+     postMessage; the inline script above resizes accordingly. Min-height
+     keeps a stable box before the first message arrives. */
+  .greenpay-embed {
     background: var(--cream);
-    border-right: 1px solid var(--ink);
-    transition: background .2s, color .2s;
-  }
-  .options button:last-child { border-right: 0; }
-  .options button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
-
-  .amount-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;
-  }
-  .amount-grid button {
-    padding: 18px 12px;
-    background: var(--cream);
-    border: 1px solid var(--ink-15);
     border-radius: 4px;
-    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em;
-    transition: background .2s, color .2s, border-color .2s;
+    overflow: hidden;
   }
-  .amount-grid button[aria-pressed="true"] { background: var(--acid); border-color: var(--ink); }
-  .amount-grid button:hover { border-color: var(--ink); }
-  .custom {
-    width: 100%; padding: 18px;
-    background: var(--cream);
-    border: 1px solid var(--ink-15); border-radius: 4px;
-    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.01em;
-    outline: none;
+  .greenpay-embed iframe {
+    display: block;
+    width: 100%;
+    min-height: 1050px;
+    border: 0;
   }
-  .custom:focus { border-color: var(--ink); }
-
-  /* Raisley embed container */
-  .raisley-embed {
-    background: var(--stone);
-    border: 2px dashed var(--ink-30);
-    border-radius: 4px;
-    padding: var(--s-8);
-    min-height: 620px;
-    display: flex; flex-direction: column; gap: 16px;
-    position: relative;
-  }
-  .raisley-embed::before {
-    content: 'RAISLEY EMBED MOUNT POINT';
-    position: absolute; top: 12px; left: 12px;
-    font-family: var(--f-sans); font-size: 10px; letter-spacing: .2em;
-    background: var(--coral); color: var(--ink); padding: 4px 8px; border-radius: 2px;
-  }
-  .raisley-embed h4 { font-family: var(--f-display); font-size: 24px; text-transform: uppercase; letter-spacing: -0.01em; margin-top: 16px; }
 
   /* Donate panel */
   .donate-panel {
@@ -208,15 +155,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   }
   .donate-panel h3 { font-family: var(--f-display); font-size: 28px; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 4px; }
   .donate-panel .sub { font-family: var(--f-serif);  opacity: .6; margin-bottom: var(--s-5); font-size: 15px; }
-
-  .impact-preview {
-    margin-top: var(--s-5);
-    padding: var(--s-5);
-    background: var(--acid);
-    border-radius: 4px;
-    font-family: var(--f-serif); font-weight: 400; font-size: 18px; line-height: 1.4;
-  }
-  .impact-preview strong { font-family: var(--f-display); font-size: 24px; display: block; margin-bottom: 4px; letter-spacing: -0.01em; }
 
   /* Trust strip */
   .trust {
@@ -235,7 +173,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   @media (max-width: 960px) {
     .donate-body { grid-template-columns: 1fr; padding: var(--s-6) 24px; }
     .donate-context { position: static; }
-    .amount-grid { grid-template-columns: 1fr 1fr; }
     .trust-inner { grid-template-columns: 1fr 1fr; }
   }
 </style>
