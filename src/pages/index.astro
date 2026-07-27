@@ -1449,10 +1449,16 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     color: var(--cream); opacity: .85;
   }
 
-  /* ---- Impact stats band ---- */
+  /* ---- Impact stats band ----
+     Homepage uses dark={true} on BaseLayout so the body inherits cream.
+     Force ink here — cream-on-stone is unreadable (Ben flagged). */
   .impact-band {
     background: var(--stone);
+    color: var(--ink);
     padding: var(--s-10) var(--pad-x);
+  }
+  .impact-band h2, .impact-band a, .impact-band .num, .impact-band .label, .impact-band .note {
+    color: var(--ink);
   }
   .impact-grid {
     max-width: 1440px; margin: 0 auto;
