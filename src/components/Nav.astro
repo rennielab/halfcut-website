@@ -21,7 +21,7 @@ const { current } = Astro.props as { current?: string };
     <a href="/contact" class="nav-item nav-cta-ghost" aria-label="Partner with us">Partner With Us</a>
     <button class="nav-item nav-menu-btn" data-open-menu aria-label="Open menu">
       <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
-      Menu
+      <span class="nav-menu-label">Menu</span>
     </button>
   </div>
 </header>
@@ -105,9 +105,27 @@ const { current } = Astro.props as { current?: string };
   }
   .menu-icon i { display: block; height: 1.5px; background: currentColor; border-radius: 1px; }
 
-  /* Mobile: keep just the loudest actions in the bar, drop copy-heavy pills */
+  /* Mobile: keep just the loudest actions in the bar, drop copy-heavy pills.
+     Shrink the wordmark + tighten pills so DONATE + MENU never overflow. */
   @media (max-width: 720px) {
     .nav-cta-cream, .nav-cta-ghost { display: none; }
-    .nav { padding: 14px 20px; }
+    .nav { padding: 12px 16px; }
+    .nav-logo img { height: 18px; }
+    .nav-right { gap: 6px; }
+    .nav-item { padding: 9px 12px; font-size: 11px; letter-spacing: .12em; }
+  }
+  @media (max-width: 460px) {
+    /* Ultra-narrow: drop the 'Menu' label, keep just the icon.
+       Solid backdrop (not translucent) so the pill reads on any hero photo. */
+    .nav-menu-label { display: none; }
+    .nav-menu-btn {
+      padding: 10px 12px;
+      background: var(--cream) !important;
+      color: var(--ink) !important;
+      min-width: 44px;
+    }
+    .nav.is-dark .nav-menu-btn { background: var(--cream) !important; color: var(--ink) !important; }
+    .nav-menu-btn .menu-icon { width: 18px; height: 12px; gap: 3px; }
+    .nav-menu-btn .menu-icon i { background: var(--ink); }
   }
 </style>
