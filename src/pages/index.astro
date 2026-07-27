@@ -13,38 +13,30 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-grain"></div>
   <div class="hero-inner">
-    <div class="hero-top">
-      <div class="eyebrow">Est. 2014 · A First Nations-led environmental charity</div>
-      <div class="hero-tracker" aria-label="Live forest loss tracker">
-        <div class="hero-tracker-head">
-          <span>Global forest loss</span>
-          <span class="live">Live</span>
-        </div>
-        <div class="hero-tracker-row">
-          <span class="lbl">Hectares lost today</span>
-          <span class="val" id="trk-ha">0<span class="u">ha</span></span>
-        </div>
-        <div class="hero-tracker-row">
-          <span class="lbl">Trees lost since you arrived</span>
-          <span class="val" id="trk-trees">0</span>
-        </div>
-        <div class="hero-tracker-foot">Source: FAO + GFW · updates on landing</div>
-      </div>
-    </div>
-
     <h1 class="manifesto">
       Protect. Restore. <span class="hero-accent">Forever.</span>
     </h1>
+
+    <div class="hero-tracker hero-tracker-below" aria-label="Live forest loss tracker">
+      <div class="hero-tracker-head">
+        <span>Global forest loss</span>
+        <span class="live">Live</span>
+      </div>
+      <div class="hero-tracker-row">
+        <span class="lbl">Hectares lost today</span>
+        <span class="val" id="trk-ha">0<span class="u">ha</span></span>
+      </div>
+      <div class="hero-tracker-row">
+        <span class="lbl">Trees lost since you arrived</span>
+        <span class="val" id="trk-trees">0</span>
+      </div>
+      <div class="hero-tracker-foot">Source: FAO + GFW · updates on landing</div>
+    </div>
 
     <div class="hero-bottom">
       <p class="hero-lede">
         The movement helping Australians meet nature halfway.
       </p>
-      <div class="hero-ctas">
-        <a href="/take-action" class="btn btn-acid btn-xl">Go HalfCut</a>
-        <a href="/donate" class="btn btn-xl hero-cta-cream">Donate</a>
-        <a href="/contact" class="btn btn-xl hero-cta-ghost">Partner With Us</a>
-      </div>
     </div>
   </div>
 </section>
@@ -53,10 +45,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 <section class="bridge" data-screen-label="01 Home · Bridge">
   <div class="bridge-grid">
     <div class="bridge-copy">
-      <div class="bridge-chapter">
-        <span class="bridge-chapter-num">02</span>
-        <span class="bridge-chapter-key">Our Position</span>
-      </div>
       <h2 class="bridge-headline">
         We are the <span class="mark">bridge</span> not<br>
         the saviour.
@@ -97,7 +85,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
   <section class="pillar" data-screen-label="01 Home · Pillar 1">
     <div class="pillar-text">
-      <span class="eyebrow">01, The Country</span>
       <h2>The Oldest<br>Rainforest<br>on Earth.</h2>
       <p>
         The Daintree has stood for 180 million years. It holds species that exist nowhere else on this planet.
@@ -106,15 +93,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       </p>
     </div>
     <div class="pillar-media">
-      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80" alt="Tropical rainforest interior, dense canopy">
-      <div class="pillar-num">01</div>
-      <div class="pillar-tag">Daintree · Wet Tropics QLD</div>
-    </div>
+      <img src="/photos/photo_001.webp" alt="Tropical rainforest interior, dense canopy">
+      </div>
   </section>
 
   <section class="pillar reverse" data-screen-label="01 Home · Pillar 2">
     <div class="pillar-text">
-      <span class="eyebrow">02, The Partnership</span>
       <h2>Led on<br>Country, by<br>Country.</h2>
       <p>
         Every dollar raised moves through a governance model developed with Jabalbina Yalanji Aboriginal Corporation.
@@ -123,15 +107,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       </p>
     </div>
     <div class="pillar-media">
-      <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1600&q=80" alt="Tropical rainforest creek, Wet Tropics">
-      <div class="pillar-num">02</div>
-      <div class="pillar-tag">Jabalbina Yalanji Aboriginal Corp.</div>
-    </div>
+      <img src="/photos/photo_074.webp" alt="Tropical rainforest creek, Wet Tropics">
+      </div>
   </section>
 
   <section class="pillar" data-screen-label="01 Home · Pillar 3">
     <div class="pillar-text">
-      <span class="eyebrow">03, The Mechanic</span>
       <h2>Half cut,<br>full<br>blown.</h2>
       <p>
         Every August, thousands of people shave half their head and wear the mission for a month.
@@ -141,10 +122,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     </div>
     <div class="pillar-media">
       <img src="/assets-legacy/halfcut-beard.avif" alt="The HalfCut, half-shaved beard, half-shaved head">
-      <div class="pillar-num">03</div>
-      <div class="pillar-tag">The Shave · Since 2014</div>
-      <div class="pillar-caption">The half-shaved beard: the walking conversation that resources the work.</div>
-    </div>
+      </div>
   </section>
 </div>
 
@@ -182,9 +160,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     </div>
 
     <!-- Chapter label rail (fixed left) -->
-    <div class="geomap-chapter-rail" aria-hidden="true">
-      <div class="geomap-chapter-num" id="geomap-chapter-num">001</div>
-      <div class="geomap-chapter-bar"><span id="geomap-chapter-bar"></span></div>
+    <div class="geomap-chapter-bar"><span id="geomap-chapter-bar"></span></div>
       <div class="geomap-chapter-key" id="geomap-chapter-key">CHALLENGE</div>
     </div>
 
@@ -207,8 +183,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
               Since 2014, we've cleared more forest than was lost in the entire Amazon during the same period, per capita.
               Most of it happens on Country that was never ceded.
             </p>
-            <div class="geomap-chapter-tag">001 · DETECT</div>
-          </header>
+            </header>
 
           <!-- Hotspot card + connecting line -->
           <div class="geomap-hotspot" style="--dot-x: 68%; --dot-y: 58%; --card-x: 44%; --card-y: 18%;">
@@ -256,8 +231,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
               and generational knowledge of the land. HalfCut doesn't lead, we fund, we resource,
               and we follow the instructions of the people who know.
             </p>
-            <div class="geomap-chapter-tag">002 · FOLLOW</div>
-          </header>
+            </header>
 
           <div class="geomap-hotspot" style="--dot-x: 74%; --dot-y: 34%; --card-x: 22%; --card-y: 30%;">
             <div class="geomap-dot" aria-hidden="true"><span class="pulse"></span></div>
@@ -300,8 +274,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
               Four active programs on Country right now. Each one governed by a Traditional Owner corporation,
               each one with a published audit trail, each one measured in hectares healed rather than slides in a deck.
             </p>
-            <div class="geomap-chapter-tag">003 · RESTORE</div>
-          </header>
+            </header>
 
           <div class="geomap-hotspot" style="--dot-x: 30%; --dot-y: 62%; --card-x: 56%; --card-y: 22%;">
             <div class="geomap-dot" aria-hidden="true"><span class="pulse"></span></div>
@@ -358,7 +331,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   </div>
   <div class="campaign-inner">
     <div class="campaign-top">
-      <div class="eyebrow">The August Campaign · 2026</div>
       <a href="#" class="tag">Register interest →</a>
     </div>
     <h2><span class="split">HALF</span><br>CUT IN</h2>
@@ -405,9 +377,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   </div>
   <div class="projects-scroll">
     <a class="project-card" href="campaign.html?c=daintree">
-      <img src="https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1400&q=80" alt="Aerial view of Daintree rainforest river and canopy" loading="lazy">
+      <img src="/photos/photo_107.webp" alt="Aerial view of Daintree rainforest river and canopy" loading="lazy">
       <div class="overlay"></div>
-      <div class="top-meta"><span>01 / 04</span><span>Active · 2022–</span></div>
       <div class="meta">
         <span class="tag">Jabalbina · QLD</span>
         <h3>The Daintree<br>Restoration</h3>
@@ -415,9 +386,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       </div>
     </a>
     <a class="project-card" href="campaign.html?c=yalada">
-      <img src="https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1400&q=80" alt="Lush tropical rainforest, Country" loading="lazy">
+      <img src="/photos/photo_077.webp" alt="Lush tropical rainforest, Country" loading="lazy">
       <div class="overlay"></div>
-      <div class="top-meta"><span>02 / 04</span><span>Annual</span></div>
       <div class="meta">
         <span class="tag">On-Country Program</span>
         <h3>The Yalada<br>Tour</h3>
@@ -425,9 +395,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       </div>
     </a>
     <a class="project-card" href="campaign.html?c=capacity">
-      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80" alt="Capacity building, NFP model" loading="lazy">
+      <img src="/photos/photo_007.webp" alt="Capacity building, NFP model" loading="lazy">
       <div class="overlay"></div>
-      <div class="top-meta"><span>03 / 04</span><span>In development</span></div>
       <div class="meta">
         <span class="tag">Replicable Model</span>
         <h3>Capacity<br>Codified</h3>
@@ -435,9 +404,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       </div>
     </a>
     <a class="project-card" href="campaign.html?c=southern">
-      <img src="https://images.unsplash.com/photo-1472213984618-c79aaec7fef0?auto=format&fit=crop&w=1400&q=80" alt="Seedling and hands" loading="lazy">
+      <img src="/photos/photo_027.webp" alt="Seedling and hands" loading="lazy">
       <div class="overlay"></div>
-      <div class="top-meta"><span>04 / 04</span><span>Scoping · 2026</span></div>
       <div class="meta">
         <span class="tag">Next Partnership</span>
         <h3>Southern<br>Rainforests</h3>
@@ -488,7 +456,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <a class="jcard feature" href="fieldnote.html?p=bridge-not-saviour">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80" alt="Long-form essay cover">
+        <img src="/photos/photo_065.webp" alt="Long-form essay cover">
       </div>
       <div class="meta"><span>Manifesto · 14 min</span><span>Apr 2026</span></div>
       <div class="meta-row">
@@ -499,7 +467,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <a class="jcard" href="fieldnote.html?p=three-seasons">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1200&q=80" alt="Dispatch cover">
+        <img src="/photos/photo_058.webp" alt="Dispatch cover">
       </div>
       <div class="meta"><span>Dispatch · 6 min</span><span>Mar 2026</span></div>
       <div class="meta-row">
@@ -510,7 +478,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <a class="jcard" href="fieldnote.html?p=marilyn-interview">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?auto=format&fit=crop&w=1200&q=80" alt="Interview cover">
+        <img src="/photos/photo_090.webp" alt="Interview cover">
       </div>
       <div class="meta"><span>Interview · 9 min</span><span>Feb 2026</span></div>
       <div class="meta-row">
@@ -521,7 +489,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <a class="jcard" href="fieldnote.html?p=q1-ledger">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1579091106567-95fda0d90c90?auto=format&fit=crop&w=1200&q=80" alt="Ledger cover">
+        <img src="/photos/photo_048.webp" alt="Ledger cover">
       </div>
       <div class="meta"><span>On the money · 4 min</span><span>Feb 2026</span></div>
       <div class="meta-row">
@@ -532,7 +500,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <a class="jcard" href="fieldnote.html?p=cassowary-tracks">
       <div class="jcard-img">
-        <img src="https://images.unsplash.com/photo-1710812030602-4a3662eb0135?auto=format&fit=crop&w=1200&q=80" alt="Field note cover">
+        <img src="/photos/photo_007.webp" alt="Field note cover">
       </div>
       <div class="meta"><span>Field note · 5 min</span><span>Jan 2026</span></div>
       <div class="meta-row">
@@ -842,7 +810,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   }
   .hero-bg {
     position: absolute; inset: 0;
-    background: url('/assets-legacy/hero-jabalbina.jpg') center/cover no-repeat;
+    background: url('/photos/hero-jabalbina-women.webp') center/cover no-repeat;
     transform: scale(1.05);
     will-change: transform;
   }
@@ -856,7 +824,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;   /* pin content to bottom so it clears faces */
+    gap: 20px;
     max-width: 1600px;
     margin: 0 auto;
   }
@@ -1203,16 +1172,28 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   .manifesto {
     font-family: var(--f-display);
     font-weight: 400;
-    font-size: clamp(38px, 6.6vw, 120px);
-    line-height: .88;
+    /* Slightly smaller than before — sits at the bottom over the darkened gradient */
+    font-size: clamp(34px, 5.4vw, 96px);
+    line-height: .9;
     letter-spacing: -0.025em;
     text-transform: uppercase;
     color: var(--cream);
-    max-width: 15ch;
+    max-width: 22ch;
     text-wrap: balance;
+    margin: 0;
   }
 
   .hero-accent { color: var(--acid); }
+
+  /* Tracker sitting between the headline and the lede — 20% wider than the
+     old floating panel (280 * 1.2 = 336 min-width). Semi-transparent surface
+     that still ties to the acid brand hint. */
+  .hero-tracker-below {
+    align-self: flex-start;
+    min-width: 336px;
+    max-width: 420px;
+    margin: 4px 0 4px;
+  }
 
   .hero-bottom {
     display: flex; flex-direction: column;

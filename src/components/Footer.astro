@@ -69,19 +69,37 @@ try {
       <span id="pageWeight">measuring…</span>
     </div>
   </div>
+
+  <div class="footer-wordmark" aria-hidden="true">
+    <img src="/logo/halfcut-wordmark-cream.webp" alt="" />
+  </div>
 </footer>
 
 <style is:global>
   .site-footer {
+    position: relative;
     background: var(--ink);
     color: var(--cream);
     padding: var(--s-9) var(--pad-x, 32px) var(--s-6);
+    isolation: isolate;
   }
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets-legacy/topo-pattern-hq.png');
+    background-size: 1200px auto;
+    background-repeat: repeat;
+    opacity: .08;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .site-footer > * { position: relative; z-index: 1; }
   .footer-aoc {
     max-width: 720px;
     margin-bottom: var(--s-9);
     padding-bottom: var(--s-7);
-    border-bottom: 1px solid var(--cream-15);
     font-family: var(--f-serif);
     font-weight: 300;
     font-size: clamp(15px, 1.2vw, 17px);
@@ -142,7 +160,6 @@ try {
     display: flex; justify-content: space-between;
     align-items: center;
     padding-top: var(--s-5);
-    border-top: 1px solid var(--cream-15);
     font-family: var(--f-sans);
     font-size: 11px;
     letter-spacing: .14em;
@@ -152,6 +169,21 @@ try {
   .carbon-badge {
     display: inline-flex; gap: 10px; align-items: center;
   }
+
+  /* Full-bleed HALFCUT wordmark image, stretched to the container edge. */
+  .footer-wordmark {
+    margin-top: var(--s-8);
+    line-height: 0;
+    user-select: none;
+    pointer-events: none;
+  }
+  .footer-wordmark img {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: .18;
+  }
+
   @media (max-width: 720px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }

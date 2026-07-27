@@ -1,21 +1,24 @@
 ---
 /**
  * Header nav — floating, transparent. Adaptive (light/dark) via adaptiveNav() in script.
- * No fabricated "Updates" panel — that data layer moves to Sanity (or stays absent).
+ * Three primary CTAs live here: Go HalfCut, Donate, Partner With Us. Plus Menu.
+ * No keylines on any pill; solid or blurred fills only. Text centre-balanced.
  */
 const { current } = Astro.props as { current?: string };
 ---
 
 <header class="nav" data-current={current}>
   <a href="/" class="nav-logo" aria-label="HalfCut home">
-    <span class="nav-logo-mark">HALFCUT</span>
+    <img class="nav-logo-ink"   src="/logo/halfcut-wordmark-ink.webp"   alt="HalfCut" width="150" height="24" />
+    <img class="nav-logo-cream" src="/logo/halfcut-wordmark-cream.webp" alt="HalfCut" width="150" height="24" />
   </a>
   <div class="nav-right">
-    <a href="/take-action" class="nav-item" aria-label="Take action">Take Action</a>
+    <a href="/take-action" class="nav-item nav-cta-cream" aria-label="Go HalfCut">Go HalfCut</a>
     <a href="/donate" class="nav-item nav-donate-pill" aria-label="Donate">
       <span class="nav-donate-topo" aria-hidden="true"></span>
       <span class="nav-donate-label">Donate</span>
     </a>
+    <a href="/contact" class="nav-item nav-cta-ghost" aria-label="Partner with us">Partner With Us</a>
     <button class="nav-item nav-menu-btn" data-open-menu aria-label="Open menu">
       <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
       Menu
@@ -32,15 +35,23 @@ const { current } = Astro.props as { current?: string };
   }
   .nav-logo, .nav-right { pointer-events: auto; }
   .nav-logo {
-    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
-    font-family: var(--f-display);
-    font-size: 24px;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+    line-height: 0;
   }
-  .nav.is-dark .nav-logo { color: var(--cream); }
-  .nav-right { display: flex; gap: 10px; align-items: center; }
+  .nav-logo img {
+    display: block;
+    height: 22px;
+    width: auto;
+  }
+  /* Show ink logo on light backgrounds, cream on dark — swapped via .nav.is-dark */
+  .nav-logo-cream { display: none !important; }
+  .nav.is-dark .nav-logo-ink   { display: none !important; }
+  .nav.is-dark .nav-logo-cream { display: block !important; }
+
+  .nav-right { display: flex; gap: 8px; align-items: center; }
+
   .nav-item {
     font-family: var(--f-sans);
     font-size: 12px;
@@ -49,24 +60,31 @@ const { current } = Astro.props as { current?: string };
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink);
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 999px;
-    background: rgba(245,244,236,.4);
+    background: rgba(245,244,236,.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--ink-15);
-    display: inline-flex; align-items: center; gap: 8px;
+    border: 0;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    text-align: center;
     cursor: pointer;
+    transition: background .2s ease, color .2s ease;
   }
   .nav.is-dark .nav-item {
     color: var(--cream);
-    background: rgba(19,20,14,.4);
-    border-color: var(--cream-15);
+    background: rgba(19,20,14,.55);
   }
-  .nav-donate-pill {
+
+  /* Cream chip on light bg becomes brighter cream on dark bg (unchanged text colour) */
+  .nav-cta-cream:hover { background: var(--cream); color: var(--ink); }
+  .nav.is-dark .nav-cta-cream:hover { background: var(--cream); color: var(--ink); }
+
+  .nav-donate-pill,
+  .nav.is-dark .nav-donate-pill {
     position: relative; overflow: hidden;
-    background: var(--acid); color: var(--ink) !important;
-    border-color: transparent;
+    background: var(--acid) !important;
+    color: var(--ink) !important;
   }
   .nav-donate-topo {
     position: absolute; inset: 0;
@@ -75,10 +93,21 @@ const { current } = Astro.props as { current?: string };
     opacity: .15; mix-blend-mode: multiply;
   }
   .nav-donate-label { position: relative; z-index: 1; }
-  .nav-menu-btn { border: 1px solid var(--ink-15); }
+
+  .nav-cta-ghost:hover { background: var(--cream); color: var(--ink); }
+  .nav.is-dark .nav-cta-ghost:hover { background: var(--cream); color: var(--ink); }
+
+  .nav-menu-btn { }
+
   .menu-icon {
     display: inline-flex; flex-direction: column; justify-content: center;
     gap: 4px; width: 14px;
   }
   .menu-icon i { display: block; height: 1.5px; background: currentColor; border-radius: 1px; }
+
+  /* Mobile: keep just the loudest actions in the bar, drop copy-heavy pills */
+  @media (max-width: 720px) {
+    .nav-cta-cream, .nav-cta-ghost { display: none; }
+    .nav { padding: 14px 20px; }
+  }
 </style>
