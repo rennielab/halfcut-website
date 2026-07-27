@@ -23,7 +23,7 @@ const heroUrl = campaign.hero?.asset ? urlFor(campaign.hero).width(1800).quality
   dark={true}
 >
   <section class="cmp-hero">
-    {heroUrl && <div class="cmp-hero-bg" style={`background-image: url('${heroUrl}');`} aria-hidden="true"></div>}
+    {heroUrl && <div class="cmp-hero-bg" style={`background-image: url('${heroUrl}');`} aria-hidden="true" data-parallax="0.15"></div>}
     <div class="cmp-hero-inner">
       {campaign.tag && <span class="cmp-tag">{campaign.tag}</span>}
       <h1>{campaign.title}</h1>

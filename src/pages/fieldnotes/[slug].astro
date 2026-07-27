@@ -25,7 +25,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('en-AU', { day: '2-dig
 >
   <article class="fn-article">
     <header class="fn-hero">
-      {cover && <div class="fn-hero-bg" style={`background-image: url('${cover}');`} aria-hidden="true"></div>}
+      {cover && <div class="fn-hero-bg" style={`background-image: url('${cover}');`} aria-hidden="true" data-parallax="0.15"></div>}
       <div class="fn-hero-inner">
         <span class="cat">{note.category}</span>
         <h1>{note.title}</h1>

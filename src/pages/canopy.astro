@@ -85,8 +85,11 @@ const pillars = [
   title="The HalfCut Canopy"
   description="A living network of businesses restoring nature together. Bronze, Silver, Gold and Platinum membership tiers supporting rainforest restoration and First Nations-led conservation."
   current="canopy"
+  dark={true}
 >
   <section class="cy-hero">
+    <div class="cy-hero-bg" aria-hidden="true" data-parallax="0.15"></div>
+    <div class="cy-hero-veil" aria-hidden="true"></div>
     <div class="cy-hero-inner">
       <h1>The<br />HalfCut<br /><span class="accent">Canopy.</span></h1>
       <p class="lede">
@@ -98,7 +101,7 @@ const pillars = [
         Whether you're a local café, family business, national brand or global
         organisation, there's a place for you in the Canopy.
       </p>
-      <a href="#tiers" class="btn btn-primary btn-xl">Sign up and start your impact</a>
+      <a href="#tiers" class="btn btn-acid btn-xl">Sign up and start your impact</a>
     </div>
   </section>
 
@@ -162,10 +165,24 @@ const pillars = [
   .accent { color: var(--acid); }
 
   .cy-hero {
-    background: var(--cream); color: var(--ink);
+    position: relative; overflow: hidden;
+    background: var(--ink); color: var(--cream);
     padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
+    min-height: 80vh;
+    display: flex; align-items: flex-end;
   }
-  .cy-hero-inner { max-width: 1440px; margin: 0 auto; }
+  .cy-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/photo_089.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.5) saturate(.9);
+    will-change: transform;
+  }
+  .cy-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.25) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .cy-hero-inner { position: relative; z-index: 2; max-width: 1440px; margin: 0 auto; width: 100%; }
   .cy-hero h1 {
     font-family: var(--f-display);
     font-size: clamp(64px, 10vw, 200px);

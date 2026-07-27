@@ -10,14 +10,22 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 >
 <!-- HERO -->
 <section class="about-hero" data-screen-label="02 About · Hero">
+  <div class="about-hero-bg" aria-hidden="true" data-parallax="0.15"></div>
+  <div class="about-hero-veil" aria-hidden="true"></div>
   <div class="about-hero-inner">
-    <h1>We're not the saviour. We're the bridge.</h1>
+    <h1>We're not the saviour.<br /><span class="accent">We're the bridge.</span></h1>
     <div class="about-hero-bottom">
       <p class="lede">
-        For twelve years we've raised funds for rainforest restoration. For the last three, we've been quietly rebuilding ourselves around a harder, truer idea: that the people best placed to heal this Country are the ones who have known it for 60,000 years.
+        Since 2014 we've raised funds for rainforest restoration. We've been
+        rebuilding ourselves around a harder, truer idea: that the people best
+        placed to heal this Country are the ones who have known it for over
+        65,000 years.
       </p>
       <p class="sidenote">
-        This page is the public statement of a working principle. It sits beneath every decision we make, every campaign, every partnership, every dollar that moves through our accounts. We publish it here so you can hold us to it.
+        This page is the public statement of a working principle. It sits
+        beneath every decision we make, every campaign, every partnership,
+        every dollar that moves through our accounts. We publish it here so
+        you can hold us to it.
       </p>
     </div>
   </div>
@@ -103,25 +111,20 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   </div>
 </section>
 
-<!-- PARTNERS -->
-<section class="partners" data-screen-label="02 About · Partners">
+<!-- PARTNERSHIPS CTA -->
+<section class="partners" data-screen-label="02 About · Partnerships">
   <div class="partners-head">
-    <h3>Current<br>partners.</h3>
-    <p>Each assessed against our partnership framework. The list is short by design.</p>
-  </div>
-  <div class="partners-grid">
-    <div class="partner">Jabalbina</div>
-    <div class="partner">Ben &amp; Jerry's</div>
-    <div class="partner">Dr.V</div>
-    <div class="partner">Seven Mile</div>
-    <div class="partner">Laidre</div>
-    <div class="partner">The Proof</div>
-    <div class="partner">Memobottle</div>
-    <div class="partner">Farm My School</div>
-    <div class="partner" style="color: var(--coral);">+ Your Org</div>
-    <div class="partner" style="opacity:.25;"></div>
-    <div class="partner" style="opacity:.25;"></div>
-    <div class="partner" style="opacity:.25;"></div>
+    <h3>A short list<br />by design.</h3>
+    <p>
+      Every partner is assessed against the framework above and confirmed in
+      writing. Rather than a wall of unverified logos, our verified partner
+      list lives on the Partners page, and organisations join through The
+      HalfCut Canopy.
+    </p>
+    <div class="partners-ctas">
+      <a href="/partners" class="btn btn-primary btn-xl">See verified partners</a>
+      <a href="/canopy" class="btn btn-xl btn-secondary">Join The HalfCut Canopy</a>
+    </div>
   </div>
 </section>
 
@@ -145,32 +148,55 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 <style is:global>
 .about-hero {
     padding: var(--hero-pad-top) var(--pad-x) var(--hero-pad-bottom);
-    background: var(--cream);
+    background: var(--ink);
+    color: var(--cream);
     position: relative;
-    border-bottom: 1px solid var(--ink-15);
+    overflow: hidden;
   }
-  .about-hero-inner { max-width: 1440px; margin: 0 auto; }
-  .about-hero .eyebrow { opacity: .5; margin-bottom: var(--s-6); }
+  .about-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/photo_047.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.5) saturate(.9);
+    will-change: transform;
+  }
+  .about-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.35) 0%, rgba(19,20,14,.25) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .about-hero-inner { position: relative; z-index: 2; max-width: 1440px; margin: 0 auto; }
+  .accent { color: var(--acid); }
   .about-hero h1 {
     font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 180px);
-    line-height: .88;
+    font-size: clamp(56px, 8vw, 160px);
+    line-height: .9;
     letter-spacing: -0.025em;
     text-transform: uppercase;
-    max-width: 14ch;
+    max-width: 18ch;
     text-wrap: balance;
+    color: var(--cream);
+    margin: 0;
   }
   .about-hero-bottom {
-    margin-top: var(--s-9);
+    margin-top: var(--s-8);
     display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8);
     padding-top: var(--s-6);
-    border-top: 1px solid var(--ink-15);
+    border-top: 1px solid var(--cream-15);
   }
-  .about-hero-bottom .lede { max-width: 38ch; }
+  .about-hero-bottom .lede {
+    max-width: 44ch;
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(18px, 1.5vw, 22px); line-height: 1.5;
+    color: var(--cream); opacity: .9;
+    margin: 0;
+  }
   .about-hero-bottom .sidenote {
     font-family: var(--f-sans); font-size: 13px; letter-spacing: .04em;
-    line-height: 1.6; opacity: .6; max-width: 36ch;
+    line-height: 1.6; opacity: .55; max-width: 36ch;
+    color: var(--cream);
+    margin: 0;
   }
+  @media (max-width: 720px) { .about-hero-bottom { grid-template-columns: 1fr; } }
 
   /* Long-form manifesto */
   .manifesto-section {
@@ -323,9 +349,26 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     border-top: 1px solid var(--ink-15);
     border-bottom: 1px solid var(--ink-15);
   }
-  .partners-head { max-width: 1440px; margin: 0 auto var(--s-7); display: flex; justify-content: space-between; align-items: end; }
-  .partners-head h3 { font-family: var(--f-display); font-size: clamp(36px, 4vw, 64px); text-transform: uppercase; letter-spacing: -0.01em; line-height: .95; }
-  .partners-head p { font-family: var(--f-sans); font-size: 13px; letter-spacing: .08em; opacity: .55; max-width: 32ch; }
+  .partners-head {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: var(--s-5);
+    text-align: center; align-items: center;
+  }
+  .partners-head h3 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 80px);
+    text-transform: uppercase; letter-spacing: -0.015em; line-height: .95;
+    margin: 0;
+  }
+  .partners-head p {
+    font-family: var(--f-serif); font-weight: 300;
+    font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55;
+    opacity: .8; max-width: 56ch; margin: 0;
+  }
+  .partners-ctas {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin-top: var(--s-4);
+  }
   .partners-grid {
     max-width: 1440px; margin: 0 auto;
     display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
