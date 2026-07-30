@@ -24,10 +24,13 @@ const bequestKinds = [
   title="Donate"
   description="Give today. Leave a legacy for tomorrow. Nature for Life gives you the opportunity to protect forests still standing and restore forests already lost."
   current="donate"
+  dark={true}
 >
   <section class="dn-hero">
+    <div class="dn-hero-bg" aria-hidden="true" data-parallax="0.15"></div>
+    <div class="dn-hero-veil" aria-hidden="true"></div>
     <div class="dn-hero-inner">
-      <h1>Give to nature.<br /><span class="accent">For life.</span></h1>
+      <h1>Give to nature.<br />For life.</h1>
       <p class="lede">
         Nature has supported us throughout our lives. Nature for Life gives you
         the opportunity to give something meaningful back by protecting forests
@@ -35,7 +38,7 @@ const bequestKinds = [
       </p>
       <div class="dn-hero-ctas">
         <a href="#donate-now" class="btn btn-acid btn-xl">Donate now</a>
-        <a href="#legacy" class="btn btn-xl btn-secondary">Leave a legacy</a>
+        <a href="#legacy" class="btn btn-xl on-ink btn-secondary">Leave a legacy</a>
       </div>
     </div>
   </section>
@@ -126,7 +129,7 @@ const bequestKinds = [
         {whereItGoes.map((item) => <div class="dn-where-row">{item}</div>)}
       </div>
       <div class="dn-where-close">
-        <p class="dn-where-headline"><span class="accent">Protect. Restore.</span> Forever.</p>
+        <p class="dn-where-headline">Protect. Restore. Forever.</p>
         <p>Every donation supports the two halves of HalfCut. Protect forests that are still standing. Restore forests that have already been lost.</p>
       </div>
     </div>
@@ -231,7 +234,7 @@ const bequestKinds = [
 
   <section class="dn-close">
     <div class="dn-close-inner">
-      <h2>Protect. Restore. <span class="accent">Forever.</span></h2>
+      <h2>Protect. Restore. Forever.</h2>
       <p>
         Your life can leave more than memories. It can leave forests standing,
         degraded landscapes restored, wildlife protected, Country returned and
@@ -260,21 +263,37 @@ const bequestKinds = [
   .accent { color: var(--acid); }
 
   .dn-hero {
-    background: var(--cream); color: var(--ink);
+    position: relative; overflow: hidden;
+    background: var(--ink); color: var(--cream);
     padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
+    min-height: 80vh;
+    display: flex; align-items: flex-end;
   }
-  .dn-hero-inner { max-width: 1200px; margin: 0 auto; }
+  .dn-hero-bg {
+    position: absolute; inset: -10% 0;
+    background-image: url('/photos/photo_063.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.5) saturate(.9);
+    will-change: transform;
+  }
+  .dn-hero-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.25) 40%, rgba(19,20,14,.85) 100%);
+  }
+  .dn-hero-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; }
   .dn-hero h1 {
     font-family: var(--f-display);
     font-size: clamp(56px, 8vw, 160px);
     line-height: .9; letter-spacing: -0.025em;
     text-transform: uppercase;
     margin: 0 0 var(--s-6);
+    color: var(--cream);
   }
   .dn-hero .lede {
     font-family: var(--f-serif); font-weight: 300;
     font-size: clamp(20px, 1.6vw, 26px); line-height: 1.45;
     max-width: 56ch; margin: 0 0 var(--s-7);
+    color: var(--cream); opacity: .9;
   }
   .dn-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
