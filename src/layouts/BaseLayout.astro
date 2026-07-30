@@ -68,7 +68,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <meta name="theme-color" content="#13140E" />
 </head>
 <body class={dark ? 'is-dark-page' : ''}>
-  <Nav current={current} />
+  <Nav current={current} dark={dark} />
   <Menu />
   <main id="main">
     <slot />
@@ -125,20 +125,55 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     function adaptiveNav() {
       const nav = document.querySelector('.nav') as HTMLElement | null;
       if (!nav) return;
-      const DARK = '.hero,.pillar,.geomap,.cta-band,.campaign,.on-ink,.on-country,.dollar,.cinematic,.ambient,.ambient-quote,.dark,.ink-section,.site-footer';
-      function update() {
-        const x = window.innerWidth / 2;
-        const y = 28;
+      // Sample a few points across the nav row so we don't get fooled by a
+      // narrow light element sitting under the centre (e.g. a form card).
+      // For each sample we walk up the DOM finding the first ancestor with a
+      // non-transparent background, then decide dark vs light by luminance.
+      function bgAt(x: number, y: number): { r: number; g: number; b: number } | null {
         const els = document.elementsFromPoint(x, y);
-        let dark = false;
         for (const el of els) {
           if (el === nav || nav.contains(el)) continue;
-          if ((el as HTMLElement).matches?.(DARK) || (el as HTMLElement).closest?.(DARK)) {
-            dark = true;
-            break;
+          let node: HTMLElement | null = el as HTMLElement;
+          while (node && node !== document.documentElement) {
+            const cs = getComputedStyle(node);
+            const bg = cs.backgroundColor;
+            const m = bg.match(/rgba?\(([^)]+)\)/);
+            if (m) {
+              const parts = m[1].split(',').map((s) => parseFloat(s.trim()));
+              const [r, g, b, a = 1] = parts;
+              if (a > 0.1) return { r, g, b };
+            }
+            node = node.parentElement;
           }
         }
-        nav.classList.toggle('is-dark', dark);
+        // Fall back to body background so the very top of the page still
+        // resolves to something concrete.
+        const cs = getComputedStyle(document.body);
+        const m = cs.backgroundColor.match(/rgba?\(([^)]+)\)/);
+        if (m) {
+          const [r, g, b] = m[1].split(',').map((s) => parseFloat(s.trim()));
+          return { r, g, b };
+        }
+        return null;
+      }
+      function luminance(c: { r: number; g: number; b: number }) {
+        // Rec 601 luma — good enough for pass/fail dark detection.
+        return 0.299 * c.r + 0.587 * c.g + 0.114 * c.b;
+      }
+      function update() {
+        const w = window.innerWidth;
+        const y = 28;
+        // Sample under the logo (left) AND the centre — logo readability is
+        // what actually matters here, so weight the left sample.
+        const samples = [
+          bgAt(60, y),
+          bgAt(w / 2, y),
+          bgAt(w - 60, y),
+        ].filter((s): s is { r: number; g: number; b: number } => !!s);
+        if (!samples.length) return;
+        const avg = samples.reduce((a, b) => a + luminance(b), 0) / samples.length;
+        // 128 = midpoint; ink (#13140E) is ~19, cream (#F5F4EC) is ~244.
+        nav.classList.toggle('is-dark', avg < 128);
       }
       let raf = 0;
       function onScroll() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); }); }

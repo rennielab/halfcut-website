@@ -26,28 +26,30 @@ const bequestKinds = [
   current="donate"
   dark={true}
 >
-  <section class="dn-hero">
-    <div class="dn-hero-bg" aria-hidden="true" data-parallax="0.15"></div>
-    <div class="dn-hero-veil" aria-hidden="true"></div>
-    <div class="dn-hero-inner">
-      <h1>Give to nature.<br />For life.</h1>
-      <p class="lede">
-        Nature has supported us throughout our lives. Nature for Life gives you
-        the opportunity to give something meaningful back by protecting forests
-        that are still standing and restoring forests that have already been lost.
-      </p>
-      <div class="dn-hero-ctas">
-        <a href="#donate-now" class="btn btn-acid btn-xl">Donate now</a>
-        <a href="#legacy" class="btn btn-xl on-ink btn-secondary">Leave a legacy</a>
-      </div>
+  <section class="dn-split" id="donate-now">
+    <div class="dn-split-bg-wrap" aria-hidden="true">
+      <div class="dn-split-bg" data-parallax="0.10"></div>
+      <div class="dn-split-veil"></div>
     </div>
-  </section>
-
-  <section class="dn-widget" id="donate-now">
-    <div class="dn-widget-inner">
-      <h2>Donate now.</h2>
-      <p class="dn-widget-sub">Secured and processed via GreenPay (EzyRaise).</p>
-      <div class="greenpay-embed">
+    <div class="dn-split-inner">
+      <aside class="dn-split-copy">
+          <h1>Give to nature.<br />For life.</h1>
+          <p class="lede">
+            Nature has supported us throughout our lives. Nature for Life gives
+            you the opportunity to give something meaningful back by protecting
+            forests that are still standing and restoring forests that have
+            already been lost.
+          </p>
+          <div class="dn-hero-ctas">
+            <a href="#legacy" class="btn btn-acid btn-xl">Leave a legacy</a>
+            <a href="#bank" class="btn btn-xl btn-on-dark btn-primary">Bank transfer</a>
+          </div>
+          <p class="dn-split-note">
+            Secured and processed via GreenPay (EzyRaise). Tax-deductible in
+            Australia. ABN 24&nbsp;642&nbsp;788&nbsp;814.
+          </p>
+      </aside>
+      <div class="dn-split-form">
         <iframe
           id="ez-chill-region-donation-widget"
           src="https://halfcut.ezyraise.site/widget/payment"
@@ -87,7 +89,7 @@ const bequestKinds = [
     })();
   </script>
 
-  <section class="dn-bank">
+  <section class="dn-bank" id="bank">
     <div class="dn-bank-inner">
       <div class="dn-bank-copy">
         <h2>Donate by bank transfer.</h2>
@@ -262,47 +264,78 @@ const bequestKinds = [
 <style is:global>
   .accent { color: var(--acid); }
 
-  .dn-hero {
-    position: relative; overflow: hidden;
+  /* Split hero: headline sticky on the left, GreenPay form on the right.
+     Single continuous dark section — no lighter beige band between hero and
+     form. Left column stays visible while user scrolls the (tall) iframe. */
+  /* NB: no overflow:hidden on .dn-split itself — that would kill the
+     position:sticky on the left column. The bg + parallax lives inside a
+     nested wrapper that owns the clip. */
+  .dn-split {
+    position: relative;
     background: var(--ink); color: var(--cream);
-    padding: var(--hero-pad-top) var(--pad-x) var(--pad-section-sm);
-    min-height: 80vh;
-    display: flex; align-items: flex-end;
   }
-  .dn-hero-bg {
-    position: absolute; inset: -10% 0;
+  .dn-split-bg-wrap {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dn-split-bg {
+    position: absolute; inset: -6% 0;
     background-image: url('/photos/photo_063.webp');
     background-size: cover; background-position: center;
-    filter: brightness(.5) saturate(.9);
+    filter: brightness(.45) saturate(.9);
     will-change: transform;
   }
-  .dn-hero-veil {
+  .dn-split-veil {
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(19,20,14,.3) 0%, rgba(19,20,14,.25) 40%, rgba(19,20,14,.85) 100%);
+    background: linear-gradient(180deg, rgba(19,20,14,.55) 0%, rgba(19,20,14,.55) 100%);
   }
-  .dn-hero-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; }
-  .dn-hero h1 {
+  .dn-split-inner {
+    position: relative; z-index: 2;
+    max-width: 1440px; margin: 0 auto;
+    padding: calc(var(--hero-pad-top) + 8px) var(--pad-x) var(--s-9);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--s-8);
+    align-items: start;        /* sticky grid child needs align-items:start */
+  }
+  /* Sticky directly on the grid cell — this is the reliable pattern.
+     Grid parent uses align-items:start so the sticky respects its own size.
+     Element sticks to top:188px as user scrolls through the tall iframe. */
+  .dn-split-copy {
+    position: sticky;
+    top: calc(var(--hero-pad-top) + 8px);
+    max-width: 44ch;
+  }
+  .dn-split-copy h1 {
     font-family: var(--f-display);
-    font-size: clamp(56px, 8vw, 160px);
+    font-size: clamp(52px, 6vw, 120px);
     line-height: .9; letter-spacing: -0.025em;
     text-transform: uppercase;
     margin: 0 0 var(--s-6);
     color: var(--cream);
   }
-  .dn-hero .lede {
+  .dn-split-copy .lede {
     font-family: var(--f-serif); font-weight: 300;
-    font-size: clamp(20px, 1.6vw, 26px); line-height: 1.45;
-    max-width: 56ch; margin: 0 0 var(--s-7);
-    color: var(--cream); opacity: .9;
+    font-size: clamp(18px, 1.4vw, 22px); line-height: 1.5;
+    color: var(--cream); opacity: .92;
+    margin: 0 0 var(--s-6);
   }
-  .dn-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .dn-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: var(--s-5); }
+  .dn-split-note {
+    font-family: var(--f-sans); font-weight: 600;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cream); opacity: .55;
+    max-width: 44ch; margin: 0;
+  }
+  /* No cream frame around the iframe — let GreenPay render edge-to-edge */
+  .dn-split-form { background: transparent; }
+  .dn-split-form iframe { display: block; width: 100%; min-height: 1050px; border: 0; background: transparent; }
 
-  .dn-widget { background: var(--stone); padding: var(--s-10) var(--pad-x); }
-  .dn-widget-inner { max-width: 1000px; margin: 0 auto; }
-  .dn-widget h2 { font-family: var(--f-display); font-size: clamp(36px, 4.5vw, 64px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 8px; }
-  .dn-widget-sub { font-family: var(--f-serif); font-weight: 300; font-size: 16px; opacity: .6; margin: 0 0 var(--s-6); }
-  .greenpay-embed { background: var(--cream); border-radius: 4px; overflow: hidden; }
-  .greenpay-embed iframe { display: block; width: 100%; min-height: 1050px; border: 0; }
+  @media (max-width: 960px) {
+    .dn-split-inner { grid-template-columns: 1fr; padding: calc(var(--hero-pad-top-sm) + 8px) var(--pad-x) var(--s-8); }
+    .dn-split-copy { position: static; top: auto; margin-bottom: var(--s-6); }
+  }
 
   .dn-bank { background: var(--cream); padding: var(--s-10) var(--pad-x); }
   .dn-bank-inner {

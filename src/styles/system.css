@@ -107,7 +107,8 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-body { overflow-x: hidden; }
+/* body overflow-x removed entirely so position:sticky descendants work.
+   Individual pages/sections use max-width/inset to avoid horizontal scroll. */
 
 img { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }

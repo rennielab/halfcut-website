@@ -4,10 +4,10 @@
  * Three primary CTAs live here: Go HalfCut, Donate, Partner With Us. Plus Menu.
  * No keylines on any pill; solid or blurred fills only. Text centre-balanced.
  */
-const { current } = Astro.props as { current?: string };
+const { current, dark = false } = Astro.props as { current?: string; dark?: boolean };
 ---
 
-<header class="nav" data-current={current}>
+<header class:list={["nav", { "is-dark": dark }]} data-current={current}>
   <a href="/" class="nav-logo" aria-label="HalfCut home">
     <img class="nav-logo-ink"   src="/logo/halfcut-wordmark-ink.webp"   alt="HalfCut" width="150" height="24" />
     <img class="nav-logo-cream" src="/logo/halfcut-wordmark-cream.webp" alt="HalfCut" width="150" height="24" />
