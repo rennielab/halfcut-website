@@ -78,6 +78,8 @@ const ways = [
   </section>
 
   <section class="gh-close">
+    <div class="gh-close-bg" aria-hidden="true" data-parallax="0.10"></div>
+    <div class="gh-close-veil" aria-hidden="true"></div>
     <div class="gh-close-inner">
       <h2>However you choose to do it.</h2>
       <p class="gh-close-line">Meet nature halfway.</p>
@@ -201,23 +203,48 @@ const ways = [
     opacity: .85; margin: 0 0 var(--s-5); max-width: 56ch;
   }
 
+  /* Dark photo close: bookends the page with the same rainforest imagery as
+     the hero, gives the ending visual weight. Acid line reads cleanly on
+     the dark overlay instead of fighting a cream background. */
   .gh-close {
-    background: var(--cream); color: var(--ink);
-    padding: var(--s-10) var(--pad-x); text-align: center;
+    position: relative; overflow: hidden;
+    background: var(--ink); color: var(--cream);
+    padding: var(--s-11) var(--pad-x) var(--s-10);
+    text-align: center;
+    min-height: 60vh;
+    display: flex; align-items: center;
   }
-  .gh-close-inner { max-width: 720px; margin: 0 auto; }
+  .gh-close-bg {
+    position: absolute; inset: -8% 0;
+    background-image: url('/photos/photo_078.webp');
+    background-size: cover; background-position: center;
+    filter: brightness(.5) saturate(.9);
+    will-change: transform;
+    z-index: 0;
+  }
+  .gh-close-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(19,20,14,.55) 0%, rgba(19,20,14,.5) 50%, rgba(19,20,14,.75) 100%);
+    z-index: 1;
+  }
+  .gh-close-inner {
+    position: relative; z-index: 2;
+    max-width: 780px; margin: 0 auto; width: 100%;
+  }
   .gh-close h2 {
     font-family: var(--f-display);
     font-size: clamp(40px, 5.5vw, 84px);
     line-height: .95; letter-spacing: -0.02em; text-transform: uppercase;
-    margin: 0 0 var(--s-4);
+    margin: 0 0 var(--s-5);
+    color: var(--cream);
   }
   .gh-close-line {
     font-family: var(--f-display);
     font-size: clamp(28px, 3vw, 48px);
     line-height: 1; letter-spacing: -0.015em;
     color: var(--acid);
-    margin: 0 0 var(--s-6);
+    margin: 0 0 var(--s-7);
+    text-transform: uppercase;
   }
   .gh-close-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 </style>
