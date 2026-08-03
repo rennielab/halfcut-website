@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 // deployed separately to halfcut.sanity.studio. No need to mount the Studio app inside Astro.
 
 export default defineConfig({
-  site: 'https://halfcut-website.vercel.app',
+  site: 'https://halfcut.org',
   image: {
     domains: ['cdn.sanity.io'],
   },
