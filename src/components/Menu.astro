@@ -6,13 +6,13 @@
 // Trimmed primary menu — Ben's call: keep 6 top-level, push everything else
 // (proof, transparency, backlog) to the footer.
 const NAV_LINKS = [
-  { href: '/',              label: 'Home' },
-  { href: '/about',         label: 'About' },
-  { href: '/heal-country',  label: 'Heal Country' },
-  { href: '/go-halfcut',    label: 'Go HalfCut' },
-  { href: '/yalada-tours',  label: 'Yalada Tours' },
-  { href: '/canopy',        label: 'The Canopy' },
-  { href: '/take-action',   label: 'Take Action' },
+  { href: '/',                         label: 'Home' },
+  { href: '/about',                    label: 'About' },
+  { href: '/heal-country',             label: 'Heal Country' },
+  { href: 'https://go.halfcut.org/',   label: 'Go HalfCut', external: true },
+  { href: '/yalada-tours',             label: 'Yalada Tours' },
+  { href: '/canopy',                   label: 'The Canopy' },
+  { href: '/take-action',              label: 'Take Action' },
 ];
 ---
 
@@ -27,7 +27,12 @@ const NAV_LINKS = [
     </header>
     <nav class="menu-list" aria-label="Primary">
       {NAV_LINKS.map((l) => (
-        <a href={l.href} class="menu-link">{l.label}</a>
+        <a
+          href={l.href}
+          class="menu-link"
+          target={l.external ? '_blank' : undefined}
+          rel={l.external ? 'noopener' : undefined}
+        >{l.label}</a>
       ))}
     </nav>
     <div class="menu-ctas">

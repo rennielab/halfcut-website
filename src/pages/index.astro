@@ -134,7 +134,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   </div>
   <div class="campaign-inner">
     <div class="campaign-top">
-      <a href="#" class="tag">Register interest →</a>
+      <a href="https://go.halfcut.org/" target="_blank" rel="noopener" class="tag">Register interest →</a>
     </div>
     <h2><span class="split">HALF</span><br>CUT IN</h2>
     <div class="campaign-row reveal">
@@ -153,6 +153,10 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
         <div class="stat">11,400+</div>
         <div class="stat-sub">half-cut heads, 47 countries</div>
       </div>
+    </div>
+    <div class="campaign-cta">
+      <a href="https://go.halfcut.org/" target="_blank" rel="noopener" class="btn btn-primary btn-xl">Go HalfCut</a>
+      <span class="campaign-cta-note">Opens the Raisely campaign</span>
     </div>
     <div class="marquee">
       <div class="marquee-track">
@@ -1303,6 +1307,22 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     .campaign-portrait img { width: 90%; min-width: 0; }
   }
   .campaign-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--s-6); }
+  /* Big CTA after the stats — sits on the lime campaign band, so we use the
+     primary ink pill (btn-primary) so it reads with authority rather than
+     blending into the acid background. */
+  .campaign-cta {
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+    margin: var(--s-7) 0 var(--s-6);
+    padding-top: var(--s-6);
+    border-top: 1px solid var(--ink-15);
+  }
+  .campaign-cta-note {
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .55;
+  }
   .campaign h2 {
     font-family: var(--f-display);
     font-size: clamp(80px, 15vw, 280px);
