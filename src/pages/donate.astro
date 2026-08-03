@@ -33,6 +33,11 @@ const bequestKinds = [
     </div>
     <div class="dn-split-inner">
       <aside class="dn-split-copy">
+          <div class="dn-match" role="note" aria-label="Match giving live now">
+            <span class="dn-match-kicker">Live match, summit 2026</span>
+            <p class="dn-match-headline">Every dollar matched to $10,000.</p>
+            <p class="dn-match-body">GreenPay is matching every donation dollar for dollar until we hit $10,000. Give today and your gift counts twice.</p>
+          </div>
           <h1>Give to nature.<br />For life.</h1>
           <p class="lede">
             Nature has supported us throughout our lives. Nature for Life gives
@@ -307,6 +312,38 @@ const bequestKinds = [
     top: calc(var(--hero-pad-top) + 8px);
     max-width: 44ch;
   }
+  /* Match-giving callout: flat acid block, dark ink text. Sits above the
+     H1 in the sticky column so it stays in view while people scroll the
+     GreenPay iframe. Reads as a live status, not a decorative badge. */
+  .dn-match {
+    background: var(--acid);
+    color: var(--ink);
+    padding: 18px 22px 20px;
+    margin: 0 0 var(--s-6);
+    max-width: 44ch;
+  }
+  .dn-match-kicker {
+    display: block;
+    font-family: var(--f-sans); font-weight: 700;
+    font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: .85;
+  }
+  .dn-match-headline {
+    font-family: var(--f-display);
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.05; letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .dn-match-body {
+    font-family: var(--f-serif); font-weight: 400;
+    font-size: 15px; line-height: 1.5;
+    margin: 0;
+    max-width: 42ch;
+  }
+
   .dn-split-copy h1 {
     font-family: var(--f-display);
     font-size: clamp(52px, 6vw, 120px);
